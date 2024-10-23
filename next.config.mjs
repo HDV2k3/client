@@ -11,6 +11,7 @@ const nextConfig = {
       javascriptEnabled: true, // Cần thiết để hỗ trợ tính năng như override biến Less
     },
   },
+  swcMinify: false,
 };
 
 export default withLess(nextConfig);
