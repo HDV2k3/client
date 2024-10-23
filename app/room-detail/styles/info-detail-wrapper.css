@@ -1,0 +1,13 @@
+.info-detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .container {
+    max-width: calc(1324px - var(--scrollbar-width, 0px));
+  }

@@ -1,0 +1,111 @@
+/* RoomCardProminent.css */
+.room-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.room-card .image-container {
+  overflow: hidden;
+}
+
+.room-card img {
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.room-card:hover img {
+  transform: scale(1.1);
+  filter: brightness(90%);
+}
+
+/* Di chuyển container trạng thái */
+.status-container {
+  top: 100px;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* Các màu nền cho trạng thái */
+.bg-green-500 {
+  background-color: #10b981; /* Màu xanh lá cây */
+}
+
+.bg-red-500 {
+  background-color: #ef4444; /* Màu đỏ */
+}
+
+/* Hiệu ứng nhấp nháy */
+.blinking {
+  animation: blinking 1s infinite;
+}
+
+@keyframes blinking {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.text-green-500 {
+  color: #1d1d1d; /* Màu xanh lá cây cho văn bản */
+}
+/* Gradient Text */
+.text-gradient {
+  background: -webkit-linear-gradient(left, #3b82f6, #10b981); /* Gradient từ xanh dương đến xanh lá cây */
+  -webkit-background-clip: text; /* Cắt nền để chỉ hiển thị trên văn bản */
+  -webkit-text-fill-color: transparent; /* Ẩn màu nền văn bản để hiển thị gradient */
+}
+
+.text-red-500 {
+  color: #ef4444; /* Màu đỏ cho văn bản */
+}
+/* RoomCardProminent.css */
+/* Hiệu ứng nảy lên xuống cho badge */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Badge Hiển Thị */
+.hot-badge {
+  background-color: #f87171; /* Màu đỏ nhạt */
+  border-radius: 12px; /* Bo tròn */
+  padding: 4px 8px;
+  animation: bounce 3s infinite; /* Áp dụng hiệu ứng nảy lên xuống */
+}
+.hot-badge1 {
+  background-color: #41c543; /* Màu xanh lá cây */
+  border-radius: 10px; /* Bo tròn */
+  padding: 4px 8px;
+  animation: rotateShrink 2s infinite; /* Áp dụng hiệu ứng xoay và thu nhỏ */
+}
+
+@keyframes rotateShrink {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(0.8);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}

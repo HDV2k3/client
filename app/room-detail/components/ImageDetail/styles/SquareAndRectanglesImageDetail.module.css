@@ -1,0 +1,103 @@
+/* styles.css */
+.container {
+  display: flex;
+  gap: 10px;
+}
+
+.square {
+  width: 500px;
+  height:520px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: lightblue;
+}
+
+.rectangles {
+grid-template-columns: repeat(2, 295px);
+grid-template-rows: repeat(2, 195px);
+gap: 10px;
+height: 510px; /* Chiều cao bằng với hình vuông */
+ border-radius: 5px;
+}
+
+.rectangle {
+width: 295px;
+height: 252px;
+background-color: lightblue;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+object-fit: cover;
+position: relative;
+
+}
+.ant-image-mask{
+  /* border-radius: 5px; */
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.rectangle .buttonContainer .btn{
+  position: absolute;
+  bottom: 1px; /* Khoảng cách từ đáy của hình ảnh */
+  right: 10px; /* Khoảng cách từ bên phải của hình ảnh */
+  background: none; /* Không có nền */
+  border: none; /* Không có viền */
+  padding: 5px;
+  border-radius: 5px; /* Để làm nổi bật nút hơn */
+  color: blanchedalmond; /* Màu chữ hoặc icon của nút */
+}
+/* Container for button positioning with three images */
+.buttonContainerThreeImages {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+/* Container for button positioning with two images */
+.buttonContainerTwoImages {
+  position: absolute;
+  bottom: 20px;
+  top: 460px;
+  right: 10px;
+}
+
+/* Styling for the button */
+.btn {
+  background-color: #1890ff;
+  color: white;
+  border-radius: 5px;
+}
+
+.btn1 {
+  background-color: #1890ff;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Positioning for images */
+.square {
+  position: relative;
+}
+
+.rectangles {
+  position: relative;
+}
+
+.rectangle {
+  position: relative;
+}
+.square1 {
+  width: 500px;
+  height: 400px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: lightblue;
+}.square2 {
+  width: 800px;
+  height: 500px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: lightblue;
+}
