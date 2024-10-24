@@ -28,7 +28,7 @@ const nextConfig = {
   
   // Tắt SWC Minify vì không được hỗ trợ trong phiên bản này
   swcMinify: false,
-
+  // 
   // Thêm alias cho các đường dẫn như @/components hay @/hooks
   webpack: (config, { isServer }) => {
     config.resolve.alias['@'] = path.resolve(__dirname); // Alias @ trỏ đến root của dự án
