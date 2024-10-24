@@ -13,14 +13,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create .env file
-        run: echo "SITE_URL=${{secrets.SITE_URL}}" >> .env
+        run: echo "SITE_URL=${{ secrets.SITE_URL }}" >> .env
       - name: Build docker image
         run: docker build -t devhuynh2003/nextjs-app .
-      - name: Delete old container
-        run: docker rm -f nextjs-app-container
       - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
-
+        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin # Sử dụng --password-stdin
       - name: Push image to Docker Hub
         run: docker push devhuynh2003/nextjs-app:latest
 
@@ -35,4 +32,4 @@ jobs:
         run: docker rm -f nextjs-app-container
 
       - name: Run docker container
-        run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app
+        run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest 
