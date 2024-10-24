@@ -9,7 +9,7 @@ export const metadata = {
   description:
     "NextRoom - Your ultimate platform for finding and renting rooms with ease.",
 };
-
+// change
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className="h-full">
