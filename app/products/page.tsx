@@ -2,9 +2,9 @@
 
 import React from "react";
 import { Button } from "antd";
-import TitleRoom from "@/components/TitleRoom";
-import ProductCard from "@/components/ProductCard"; // You need to create this component
-import { SkeletonCard } from "@/components/SkeletonCard"; // Use for loading state
+import TitleRoom from "../../components/TitleRoom";
+import ProductCard from "../../components/ProductCard"; // You need to create this component
+import { SkeletonCard } from "../../components/SkeletonCard"; // Use for loading state
 
 // Define the types for your products
 interface Product {

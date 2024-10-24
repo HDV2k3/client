@@ -6,7 +6,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "../components/ui/carousel";
 import { SkeletonCard } from "./SkeletonCard";
 import "../styles/RoomCardProminent.css";
 import RoomCardProminent from "./RoomCard"; // Import the RoomCardProminent component

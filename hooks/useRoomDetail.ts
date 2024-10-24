@@ -1,7 +1,7 @@
 // hooks/useRoomDetail.ts
 
 import useSWR from 'swr';
-import { fetchPostsById } from '@/service/Marketing';
+import { fetchPostsById } from '../service/Marketing';
 
 const fetcher = (id: string) => fetchPostsById(id).then(res => res.data);
 

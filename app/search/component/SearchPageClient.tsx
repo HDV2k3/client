@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import FeaturedRoomList from "@/components/RoomList";
+import FeaturedRoomList from "../../../components/RoomList";
 import LoadMoreButton from "../../../components/LoadMoreButton";
-import useSearchResults from "@/hooks/useSearchResults";
+import useSearchResults from "../../../hooks/useSearchResults";
 // Spinner component for loading effect
 const Spinner = () => (
   <div className="spinner-container">

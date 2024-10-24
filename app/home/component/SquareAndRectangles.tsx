@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import "@/styles/SquareAndRectangles.css";
+import "../../../styles/SquareAndRectangles.css";
 
 // Dữ liệu mẫu các quận
 const districts = [

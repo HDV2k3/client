@@ -1,6 +1,6 @@
 // hooks/useRoomPromotionalDetail.ts
 import useSWR from "swr";
-import { fetchPostPromotionalById, fetchPostsById } from "@/service/Marketing";
+import { fetchPostPromotionalById, fetchPostsById } from "../service/Marketing";
 
 const fetcher = (id: string) =>
   fetchPostPromotionalById(id).then((res) => res.data);

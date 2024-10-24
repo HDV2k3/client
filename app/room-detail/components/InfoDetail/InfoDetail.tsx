@@ -2,9 +2,7 @@
 import React from "react";
 import { FaCheckCircle, FaShower, FaPlug } from "react-icons/fa";
 import { EnvironmentFilled, TagFilled } from "@ant-design/icons";
-import { convertToVND } from "@/utils/convertToVND";
-import Button from "antd/es/button";
-import { SiZalo } from "react-icons/si";
+import { convertToVND } from "../../../../utils/convertToVND";
 import Image from "next/image";
 // Subcomponent for displaying utility items
 const UtilityItem: React.FC<{ label: string }> = ({ label }) => (

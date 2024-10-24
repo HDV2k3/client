@@ -1,6 +1,6 @@
 import React from "react";
-import RoomCardProminent from "@/components/RoomCard";
-import { SkeletonCard } from "@/components/SkeletonCard";
+import RoomCardProminent from "../components/RoomCard";
+import { SkeletonCard } from "../components/SkeletonCard";
 interface FeaturedRoomListProps {
   rooms: Room[];
   isLoadingMore: boolean;
