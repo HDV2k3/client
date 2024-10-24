@@ -14,13 +14,10 @@ jobs:
 
       - name: Create .env file
         run: echo "SITE_URL=${{secrets.SITE_URL}}" >> .env
-
-      - name: Prune Docker builder cache
-        run: docker builder prune -f
-
       - name: Build docker image
         run: docker build -t devhuynh2003/nextjs-app .
-
+      - name: Delete old container
+        run: docker rm -f nextjs-app-container
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
