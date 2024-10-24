@@ -35,7 +35,7 @@ jobs:
         run: docker pull devhuynh2003/nextjs-app:latest
 
       - name: Delete old container
-        run: docker rm -f nextjs-app-container    
+        run: docker rm -f nextjs-app-container
 
       - name: Run docker container
-        run: docker run -d -p 3004:3004 --name nextjs-app-container devhuynh2003/nextjs-app
+        run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app
