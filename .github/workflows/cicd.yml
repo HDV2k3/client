@@ -32,4 +32,4 @@ jobs:
         run: docker rm -f nextjs-app-container
 
       - name: Run docker container
-        run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest 
+        run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest

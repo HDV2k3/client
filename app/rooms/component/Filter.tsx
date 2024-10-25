@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// Define the type for filters
 interface FilterProps {
-  applyFilters: (filters: any) => void;
+  applyFilters: (filters: FilterCriteria) => void;
+}
+
+interface FilterCriteria {
+  minPrice?: string;
+  maxPrice?: string;
+  district?: string;
+  type?: string;
+  hasPromotion?: boolean;
+  sortByPrice?: string;
+  sortByCreated?: string;
+  page?: number;
+  size?: number;
 }
 
 const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
-  const initialFilters = {
+  const initialFilters: FilterCriteria = {
     minPrice: "",
     maxPrice: "",
     district: "",
@@ -18,7 +29,10 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
     size: 10,
   };
 
-  const [filters, setFilters] = useState(initialFilters);
+  const [filters, setFilters] = useState<FilterCriteria>(initialFilters);
+  const [priceRanges, setPriceRanges] = useState<
+    Array<{ label: string; min: number; max: number }>
+  >([]);
 
   const districts = [
     "Quận 1",
@@ -50,40 +64,97 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
     "Phòng trọ",
   ];
 
-  const priceRanges = [
-    { label: "Dưới 1 tỷ", min: 0, max: 1000 },
-    { label: "1 tỷ - 2 tỷ", min: 1000, max: 1500 },
-    { label: "2 tỷ - 3 tỷ", min: 1500, max: 2000 },
-    { label: "3 tỷ - 5 tỷ", min: 2000, max: 2500 },
-    { label: "5 tỷ - 10 tỷ", min: 2500, max: 3000 },
-    { label: "Trên 10 tỷ", min: 3000, max: "" },
-  ];
+  useEffect(() => {
+    updatePriceRanges(filters.type);
+  }, [filters.type]);
 
-  const handleInputChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
+  const updatePriceRanges = (type: string | undefined) => {
+    switch (type) {
+      case "Căn hộ":
+        setPriceRanges([
+          { label: "Dưới 10 triệu", min: 0, max: 10 },
+          { label: "10 - 20 triệu", min: 10, max: 20 },
+          { label: "20 - 30 triệu", min: 20, max: 30 },
+          { label: "30 - 40 triệu", min: 30, max: 40 },
+          { label: "40 - 50 triệu", min: 40, max: 50 },
+          { label: "Trên 50 triệu", min: 50, max: Number.MAX_SAFE_INTEGER },
+        ]);
+        break;
+      case "Nhà phố":
+        setPriceRanges([
+          { label: "Dưới 2 tỷ", min: 0, max: 2000 },
+          { label: "2 - 4 tỷ", min: 2000, max: 4000 },
+          { label: "4 - 6 tỷ", min: 4000, max: 6000 },
+          { label: "6 - 8 tỷ", min: 6000, max: 8000 },
+          { label: "8 - 10 tỷ", min: 8000, max: 10000 },
+          { label: "Trên 10 tỷ", min: 10000, max: Number.MAX_SAFE_INTEGER },
+        ]);
+        break;
+      case "Phòng trọ":
+        setPriceRanges([
+          { label: "Dưới 1 triệu", min: 0, max: 1 },
+          { label: "1 - 2 triệu", min: 1, max: 2 },
+          { label: "2 - 3 triệu", min: 2, max: 3 },
+          { label: "3 - 4 triệu", min: 3, max: 4 },
+          { label: "4 - 5 triệu", min: 4, max: 5 },
+          { label: "Trên 5 triệu", min: 5, max: Number.MAX_SAFE_INTEGER },
+        ]);
+        break;
+      default:
+        setPriceRanges([
+          { label: "Tất cả khoảng giá", min: 0, max: Number.MAX_SAFE_INTEGER },
+        ]);
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type } = e.target;
+    const newValue =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
+    setFilters((prev) => ({ ...prev, [name]: newValue }));
+  };
+
+  const handlePriceRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const [min, max] = e.target.value.split(",").map(Number);
     setFilters((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      minPrice: min.toString(),
+      maxPrice: max === Number.MAX_SAFE_INTEGER ? "" : max.toString(),
     }));
   };
 
-  const handlePriceRangeChange = (e: any) => {
-    const [min, max] = e.target.value.split(",");
-    setFilters((prev) => ({
-      ...prev,
-      minPrice: min,
-      maxPrice: max,
-    }));
+  const handleSortChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    if (checked) {
+      setFilters((prev) => ({
+        ...prev,
+        sortByPrice:
+          name === "sortByPriceAsc"
+            ? "ASC"
+            : name === "sortByPriceDesc"
+              ? "DESC"
+              : "",
+        sortByCreated: name === "sortByNewest" ? "DESC" : "",
+      }));
+    } else {
+      setFilters((prev) => ({
+        ...prev,
+        sortByPrice: "",
+        sortByCreated: "",
+      }));
+    }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     applyFilters(filters);
   };
 
   const handleReset = () => {
-    setFilters(initialFilters); // Reset filters to initial state
-    applyFilters(initialFilters); // Apply the reset filters
+    setFilters(initialFilters);
+    applyFilters(initialFilters);
   };
 
   return (
@@ -91,7 +162,6 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
       onSubmit={handleSubmit}
       className="space-y-6 bg-white p-6 rounded-lg shadow-md"
     >
-      {/* District filter */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label
@@ -116,7 +186,6 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
           </select>
         </div>
 
-        {/* Property type filter */}
         <div>
           <label
             htmlFor="type"
@@ -140,7 +209,6 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
           </select>
         </div>
 
-        {/* Price range filter */}
         <div>
           <label
             htmlFor="priceRange"
@@ -163,7 +231,6 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
           </select>
         </div>
 
-        {/* Has promotion filter */}
         <div className="flex items-center">
           <input
             type="checkbox"
@@ -182,7 +249,44 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
         </div>
       </div>
 
-      {/* Buttons */}
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">
+          Sắp xếp
+        </label>
+        <div className="flex space-x-4">
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="sortByPriceAsc"
+              checked={filters.sortByPrice === "ASC"}
+              onChange={handleSortChange}
+              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span className="ml-2 text-sm text-gray-700">Giá tăng dần</span>
+          </label>
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="sortByPriceDesc"
+              checked={filters.sortByPrice === "DESC"}
+              onChange={handleSortChange}
+              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span className="ml-2 text-sm text-gray-700">Giá giảm dần</span>
+          </label>
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="sortByNewest"
+              checked={filters.sortByCreated === "DESC"}
+              onChange={handleSortChange}
+              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span className="ml-2 text-sm text-gray-700">Mới nhất</span>
+          </label>
+        </div>
+      </div>
+
       <div className="flex justify-end space-x-4">
         <button
           type="button"
