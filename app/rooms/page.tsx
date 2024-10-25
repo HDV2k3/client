@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import FeaturedRoomList from "@/components/RoomList";
-import LoadMoreButton from "@/components/LoadMoreButton";
-import TitleRoom from "@/components/TitleRoom";
+import FeaturedRoomList from "../../components/RoomList";
+import LoadMoreButton from "../../components/LoadMoreButton";
+import TitleRoom from "../../components/TitleRoom";
 import Stats from "./component/Stats";
-import Courasel from "@/app/home/component/Courasel";
+import Courasel from "../../app/home/component/Courasel";
 import PromotionSection from "./component/PromotionSection";
 import RealEstateExperience from "./component/RealEstateExperience";
 import axios from "axios";
