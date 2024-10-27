@@ -14,10 +14,13 @@ jobs:
 
       - name: Create .env file
         run: echo "SITE_URL=${{ secrets.SITE_URL }}" >> .env
+
       - name: Build docker image
         run: docker build -t devhuynh2003/nextjs-app .
+
       - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin # Sử dụng --password-stdin
+        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
       - name: Push image to Docker Hub
         run: docker push devhuynh2003/nextjs-app:latest
 
@@ -25,11 +28,16 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Remove old images
+        run: |
+          docker image prune -af  # Remove dangling images
+          docker system prune -af --volumes  # Remove unused containers, networks, images (both dangling and unreferenced) and optionally volumes
+
       - name: Pull image from Docker Hub
         run: docker pull devhuynh2003/nextjs-app:latest
 
       - name: Delete old container
-        run: docker rm -f nextjs-app-container
+        run: docker rm -f nextjs-app-container || true # Ignore error if container does not exist
 
       - name: Run docker container
         run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest

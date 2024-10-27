@@ -1,6 +1,6 @@
 import React from "react";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import AppHeader from "../components/Header";
+import AppHeader from "../components/Header/Header";
 import AppFooter from "../components/Footer";
 import "../styles/globals.css"; // Import global styles
 
