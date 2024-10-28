@@ -11,7 +11,6 @@ import LoadMoreButton from "../../components/LoadMoreButton";
 import SquareAndRectangles from "../../app/home/component/SquareAndRectangles";
 import Courasel from "../../app/home/component/Courasel";
 import IconRow from "../../app/home/component/IconRow";
-import DiscoveryCategories from "../../app/home/component/DiscoveryCategories";
 import Content from "./component/Content";
 import Chat from "../../components/Chat";
 import { FiArrowUp } from "react-icons/fi";
