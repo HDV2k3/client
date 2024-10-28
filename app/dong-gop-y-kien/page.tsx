@@ -1,6 +1,7 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { FaSpinner } from "react-icons/fa";
+import Image from "next/image";
 
 interface FormData {
   title: string;
@@ -86,11 +87,13 @@ const IdeaContributionForm: React.FC = () => {
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative h-48">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2"
-              alt="Real Estate Background"
-              className="w-full h-full object-cover"
+              alt="alt"
+              width={100}
+              height={100}
             />
+
             <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-3xl font-bold text-white mb-2">

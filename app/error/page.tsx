@@ -107,32 +107,36 @@ const SnakeGame: React.FC = () => {
     [gameStarted, gameOver, direction]
   );
 
-  const handleTouchStart = useCallback((e: TouchEvent) => {
-    touchStartRef.current = {
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-    };
+  const handleTouchStart = useCallback((e: Event) => {
+    if (e instanceof TouchEvent) {
+      touchStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
+    }
   }, []);
 
   const handleTouchEnd = useCallback(
-    (e: TouchEvent) => {
-      if (!gameStarted) {
-        setGameStarted(true);
-        return;
-      }
-      if (gameStarted && !gameOver) {
-        const touchEnd = {
-          x: e.changedTouches[0].clientX,
-          y: e.changedTouches[0].clientY,
-        };
-        const dx = touchEnd.x - touchStartRef.current.x;
-        const dy = touchEnd.y - touchStartRef.current.y;
-        if (Math.abs(dx) > Math.abs(dy)) {
-          if (dx > 0 && direction.x === 0) setDirection({ x: 1, y: 0 });
-          else if (dx < 0 && direction.x === 0) setDirection({ x: -1, y: 0 });
-        } else {
-          if (dy > 0 && direction.y === 0) setDirection({ x: 0, y: 1 });
-          else if (dy < 0 && direction.y === 0) setDirection({ x: 0, y: -1 });
+    (e: Event) => {
+      if (e instanceof TouchEvent) {
+        if (!gameStarted) {
+          setGameStarted(true);
+          return;
+        }
+        if (gameStarted && !gameOver) {
+          const touchEnd = {
+            x: e.changedTouches[0].clientX,
+            y: e.changedTouches[0].clientY,
+          };
+          const dx = touchEnd.x - touchStartRef.current.x;
+          const dy = touchEnd.y - touchStartRef.current.y;
+          if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx > 0 && direction.x === 0) setDirection({ x: 1, y: 0 });
+            else if (dx < 0 && direction.x === 0) setDirection({ x: -1, y: 0 });
+          } else {
+            if (dy > 0 && direction.y === 0) setDirection({ x: 0, y: 1 });
+            else if (dy < 0 && direction.y === 0) setDirection({ x: 0, y: -1 });
+          }
         }
       }
     },
