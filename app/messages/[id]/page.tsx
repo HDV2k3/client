@@ -4,9 +4,17 @@ import { useState, useRef, useEffect } from "react";
 import { Avatar } from "antd";
 import { FaPaperPlane, FaSmile, FaPaperclip } from "react-icons/fa";
 
-const ChatDetail = () => {
-  const { id } = useParams();
-  const [messages, setMessages] = useState([
+const ChatDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>(); // Specify the type for useParams
+  const [messages, setMessages] = useState<
+    {
+      id: number;
+      sender: string;
+      content: string;
+      timestamp: string;
+      isSent: boolean;
+    }[]
+  >([
     {
       id: 1,
       sender: "User A",
@@ -22,21 +30,24 @@ const ChatDetail = () => {
       isSent: false,
     },
   ]);
-  const [newMessage, setNewMessage] = useState("");
-  const messagesEndRef = useRef(null);
+  const [newMessage, setNewMessage] = useState<string>("");
+  const messagesEndRef = useRef<HTMLDivElement | null>(null); // Define type for ref
 
-  const scrollToBottom = () =>
+  const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  useEffect(scrollToBottom, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newMessage.trim()) {
-      setMessages([
-        ...messages,
+      setMessages((prevMessages) => [
+        ...prevMessages,
         {
-          id: messages.length + 1,
+          id: prevMessages.length + 1,
           sender: "User A",
           content: newMessage,
           timestamp: new Date().toLocaleTimeString([], {
