@@ -1,8 +1,13 @@
 // app/messages/layout.tsx
 "use client";
-import MessageList from "./MessageList";
+import React, { ReactNode } from "react"; // Import ReactNode
+import MessageList from "../messages/MessageList";
 
-export default function MessagesLayout({ children }) {
+interface MessagesLayoutProps {
+  children: ReactNode; // Specify that children is of type ReactNode
+}
+
+export default function MessagesLayout({ children }: MessagesLayoutProps) {
   return (
     <div className="flex h-screen">
       {/* Message List Sidebar */}

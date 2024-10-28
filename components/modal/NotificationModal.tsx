@@ -1,4 +1,4 @@
-// NotificationModal.js
+// components/NotificationModal.tsx
 import { useEffect, useState } from "react";
 import {
   FaTimes,
@@ -10,8 +10,24 @@ import {
   FaFilter,
 } from "react-icons/fa";
 
-const NotificationModal = ({ isOpen, onClose }) => {
-  const [notifications, setNotifications] = useState([
+interface Notification {
+  id: number;
+  type: "success" | "error" | "warning" | "info";
+  message: string;
+  timestamp: string;
+  isRead: boolean;
+}
+
+interface NotificationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const NotificationModal: React.FC<NotificationModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
+  const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: 1,
       type: "success",
@@ -41,11 +57,13 @@ const NotificationModal = ({ isOpen, onClose }) => {
       isRead: false,
     },
   ]);
-  const [sortType, setSortType] = useState("date");
-  const [filterType, setFilterType] = useState("all");
+  const [sortType, setSortType] = useState<"date" | "type">("date");
+  const [filterType, setFilterType] = useState<
+    "all" | "success" | "error" | "warning" | "info"
+  >("all");
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
       }
@@ -54,7 +72,7 @@ const NotificationModal = ({ isOpen, onClose }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  const getIcon = (type) => {
+  const getIcon = (type: "success" | "error" | "warning" | "info") => {
     switch (type) {
       case "success":
         return <FaCheck className="text-green-500" />;
@@ -62,19 +80,22 @@ const NotificationModal = ({ isOpen, onClose }) => {
         return <FaTimes className="text-red-500" />;
       case "warning":
         return <FaExclamationTriangle className="text-yellow-500" />;
-      default:
+      case "info":
         return <FaExclamationCircle className="text-blue-500" />;
+      default:
+        return null;
     }
   };
 
-  const handleSort = (type) => {
+  const handleSort = (type: "date" | "type") => {
     setSortType(type);
     let sortedNotifications = [...notifications];
 
     switch (type) {
       case "date":
         sortedNotifications.sort(
-          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+          (a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
         );
         break;
       case "type":
@@ -87,13 +108,15 @@ const NotificationModal = ({ isOpen, onClose }) => {
     setNotifications(sortedNotifications);
   };
 
-  const handleFilter = (type) => {
+  const handleFilter = (
+    type: "all" | "success" | "error" | "warning" | "info"
+  ) => {
     setFilterType(type);
   };
 
-  const handleMarkAsRead = (id) => {
-    setNotifications(
-      notifications.map((notification) =>
+  const handleMarkAsRead = (id: number) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.map((notification) =>
         notification.id === id
           ? { ...notification, isRead: true }
           : notification
@@ -101,9 +124,9 @@ const NotificationModal = ({ isOpen, onClose }) => {
     );
   };
 
-  const handleDelete = (id) => {
-    setNotifications(
-      notifications.filter((notification) => notification.id !== id)
+  const handleDelete = (id: number) => {
+    setNotifications((prevNotifications) =>
+      prevNotifications.filter((notification) => notification.id !== id)
     );
   };
 
@@ -115,7 +138,7 @@ const NotificationModal = ({ isOpen, onClose }) => {
   return (
     isOpen && (
       <div
-        className="fixed inset-0  bg-opacity-50 flex items-end justify-end z-50 mb-16"
+        className="fixed inset-0 bg-opacity-50 flex items-end justify-end z-50 mb-16"
         onClick={onClose}
         role="dialog"
         aria-modal="true"
@@ -144,7 +167,9 @@ const NotificationModal = ({ isOpen, onClose }) => {
                 <FaSort className="mr-2" />
                 <select
                   value={sortType}
-                  onChange={(e) => handleSort(e.target.value)}
+                  onChange={(e) =>
+                    handleSort(e.target.value as "date" | "type")
+                  }
                   className="border rounded p-1"
                 >
                   <option value="date">Date</option>
@@ -155,7 +180,16 @@ const NotificationModal = ({ isOpen, onClose }) => {
                 <FaFilter className="mr-2" />
                 <select
                   value={filterType}
-                  onChange={(e) => handleFilter(e.target.value)}
+                  onChange={(e) =>
+                    handleFilter(
+                      e.target.value as
+                        | "all"
+                        | "success"
+                        | "error"
+                        | "warning"
+                        | "info"
+                    )
+                  }
                   className="border rounded p-1"
                 >
                   <option value="all">All</option>
