@@ -1,11 +1,25 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { Avatar, Input, Button } from "antd";
 import { SearchOutlined, SettingOutlined } from "@ant-design/icons";
 
-const MessageList = () => {
+// Define the User type
+interface User {
+  id: number;
+  avatar: string;
+  name: string;
+  time: string;
+  title: string;
+  description: string;
+  status: string;
+}
+
+const MessageList: React.FC = () => {
   const router = useRouter();
-  const userList = [
+
+  // Define userList with type User[]
+  const userList: User[] = [
     {
       id: 1,
       avatar: "/api/placeholder/40/40",
@@ -26,7 +40,7 @@ const MessageList = () => {
     },
   ];
 
-  const handleUserClick = (userId) => {
+  const handleUserClick = (userId: number) => {
     router.push(`/messages/${userId}`);
   };
 
