@@ -1,11 +1,5 @@
 "use client";
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  TouchEvent,
-} from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   FaPlay,
   FaRedo,
