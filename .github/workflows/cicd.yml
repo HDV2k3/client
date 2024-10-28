@@ -52,6 +52,16 @@ jobs:
               echo "Container '$CONTAINER_NAME' does not exist. No action taken."
             fi
 
+      - name: Delete old Docker image
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Removing old Docker image..."
+            docker rmi -f devhuynh2003/nextjs-app:latest || true
+
       - name: Pull image from Docker Hub
         run: docker pull devhuynh2003/nextjs-app:latest
 
