@@ -7,6 +7,7 @@ interface UserMenuProps {
   isLoggedIn: boolean;
   onLogout: () => void;
   logOut: string;
+  profile: string;
 }
 
 const UserMenu = ({
@@ -14,13 +15,14 @@ const UserMenu = ({
   isLoggedIn,
   onLogout,
   logOut,
+  profile,
 }: UserMenuProps) => {
   const router = useRouter();
 
   const userMenuItems = [
     {
       key: "1",
-      label: "Tài khoản của tôi",
+      label: profile,
       onClick: () => router.push("/profile"),
     },
     {

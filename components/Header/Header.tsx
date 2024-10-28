@@ -11,7 +11,7 @@ const Header = () => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [logOut, setlogOut] = useState("");
-
+  const [profile, setProfile] = useState("");
   // Ensure code only runs on the client side
   useEffect(() => {
     setMounted(true);
@@ -43,6 +43,7 @@ const Header = () => {
               setUserName(userData.username);
               setIsLoggedIn(true);
               setlogOut("Đăng Xuất");
+              setProfile("Tài khoản của tôi");
               localStorage.setItem("userId", userData.id);
             } else {
               console.error("Unexpected API response format:", response.data);
@@ -90,6 +91,7 @@ const Header = () => {
           isLoggedIn={isLoggedIn}
           onLogout={handleLogout}
           logOut={logOut}
+          profile={profile}
         />
       </div>
     </header>

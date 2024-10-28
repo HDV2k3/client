@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import Link from "next/link";
 import MenuDropdown from "./MenuDropdown";
 import {
@@ -9,12 +9,15 @@ import {
 } from "@ant-design/icons";
 import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
-
+import { SettingOutlined } from "@ant-design/icons";
+import NotificationButton from "./NotificationButton";
+import SettingsButton from "./SettingsButton";
 interface MainHeaderProps {
   userName: string;
   isLoggedIn: boolean;
   onLogout: () => void;
   logOut: string;
+  profile: string;
 }
 
 const MainHeader: React.FC<MainHeaderProps> = ({
@@ -22,6 +25,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   isLoggedIn,
   onLogout,
   logOut,
+  profile,
 }) => {
   return (
     <div className="flex items-center justify-between flex-wrap">
@@ -37,33 +41,44 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       <SearchBar />
 
       <div className="flex items-center space-x-2 sm:space-x-4">
-        <Button type="text" icon={<BellOutlined />} style={{ color: "#FFF" }} />
-        <Button
-          type="text"
-          icon={<MessageOutlined />}
-          style={{ color: "#FFF" }}
-        />
-        <Button
-          type="text"
-          icon={<ShoppingOutlined />}
-          style={{ color: "#FFF" }}
-        />
+        <Tooltip title="Thông báo">
+          <NotificationButton />
+        </Tooltip>
+
+        <Link href="messages">
+          <Tooltip title="Tin nhắn">
+            <Button
+              type="text"
+              icon={<MessageOutlined />}
+              style={{ color: "#FFF" }}
+            />
+          </Tooltip>
+        </Link>
+
+        <Tooltip title="Cài đặt">
+          <SettingsButton />
+        </Tooltip>
+
         <UserMenu
           userName={userName}
           isLoggedIn={isLoggedIn}
           onLogout={onLogout}
           logOut={logOut}
+          profile={profile}
         />
-        <Button
-          icon={<FormOutlined />}
-          style={{
-            backgroundColor: "#FF8800",
-            color: "#FFF",
-            border: "none",
-          }}
-        >
-          <span className="hidden sm:inline">ĐĂNG TIN</span>
-        </Button>
+
+        <Tooltip title="Đăng tin">
+          <Button
+            icon={<FormOutlined />}
+            style={{
+              backgroundColor: "#FF8800",
+              color: "#FFF",
+              border: "none",
+            }}
+          >
+            <span className="hidden sm:inline">ĐĂNG TIN</span>
+          </Button>
+        </Tooltip>
       </div>
     </div>
   );

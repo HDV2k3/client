@@ -14,6 +14,7 @@ import IconRow from "../../app/home/component/IconRow";
 import DiscoveryCategories from "../../app/home/component/DiscoveryCategories";
 import Content from "./component/Content";
 import Chat from "../../components/Chat";
+import { FiArrowUp } from "react-icons/fi";
 
 const HomePage: React.FC = () => {
   const {
@@ -47,9 +48,6 @@ const HomePage: React.FC = () => {
       <div className="m-0 p-0">
         <Courasel />
         <IconRow />
-      </div>
-      <div>
-        <DiscoveryCategories />
       </div>
       <div className="py-5">
         <PromotionBanner />
@@ -90,15 +88,13 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Nút Back to Top */}
-      <div className="fixed bottom-16 right-4 z-50">
+      <div className="fixed bottom-20 right-4 z-50">
         <Button
           type="primary"
           onClick={scrollToTop}
-          className="bg-blue-500 hover:bg-blue-600 rounded-full"
-          icon={<i className="fas fa-arrow-up"></i>} // Icon của nút
-        >
-          Về đầu
-        </Button>
+          className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 shadow-lg transition-transform transform hover:scale-110"
+          icon={<FiArrowUp size={20} />} // Icon mới cho nút
+        />
       </div>
     </div>
   );

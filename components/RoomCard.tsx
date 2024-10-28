@@ -101,17 +101,17 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
           {/* Layer 3: Price Display */}
           <div className="flex justify-between items-center">
             {fixPrice != null ? (
-              <span className="text-gray-500 line-through text-lg">
-                {price.toLocaleString()} đ/tháng
+              <span className="text-gray-500 line-through text-sm">
+                {price.toLocaleString()} VNĐ/tháng
               </span>
             ) : (
               <span className="font-bold text-lg">
-                {price.toLocaleString()} đ/tháng
+                {price.toLocaleString()} VNĐ/tháng
               </span>
             )}
             {fixPrice != null && (
-              <span className="font-bold text-lg text-red-600">
-                {fixPrice.toLocaleString()} đ/tháng
+              <span className="font-bold text-sm text-red-600">
+                {fixPrice.toLocaleString()} VNĐ/tháng
               </span>
             )}
           </div>

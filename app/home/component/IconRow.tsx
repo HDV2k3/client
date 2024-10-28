@@ -1,37 +1,73 @@
 import React from "react";
-import { FaMobileAlt, FaCar, FaCoins, FaCrown, FaMotorcycle, FaRegBookmark, FaGift } from "react-icons/fa";
+import {
+  FaHome,
+  FaBuilding,
+  FaWarehouse,
+  FaRegNewspaper,
+  FaRegBookmark,
+  FaRegEdit,
+} from "react-icons/fa";
 
 const IconRow = () => {
   const services = [
-    { icon: FaMobileAlt, text: "Thu mua điện thoại", alt: "Icon for buying phones" },
-    { icon: FaCar, text: "Thu mua ô tô", alt: "Icon for buying cars" },
-    { icon: FaCoins, text: "Nạp Đồng Tốt", alt: "Icon for good coins" },
-    { icon: FaCrown, text: "Gói Pro", alt: "Icon for pro package" },
-    { icon: FaMotorcycle, text: "Thu mua xe máy", alt: "Icon for buying motorcycles" },
-    { icon: FaRegBookmark, text: "Tin đăng đã lưu", alt: "Icon for saved posts" },
-    { icon: FaGift, text: "Đăng tin cho tặng", alt: "Icon for gift posts" },
+    {
+      icon: FaHome,
+      text: "Phòng Trọ",
+      alt: "Icon for houses",
+      link: "/nha-rieng",
+    },
+    {
+      icon: FaBuilding,
+      text: "Căn Hộ",
+      alt: "Icon for apartments",
+      link: "/can-ho",
+    },
+    {
+      icon: FaWarehouse,
+      text: "Mặt Bằng",
+      alt: "Icon for commercial spaces",
+      link: "/mat-bang",
+    },
+    {
+      icon: FaRegNewspaper,
+      text: "Tin Tức",
+      alt: "Icon for latest news",
+      link: "/tin-moi",
+    },
+    {
+      icon: FaRegBookmark,
+      text: "Tin Đã Lưu",
+      alt: "Icon for saved posts",
+      link: "/tin-da-luu",
+    },
+    {
+      icon: FaRegEdit,
+      text: "Đăng Tin",
+      alt: "Icon for posting",
+      link: "/dang-tin",
+    },
   ];
 
-  const handleClick = (text:any) => {
-    console.log(`Clicked on: ${text}`);
+  const handleClick = (link: string) => {
+    window.location.href = link;
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-white">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4">
+    <div className="container mx-auto px-4 py-6 bg-white shadow-sm">
+      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2">
         {services.map((service, index) => (
           <button
             key={index}
-            className="flex flex-col items-center justify-center p-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onClick={() => handleClick(service.text)}
+            className="flex flex-col items-center justify-center p-3 rounded-lg transition duration-300 ease-in-out hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onClick={() => handleClick(service.link)}
           >
-            <div className="text-3xl mb-2 text-blue-600">
+            <div className="text-2xl mb-2 text-blue-600">
               {React.createElement(service.icon, {
                 "aria-hidden": "true",
                 role: "img",
               })}
             </div>
-            <span className="text-sm text-center font-medium text-gray-700">
+            <span className="text-xs sm:text-sm text-center font-medium text-gray-700">
               {service.text}
             </span>
             <span className="sr-only">{service.alt}</span>
