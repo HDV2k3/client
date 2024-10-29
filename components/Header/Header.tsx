@@ -149,7 +149,9 @@ const Header = () => {
 
             if (response.data && response.data.data) {
               const userData = response.data.data;
-              setUserName(userData.username);
+              const fullName = userData.firstName + " " + userData.lastName;
+
+              setUserName(fullName);
               setIsLoggedIn(true);
               setlogOut("Đăng Xuất");
               setProfile("Tài khoản của tôi");

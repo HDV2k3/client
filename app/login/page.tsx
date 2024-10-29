@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
       const response = await axios.post(
         "http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/auth/login",
         {
-          username,
+          email,
           password,
         }
       );
@@ -70,20 +70,20 @@ const LoginPage: React.FC = () => {
             <div className="rounded-md shadow-sm space-y-4">
               <div>
                 <label
-                  htmlFor="username"
+                  htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Username
+                  Email
                 </label>
                 <input
-                  id="username"
-                  name="username"
-                  type="text"
+                  id="email"
+                  name="email"
+                  type="email"
                   required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none relative block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                 />
               </div>
               <div className="relative">
