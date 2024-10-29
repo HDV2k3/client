@@ -34,6 +34,9 @@ const nextConfig = {
     config.resolve.alias['@'] = path.resolve(__dirname); // Alias @ trỏ đến root của dự án
     return config;
   },
+  experimental: {
+    appDir: true,
+  },
 };
 
 export default withLess(nextConfig);

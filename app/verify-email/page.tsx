@@ -1,8 +1,12 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 
 interface NotificationState {
   isOpen: boolean;
@@ -13,7 +17,6 @@ interface NotificationState {
 
 const VerifyEmailPage: React.FC = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [notification, setNotification] = useState<NotificationState>({
     isOpen: false,
@@ -82,7 +85,7 @@ const VerifyEmailPage: React.FC = () => {
     };
 
     verifyEmail();
-  }, [searchParams, router]);
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
