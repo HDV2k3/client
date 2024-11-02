@@ -30,7 +30,11 @@ const LoginPage: React.FC = () => {
       if (response.data && response.data.data.token) {
         localStorage.setItem("token", response.data.data.token);
         document.cookie = `token=${response.data.data.token}; path=/; max-age=86400`;
-        router.push("/");
+
+        // Phát sự kiện 'userLogin' khi đăng nhập thành công
+        window.dispatchEvent(new Event("userLogin"));
+
+        router.push("/"); // chuyển hướng đến trang chủ hoặc trang khác
       } else {
         setError("Invalid login response. Please try again.");
       }
