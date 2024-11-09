@@ -8,7 +8,7 @@
   display: grid;
   gap: 10px;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(200px, auto);
   grid-template-areas:
     "square square rectangle rectangle"
     "rectangle rectangle rectangle rectangle"; /* Ensures the grid layout is consistent */
@@ -35,7 +35,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 200px; /* Default height for rectangles */
+  height: 190px; /* Default height for rectangles */
 }
 
 /* Text Overlay Styles */
