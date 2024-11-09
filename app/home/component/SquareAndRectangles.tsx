@@ -152,8 +152,29 @@ const SquareAndRectangles: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  //   return (
+  //     <div className="container1 ">
+  //       <div className="grid-container">
+  //         {randomDistricts.map((district, index) => (
+  //           <div
+  //             key={district.name}
+  //             className={index === 0 ? "square room-card" : "rectangle room-card"}
+  //             style={{
+  //               backgroundImage: `url(${district.imageUrl})`,
+  //             }}
+  //           >
+  //             <div className="text-overlay">
+  //               <div>{district.name}</div>
+  //               <div>{district.posts} bài đăng</div>
+  //             </div>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // };
   return (
-    <div className="container1 ">
+    <div className="container1">
       <div className="grid-container">
         {randomDistricts.map((district, index) => (
           <div

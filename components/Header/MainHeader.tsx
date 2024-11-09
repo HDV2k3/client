@@ -9,9 +9,10 @@ import {
 } from "@ant-design/icons";
 import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
-import { SettingOutlined } from "@ant-design/icons";
 import NotificationButton from "./NotificationButton";
 import SettingsButton from "./SettingsButton";
+import { useRouter } from "next/navigation";
+
 interface MainHeaderProps {
   userName: string;
   isLoggedIn: boolean;
@@ -27,6 +28,27 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   logOut,
   profile,
 }) => {
+  const router = useRouter();
+
+  // Hàm kiểm tra xem có token không
+  const hasToken = (): boolean => {
+    // Kiểm tra trong cookie hoặc localStorage
+    return (
+      !!document.cookie.includes("token") || !!localStorage.getItem("token")
+    );
+  };
+
+  // Hàm xử lý khi nhấp vào tin nhắn
+  const handleMessagesClick = () => {
+    if (!hasToken()) {
+      // Nếu không có token, chuyển hướng đến trang đăng nhập
+      router.push(`/login?callbackUrl=${window.location.href}`);
+    } else {
+      // Nếu có token, chuyển hướng đến trang tin nhắn
+      router.push("/messages");
+    }
+  };
+
   return (
     <div className="flex items-center justify-between flex-wrap">
       <div className="flex items-center space-x-4 mb-2 sm:mb-0">
@@ -45,15 +67,14 @@ const MainHeader: React.FC<MainHeaderProps> = ({
           <NotificationButton />
         </Tooltip>
 
-        <Link href="messages">
-          <Tooltip title="Tin nhắn">
-            <Button
-              type="text"
-              icon={<MessageOutlined />}
-              style={{ color: "#FFF" }}
-            />
-          </Tooltip>
-        </Link>
+        <Tooltip title="Tin nhắn">
+          <Button
+            type="text"
+            icon={<MessageOutlined />}
+            style={{ color: "#FFF" }}
+            onClick={handleMessagesClick} // Gọi hàm kiểm tra khi nhấp vào tin nhắn
+          />
+        </Tooltip>
 
         <Tooltip title="Cài đặt">
           <SettingsButton />

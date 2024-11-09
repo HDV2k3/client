@@ -7,7 +7,7 @@ interface PostImage {
   urlImagePost: string;
 }
 
-interface Experience {
+interface NewsItem {
   id: string;
   title: string;
   description: string;
@@ -21,12 +21,12 @@ interface ApiResponse {
     totalPages: number;
     pageSize: number;
     totalElements: number;
-    data: Experience[];
+    data: NewsItem[];
   };
   message: string;
 }
 
-const ExperienceCard: React.FC<Experience> = ({
+const ExperienceCard: React.FC<NewsItem> = ({
   title,
   description,
   postImages,
@@ -47,29 +47,30 @@ const ExperienceCard: React.FC<Experience> = ({
   </div>
 );
 
-const RealEstateExperience: React.FC = () => {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
+const Content = () => {
+  const [experiences, setExperiences] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchExperiences = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/experience/all"
+          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/news/all"
         );
         const result: ApiResponse = await response.json();
 
+        // Kiểm tra responseCode và cập nhật dữ liệu
         if (result.responseCode === 101000) {
           setExperiences(result.data.data);
         }
       } catch (error) {
-        console.error("Error fetching experiences:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchExperiences();
+    fetchData();
   }, []);
 
   if (loading) {
@@ -78,19 +79,20 @@ const RealEstateExperience: React.FC = () => {
 
   return (
     <div className="rounded-lg mt-5">
-      <h2 className="text-2xl font-bold mb-4">Kinh nghiệm Bất động sản</h2>
+      <h2 className="text-2xl font-bold mb-4">Thị trường và xu hướng</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {experiences.map((exp) => (
           <ExperienceCard key={exp.id} {...exp} />
         ))}
       </div>
-      <div className="text-center py-5">
+      {/* Uncomment if you want to add a "Xem thêm" button */}
+      {/* <div className="text-center py-5">
         <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors">
           Xem thêm
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default RealEstateExperience;
+export default Content;

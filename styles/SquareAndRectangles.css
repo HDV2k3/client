@@ -1,18 +1,20 @@
-
+/* Container and Grid Styles */
 .container1 {
   max-width: 1280px;
   margin: 0 auto;
-  
 }
 
 .grid-container {
-  
   display: grid;
   gap: 10px;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: minmax(190px, auto);
+  grid-auto-rows: minmax(100px, auto);
+  grid-template-areas:
+    "square square rectangle rectangle"
+    "rectangle rectangle rectangle rectangle"; /* Ensures the grid layout is consistent */
 }
 
+/* Styling for Square Card */
 .square {
   grid-column: span 2;
   grid-row: span 2;
@@ -23,19 +25,20 @@
   background-position: center;
   background-repeat: no-repeat;
   height: 400px;
-  width: 600px;
+  width: 100%;
 }
 
+/* Styling for Rectangle Cards */
 .rectangle {
   background-color: lightblue;
   border-radius: 5px;
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  height: 200px; /* Default height for rectangles */
 }
 
-/* Adjust text-overlay styles to ensure visibility on all screen sizes */
+/* Text Overlay Styles */
 .text-overlay {
   position: absolute;
   top: 10px;
@@ -44,50 +47,65 @@
   font-size: 14px;
   font-weight: bold;
   text-decoration: underline;
-  padding: 5px; /* Added padding for better readability */
+  padding: 5px;
+  background: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Added background to improve text visibility */
 }
 
+/* Responsive Media Queries */
 
-
-/* Media Queries cho responsive */
-
-/* 3 cột cho tablet */
+/* Tablet view - 3 columns */
 @media (max-width: 1024px) {
   .grid-container {
     grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "square square rectangle"
+      "rectangle rectangle rectangle";
   }
 
   .square {
-    height: 300px; /* Giảm chiều cao */
-    width: 100%; /* Sử dụng toàn bộ chiều rộng */
-  }
-}
-
-/* 2 cột cho màn hình di động lớn */
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .square {
-    height: 250px;
+    height: 300px;
     width: 100%;
   }
 
   .rectangle {
-    height: 180px;
+    height: 250px;
   }
 }
 
-/* 1 cột cho màn hình di động nhỏ */
+/* Large mobile view - 2 columns */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "square square"
+      "rectangle rectangle";
+  }
+
+  .square {
+    height: 250px;
+  }
+
+  .rectangle {
+    height: 200px;
+  }
+}
+
+/* Small mobile view - 1 column */
 @media (max-width: 480px) {
   .grid-container {
-    grid-template-columns: 1fr; /* 1 cột */
+    grid-template-columns: 1fr; /* 1 column */
+    grid-template-areas:
+      "square"
+      "rectangle";
   }
 
   .square {
     height: 200px;
-    width: 100%;
   }
 
   .rectangle {

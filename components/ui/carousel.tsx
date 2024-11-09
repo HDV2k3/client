@@ -195,37 +195,6 @@ const CarouselItem = React.forwardRef<
 CarouselItem.displayName = "CarouselItem";
 
 // button chuyển item
-// const CarouselPrevious = React.forwardRef<
-//   HTMLButtonElement,
-//   React.ComponentProps<typeof Button>
-// >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-//   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
-
-//   return (
-//     <Button
-//       ref={ref}
-//       variant={variant}
-//       size={size}
-//       className={cn(
-//         "absolute h-8 w-8 rounded-full",
-//         // Điều chỉnh vị trí nút khi màn hình nhỏ hơn
-//         orientation === "horizontal"
-//           ? "-left-4 top-1/2 -translate-y-1/2 lg:-left-8 lg:h-10 lg:w-10"
-//           : "-top-4 left-1/2 -translate-x-1/2 rotate-90 lg:-top-8 lg:h-10 lg:w-10",
-//         // Đảm bảo vị trí khi màn hình nhỏ
-//         "md:left-2 md:top-auto md:bottom-2 md:translate-x-0",
-//         className
-//       )}
-//       disabled={!canScrollPrev}
-//       onClick={scrollPrev}
-//       {...props}
-//     >
-//       <ArrowLeftIcon className="h-4 w-4 lg:h-5 lg:w-5" />
-//       <span className="sr-only">Previous slide</span>
-//     </Button>
-//   );
-// });
-// CarouselPrevious.displayName = "CarouselPrevious";
 const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
@@ -239,9 +208,12 @@ const CarouselPrevious = React.forwardRef<
       size={size}
       className={cn(
         "absolute h-8 w-8 rounded-full",
+        // Điều chỉnh vị trí nút khi màn hình nhỏ hơn
         orientation === "horizontal"
-          ? "-left-4 top-1/2 -translate-y-1/2 md:-left-8 md:top-1/2 md:-translate-y-1/2 lg:-left-12 lg:top-1/2 lg:-translate-y-1/2" // Desktop adjustments
-          : "-top-4 left-1/2 -translate-x-1/2 rotate-90 md:-top-8 md:left-1/2 md:-translate-x-1/2 lg:-top-12 lg:left-1/2 lg:-translate-x-1/2 lg:rotate-90", // Desktop adjustments for vertical orientation
+          ? "-left-4 top-1/2 -translate-y-1/2 lg:-left-8 lg:h-10 lg:w-10"
+          : "-top-4 left-1/2 -translate-x-1/2 rotate-90 lg:-top-8 lg:h-10 lg:w-10",
+        // Đảm bảo vị trí khi màn hình nhỏ
+        "md:left-2 md:top-auto md:bottom-2 md:translate-x-0",
         className
       )}
       disabled={!canScrollPrev}
@@ -254,12 +226,11 @@ const CarouselPrevious = React.forwardRef<
   );
 });
 CarouselPrevious.displayName = "CarouselPrevious";
-
-// const CarouselNext = React.forwardRef<
+// const CarouselPrevious = React.forwardRef<
 //   HTMLButtonElement,
 //   React.ComponentProps<typeof Button>
 // >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-//   const { orientation, scrollNext, canScrollNext } = useCarousel();
+//   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
 //   return (
 //     <Button
@@ -268,24 +239,22 @@ CarouselPrevious.displayName = "CarouselPrevious";
 //       size={size}
 //       className={cn(
 //         "absolute h-8 w-8 rounded-full",
-//         // Điều chỉnh vị trí nút khi màn hình nhỏ hơn
 //         orientation === "horizontal"
-//           ? "-right-4 top-1/2 -translate-y-1/2 lg:-right-8 lg:h-10 lg:w-10"
-//           : "-bottom-4 left-1/2 -translate-x-1/2 rotate-90 lg:-bottom-8 lg:h-10 lg:w-10",
-//         // Đảm bảo vị trí khi màn hình nhỏ
-//         "md:right-2 md:top-auto md:bottom-2 md:translate-x-0",
+//           ? "-left-4 top-1/2 -translate-y-1/2 md:-left-8 md:top-1/2 md:-translate-y-1/2 lg:-left-12 lg:top-1/2 lg:-translate-y-1/2" // Desktop adjustments
+//           : "-top-4 left-1/2 -translate-x-1/2 rotate-90 md:-top-8 md:left-1/2 md:-translate-x-1/2 lg:-top-12 lg:left-1/2 lg:-translate-x-1/2 lg:rotate-90", // Desktop adjustments for vertical orientation
 //         className
 //       )}
-//       disabled={!canScrollNext}
-//       onClick={scrollNext}
+//       disabled={!canScrollPrev}
+//       onClick={scrollPrev}
 //       {...props}
 //     >
-//       <ArrowRightIcon className="h-4 w-4 lg:h-5 lg:w-5" />
-//       <span className="sr-only">Next slide</span>
+//       <ArrowLeftIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+//       <span className="sr-only">Previous slide</span>
 //     </Button>
 //   );
 // });
-// CarouselNext.displayName = "CarouselNext";
+// CarouselPrevious.displayName = "CarouselPrevious";
+
 const CarouselNext = React.forwardRef<
   HTMLButtonElement,
   React.ComponentProps<typeof Button>
@@ -299,9 +268,12 @@ const CarouselNext = React.forwardRef<
       size={size}
       className={cn(
         "absolute h-8 w-8 rounded-full",
+        // Điều chỉnh vị trí nút khi màn hình nhỏ hơn
         orientation === "horizontal"
-          ? "-right-4 top-1/2 -translate-y-1/2 md:-right-8 md:top-1/2 md:-translate-y-1/2 lg:-right-12 lg:top-1/2 lg:-translate-y-1/2" // Desktop adjustments
-          : "-bottom-4 left-1/2 -translate-x-1/2 rotate-90 md:-bottom-8 md:left-1/2 md:-translate-x-1/2 lg:-bottom-12 lg:left-1/2 lg:-translate-x-1/2 lg:rotate-90", // Desktop adjustments for vertical orientation
+          ? "-right-4 top-1/2 -translate-y-1/2 lg:-right-8 lg:h-10 lg:w-10"
+          : "-bottom-4 left-1/2 -translate-x-1/2 rotate-90 lg:-bottom-8 lg:h-10 lg:w-10",
+        // Đảm bảo vị trí khi màn hình nhỏ
+        "md:right-2 md:top-auto md:bottom-2 md:translate-x-0",
         className
       )}
       disabled={!canScrollNext}
@@ -314,6 +286,34 @@ const CarouselNext = React.forwardRef<
   );
 });
 CarouselNext.displayName = "CarouselNext";
+// const CarouselNext = React.forwardRef<
+//   HTMLButtonElement,
+//   React.ComponentProps<typeof Button>
+// >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+//   const { orientation, scrollNext, canScrollNext } = useCarousel();
+
+//   return (
+//     <Button
+//       ref={ref}
+//       variant={variant}
+//       size={size}
+//       className={cn(
+//         "absolute h-8 w-8 rounded-full",
+//         orientation === "horizontal"
+//           ? "-right-4 top-1/2 -translate-y-1/2 md:-right-8 md:top-1/2 md:-translate-y-1/2 lg:-right-12 lg:top-1/2 lg:-translate-y-1/2" // Desktop adjustments
+//           : "-bottom-4 left-1/2 -translate-x-1/2 rotate-90 md:-bottom-8 md:left-1/2 md:-translate-x-1/2 lg:-bottom-12 lg:left-1/2 lg:-translate-x-1/2 lg:rotate-90", // Desktop adjustments for vertical orientation
+//         className
+//       )}
+//       disabled={!canScrollNext}
+//       onClick={scrollNext}
+//       {...props}
+//     >
+//       <ArrowRightIcon className="h-4 w-4 lg:h-5 lg:w-5" />
+//       <span className="sr-only">Next slide</span>
+//     </Button>
+//   );
+// });
+// CarouselNext.displayName = "CarouselNext";
 
 export {
   type CarouselApi,

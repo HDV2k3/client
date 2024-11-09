@@ -1,7 +1,7 @@
 // app/messages/layout.tsx
 "use client";
 import React, { ReactNode } from "react"; // Import ReactNode
-import MessageList from "../messages/MessageList";
+import MessageList from "./users";
 
 interface MessagesLayoutProps {
   children: ReactNode; // Specify that children is of type ReactNode
@@ -9,7 +9,7 @@ interface MessagesLayoutProps {
 
 export default function MessagesLayout({ children }: MessagesLayoutProps) {
   return (
-    <div className="flex h-screen">
+    <div className=" flex container mx-auto px-4 py-2 sm:px-0 lg:px-0 max-w-screen-xl">
       {/* Message List Sidebar */}
       <div className="w-96 bg-white border-r">
         <MessageList />
