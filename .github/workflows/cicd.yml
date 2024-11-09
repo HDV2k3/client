@@ -28,7 +28,7 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: Xóa container cũ trên server
+      - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -37,33 +37,24 @@ jobs:
           script: |
             CONTAINER_NAME="nextjs-app-container"
 
-            # Kiểm tra xem container có tồn tại không
+            # Stop and remove the old container if it exists
             if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
               echo "Container '$CONTAINER_NAME' found. Stopping..."
-
-              # Dừng container nếu đang chạy
               docker stop $CONTAINER_NAME || true
-              
               echo "Removing container '$CONTAINER_NAME'..."
-
-              # Xóa container
               docker rm -f $CONTAINER_NAME || true
             else
               echo "Container '$CONTAINER_NAME' does not exist. No action taken."
             fi
 
-      - name: Delete old Docker image
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
+            # Remove the old image
             echo "Removing old Docker image..."
             docker rmi -f devhuynh2003/nextjs-app:latest || true
 
-      - name: Pull image from Docker Hub
-        run: docker pull devhuynh2003/nextjs-app:latest
+            # Pull the latest image
+            echo "Pulling the latest Docker image..."
+            docker pull devhuynh2003/nextjs-app:latest
 
-      - name: Run docker container
-        run: docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest
+            # Run the new container
+            echo "Running the new container..."
+            docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest
