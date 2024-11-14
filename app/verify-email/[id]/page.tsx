@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
+} from "../../../components/ui/card";
 
 interface NotificationState {
   isOpen: boolean;
@@ -24,13 +24,11 @@ const VerifyEmailPage: React.FC = () => {
     title: "",
     message: "",
   });
+  const tokenVerify = useParams().id;
 
   useEffect(() => {
     const verifyEmail = async () => {
-      // Get token from URL instead of localStorage
-      const token = localStorage.getItem("verifiedToken");
-
-      if (!token) {
+      if (!tokenVerify) {
         setNotification({
           isOpen: true,
           type: "error",
@@ -43,7 +41,7 @@ const VerifyEmailPage: React.FC = () => {
 
       try {
         const response = await fetch(
-          `http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/users/verify-email?token=${token}`,
+          `http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/users/verify-email?token=${tokenVerify}`,
           {
             method: "GET",
             headers: {

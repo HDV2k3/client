@@ -10,12 +10,17 @@ import {
   Typography,
   message,
 } from "antd";
-import { CloseOutlined, EyeInvisibleOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import WebSocketConnection from "../../../service/Websocket";
 import { ChatMessage } from "../../../types/ChatType";
 import axios from "axios";
 import EncryptionService from "../../../service/EncryptionService";
-import { useParams,useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getChatHistory, markMessagesAsDelivered } from "@/service/ChatService";
 import { API_URL } from "../../../service/constants";
 const { Title } = Typography;
@@ -52,6 +57,7 @@ const ChatDetail: React.FC = () => {
   const [fullName, setFullName] = useState<string>("Unknown User");
   const [showChat, setShowChat] = useState(true);
   const router = useRouter();
+  const { id: receiverId } = useParams() as { id: string };
   const handleGoBack = () => {
     router.push("/messages"); // Điều hướng về trang messages mà không tải lại trang
   };
@@ -60,7 +66,6 @@ const ChatDetail: React.FC = () => {
     setShowChat((prevState) => !prevState); // Đảo ngược trạng thái hiển thị
   };
   const senderId = Number(localStorage.getItem("userId"));
-  const receiverId = Number(useParams().id);
   const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -103,8 +108,9 @@ const ChatDetail: React.FC = () => {
       const decryptedContent = await EncryptionService.decryptMessage(
         encryptedMessage,
         senderId,
-        receiverId
+        +receiverId
       );
+      // console.log("debug", decryptedContent);
       return {
         id: chat.id,
         senderId: chat.senderId,
@@ -176,7 +182,7 @@ const ChatDetail: React.FC = () => {
     };
 
     fetchChatHistory();
-  }, [senderId, receiverId, token,decryptMessage]);
+  }, [senderId, receiverId, token, decryptMessage]);
 
   useEffect(() => {
     const wsService = new WebSocketConnection();
@@ -195,7 +201,7 @@ const ChatDetail: React.FC = () => {
     if (webSocketService) {
       const messageSubscription = webSocketService.subscribeToPrivateMessages(
         senderId,
-        receiverId,
+        +receiverId,
         async (encryptedMessage) => {
           try {
             const decryptedMessage = await decryptMessage(encryptedMessage);
@@ -210,7 +216,7 @@ const ChatDetail: React.FC = () => {
 
       const typingSubscription = webSocketService.subscribeToTyping(
         senderId,
-        receiverId,
+        +receiverId,
         () => setIsTyping(true)
       );
 
@@ -219,7 +225,7 @@ const ChatDetail: React.FC = () => {
         typingSubscription.unsubscribe();
       };
     }
-  }, [senderId, receiverId, webSocketService,fullName,decryptMessage]);
+  }, [senderId, receiverId]);
 
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
@@ -232,7 +238,7 @@ const ChatDetail: React.FC = () => {
     try {
       await webSocketService.sendMessage(
         senderId,
-        receiverId,
+        +receiverId,
         newMessage,
         "TEXT",
         null
@@ -242,7 +248,7 @@ const ChatDetail: React.FC = () => {
       await markMessagesAsDelivered(senderId, token || "");
       const updatedHistory = await getChatHistory(
         senderId,
-        receiverId,
+        +receiverId,
         token || ""
       );
       const decryptedHistory = await Promise.all(
@@ -256,7 +262,7 @@ const ChatDetail: React.FC = () => {
 
   const handleTyping = () => {
     if (newMessage.trim() && webSocketService) {
-      webSocketService.sendTypingEvent(senderId, receiverId);
+      webSocketService.sendTypingEvent(senderId, +receiverId);
     }
   };
 
