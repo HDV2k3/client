@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { TagFilled } from "@ant-design/icons";
+import { API_MARKETING } from "@/service/constants";
 
 type Banner = {
   id: string;
@@ -23,7 +24,7 @@ const PromotionBanner: React.FC = () => {
     const fetchBanners = async () => {
       try {
         const response = await fetch(
-          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/banner/all"
+          `${API_MARKETING}/banner/all`
         );
 
         if (!response.ok) {

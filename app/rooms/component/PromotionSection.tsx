@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { API_MARKETING } from "@/service/constants";
 
 interface PostImage {
   name: string;
@@ -55,7 +56,7 @@ const PromotionSection: React.FC = () => {
     const fetchPromotions = async () => {
       try {
         const response = await fetch(
-          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/incentive-program/get-all"
+          `${API_MARKETING}/incentive-program/get-all`
         );
         const result: ApiResponse = await response.json();
 

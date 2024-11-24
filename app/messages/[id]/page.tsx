@@ -22,7 +22,7 @@ import axios from "axios";
 import EncryptionService from "../../../service/EncryptionService";
 import { useParams, useRouter } from "next/navigation";
 import { getChatHistory, markMessagesAsDelivered } from "@/service/ChatService";
-import { API_URL } from "../../../service/constants";
+import { API_URL_CHATTING, API_USER } from "@/service/constants";
 const { Title } = Typography;
 
 interface MessageResponse {
@@ -71,7 +71,7 @@ const ChatDetail: React.FC = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `http://ec2-52-64-255-108.ap-southeast-2.compute.amazonaws.com:8080/user/users/get-by-id/${receiverId}`
+          `${API_USER}/users/get-by-id/${receiverId}`
         );
         const firstName = response.data.data.firstName;
         // const { firstName, lastName } = response.data;
@@ -154,7 +154,7 @@ const ChatDetail: React.FC = () => {
 
       try {
         const response = await axios.get<MessageResponse>(
-          `${API_URL}/api/v1/chat/history`,
+          `${API_URL_CHATTING}/api/v1/chat/history`,
           {
             params: { senderId, receiverId },
             headers: { Authorization: `Bearer ${token}` },

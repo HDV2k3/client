@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "antd";
 import Image from "next/image";
+import { API_MARKETING } from "@/service/constants";
 
 type PostImage = {
   name: string;
@@ -39,7 +40,7 @@ const Courasel: React.FC = () => {
     const fetchCarouselData = async () => {
       try {
         const response = await fetch(
-          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/carousel/all"
+          `${API_MARKETING}/carousel/all`
         );
 
         if (!response.ok) {

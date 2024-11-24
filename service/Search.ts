@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { API_MARKETING } from "./constants";
 
 type Product = {
   title: string;
@@ -27,7 +28,7 @@ export default async function handler(
 
   // External API endpoint to fetch products
   const apiEndpoint =
-    "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/post/searching";
+    `${API_MARKETING}/post/searching`;
 
   try {
     // Fetch products from the external API

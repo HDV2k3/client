@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { API_URL } from "./constants";
+import { API_URL_CHATTING } from "./constants";
 import { ChatDTO, ChatMessage, ChatStatus } from "../types/ChatType";
 // API functions
 
@@ -10,7 +10,7 @@ export const markMessagesStatus = async (
 ): Promise<ChatDTO> => {
   try {
     const response: AxiosResponse<ChatDTO> = await axios.put(
-      `${API_URL}/api/v1/chat/${chatId}/status`,
+      `${API_URL_CHATTING}/api/v1/chat/${chatId}/status`,
       null, // no body needed
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -29,7 +29,7 @@ export const markMessagesAsDelivered = async (
   token: string
 ): Promise<void> => {
   try {
-    await axios.put(`${API_URL}/api/v1/chat/mark-delivered/${userId}`, null, {
+    await axios.put(`${API_URL_CHATTING}/api/v1/chat/mark-delivered/${userId}`, null, {
       headers: { Authorization: `Bearer ${token}` },
     });
   } catch (error) {
@@ -44,7 +44,7 @@ export const getChatHistory = async (
 ): Promise<ChatMessage[]> => {
   try {
     const response: AxiosResponse<ChatMessage[]> = await axios.get(
-      `${API_URL}/api/v1/chat/history`,
+      `${API_URL_CHATTING}/api/v1/chat/history`,
       {
         params: { senderId, receiverId },
         headers: {
