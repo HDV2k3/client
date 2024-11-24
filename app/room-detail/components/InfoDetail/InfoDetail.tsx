@@ -1,10 +1,11 @@
-
 "use client";
 import React from "react";
 import { FaCheckCircle, FaShower, FaPlug } from "react-icons/fa";
 import { EnvironmentFilled, TagFilled } from "@ant-design/icons";
 import { convertToVND } from "../../../../utils/convertToVND";
 import Image from "next/image";
+import { Button } from "antd";
+import Link from "next/link";
 
 // Subcomponent for displaying utility items
 const UtilityItem: React.FC<{ label: string }> = ({ label }) => (
@@ -86,7 +87,6 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             <UtilityItem label="Phòng ngủ" />
           )}
         </div>
-
         <h3 className="text-base font-semibold underline mb-2">Tiện Nghi</h3>
         <div className="flex flex-wrap mb-2">
           {Object.entries(room.roomUtility.amenitiesAvailability)
@@ -95,7 +95,6 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
               <UtilityItem key={key} label={key} />
             ))}
         </div>
-
         <h3 className="text-base font-semibold underline mb-2">Giá dịch vụ</h3>
         <div className="flex mb-4">
           <ServicePrice
@@ -109,7 +108,6 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             price={`${convertToVND(room.pricingDetails.waterCost)} / m³`}
           />
         </div>
-
         <div className="flex flex-wrap mb-4 text-sm">
           {room.pricingDetails.additionalFees.map((fee) => (
             <ServicePrice
@@ -120,14 +118,12 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             />
           ))}
         </div>
-
         <div className=" text-sm">
           <span className="mr-2 text-gray-600">Lưu ý:</span>
           <span className="italic text-gray-600">
             Hình ảnh có thể thay đổi theo thời gian!
           </span>
         </div>
-
         <h3 className="text-base font-semibold underline text-gray-600 mb-2">
           Giá thuê Phòng
         </h3>
@@ -152,20 +148,29 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             </>
           )}
         </div>
-        <a
-          href="https://zalo.me/0329615309"
-          target="_blank"
-          className="inline-flex items-center justify-center px-4 py-2 border border-black text-base font-medium rounded-md text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-        >
-          <Image
-            src="/assets/images/icons/7044033_zalo_icon.png"
-            alt="Icon ZL"
-            className="mr-2"
-            width={20}
-            height={20}
-          />
-          Nhắn Zalo Ngay
-        </a>
+      </div>
+      <div>
+        <div className="flex justify-start">
+          <Link href={`/messages`} passHref>
+            <Button>liên hệ ngay: {room.createdBy}</Button>
+          </Link>
+        </div>
+        <div className="flex justify-end mb-5">
+          <a
+            href="https://zalo.me/0329615309"
+            target="_blank"
+            className="inline-flex items-center justify-center px-4 py-2 border border-black text-base font-medium rounded-md text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+          >
+            <Image
+              src="/assets/images/icons/7044033_zalo_icon.png"
+              alt="Icon ZL"
+              className="mr-2"
+              width={20}
+              height={20}
+            />
+            Nhắn Zalo Ngay
+          </a>
+        </div>
       </div>
     </div>
   );
