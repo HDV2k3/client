@@ -2,7 +2,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { EnvironmentFilled, TagFilled } from "@ant-design/icons";
+import {
+  CheckCircleFilled,
+  EnvironmentFilled,
+  TagFilled,
+} from "@ant-design/icons";
 import "../styles/RoomCardProminent.css";
 import { FaUser } from "react-icons/fa";
 import { Carousel } from "antd"; // Thêm Carousel
@@ -20,6 +24,8 @@ interface RoomCardProps {
   status: string;
   type: string;
   capacity: number;
+  createdBy: string;
+  contactInfo: string;
 }
 
 const RoomCardProminent: React.FC<RoomCardProps> = ({
@@ -31,6 +37,8 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
   address,
   type,
   capacity,
+  createdBy,
+  contactInfo,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -105,7 +113,7 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
                 {price.toLocaleString()} VNĐ/tháng
               </span>
             ) : (
-              <span className="font-bold text-lg">
+              <span className="font-bold text-sm">
                 {price.toLocaleString()} VNĐ/tháng
               </span>
             )}
@@ -114,6 +122,15 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
                 {fixPrice.toLocaleString()} VNĐ/tháng
               </span>
             )}
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-gray-500 text-sm">
+              Người đăng: {createdBy}{" "}
+              <CheckCircleFilled className="text-green-500" />
+            </span>
+            <span className="text-gray-500 text-sm">
+              Liên hệ: {contactInfo}
+            </span>
           </div>
         </div>
       </div>

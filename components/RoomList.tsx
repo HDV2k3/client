@@ -33,6 +33,8 @@ const FeaturedRoomList: React.FC<FeaturedRoomListProps> = ({
             createdDate={""}
             description={""}
             status={""}
+            createdBy={room.createdBy}
+            contactInfo={room.contactInfo}
           />
         );
       })}
