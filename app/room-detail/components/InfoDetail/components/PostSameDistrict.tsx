@@ -36,6 +36,8 @@ const SameDistrictRoomList: React.FC<RoomListProps> = ({
               status={room.status}
               type={room.roomInfo.type}
               capacity={room.roomInfo.capacity}
+              createdBy={room.createdBy}
+              contactInfo={room.contactInfo}
             />
           </Link>
         );
