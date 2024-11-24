@@ -35,8 +35,9 @@ const SamePriceRoomList: React.FC<FeaturedRoomListProps> = ({
               description={room.description}
               status={room.status}
               type={room.roomInfo.type}
-              capacity={room.roomInfo.capacity}
-            />
+              capacity={room.roomInfo.capacity} 
+              createdBy={room.createdBy} 
+              contactInfo={room.contactInfo}            />
           </Link>
         );
       })}
