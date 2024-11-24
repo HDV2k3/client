@@ -8,6 +8,7 @@ import {
   BsInfoCircleFill,
 } from "react-icons/bs";
 import { FaTimes } from "react-icons/fa";
+import { API_USER } from "@/service/constants";
 
 interface NotificationModalProps {
   isOpen: boolean;
@@ -169,7 +170,7 @@ const RegisterPage: React.FC = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/users/create",
+        `${API_USER}/users/create`,
         {
           method: "POST",
           headers: {

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { TagFilled } from "@ant-design/icons";
+import { API_MARKETING } from "@/service/constants";
 
 type Banner = {
   id: string;
@@ -23,7 +24,7 @@ const PromotionBanner: React.FC = () => {
     const fetchBanners = async () => {
       try {
         const response = await fetch(
-          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/banner/all"
+          `${API_MARKETING}/banner/all`
         );
 
         if (!response.ok) {
@@ -68,7 +69,7 @@ const PromotionBanner: React.FC = () => {
       {banners.map((banner) => (
         <div
           key={banner.id}
-          className="relative bg-white text-center p-4 mb-4 rounded-lg shadow-md text-lg font-bold"
+          className="container mx-auto relative bg-white text-center p-4 mb-4 rounded-lg shadow-md text-lg font-bold"
         >
           <div className="absolute top-2 right-2 flex items-center justify-center bg-red-500 text-white p-2 rounded-full">
             <TagFilled className="text-2xl" />

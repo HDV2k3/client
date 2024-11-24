@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import TopNavigation from "./TopNavigation";
 import MainHeader from "./MainHeader";
+import { API_USER } from "@/service/constants";
 
 const Header = () => {
   const [userName, setUserName] = useState("Tài Khoản");
@@ -31,7 +32,7 @@ const Header = () => {
     if (token) {
       try {
         const response = await axios.get(
-          "http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/users/me",
+          `${API_USER}/users/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

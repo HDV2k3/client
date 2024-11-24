@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
+import { API_USER } from "@/service/constants";
 
 interface NotificationState {
   isOpen: boolean;
@@ -41,7 +42,7 @@ const VerifyEmailPage: React.FC = () => {
 
       try {
         const response = await fetch(
-          `http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/users/verify-email?token=${tokenVerify}`,
+          `${API_USER}/users/verify-email?token=${tokenVerify}`,
           {
             method: "GET",
             headers: {

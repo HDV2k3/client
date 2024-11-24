@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "antd";
 import Image from "next/image";
+import { API_MARKETING } from "@/service/constants";
 
 type PostImage = {
   name: string;
@@ -24,7 +25,6 @@ type ApiResponse = {
 
 const contentStyle: React.CSSProperties = {
   position: "relative",
-  height: "235px",
   overflow: "hidden",
   background: "#364d79",
   borderTopLeftRadius: "5px",
@@ -40,7 +40,7 @@ const Courasel: React.FC = () => {
     const fetchCarouselData = async () => {
       try {
         const response = await fetch(
-          "http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/carousel/all"
+          `${API_MARKETING}/carousel/all`
         );
 
         if (!response.ok) {
@@ -81,16 +81,17 @@ const Courasel: React.FC = () => {
   }
 
   return (
-    <Carousel autoplay>
+    <Carousel autoplay className="container my-3 mx-auto">
       {carouselData[0]?.postImages.map((image, index) => (
         <div key={image.name}>
-          <div style={contentStyle}>
+          <div style={contentStyle} className="h-fit">
             <Image
               src={image.urlImagePost}
               alt={`Image ${index + 1}`}
-              layout="fill"
-              objectFit="cover"
+              className="md:object-cover object-contain w-full h-full"
               priority={index === 0} // Load the first image with priority
+              height={350}
+              width={1500}
             />
           </div>
         </div>

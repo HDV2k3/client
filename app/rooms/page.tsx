@@ -10,6 +10,7 @@ import RealEstateExperience from "./component/RealEstateExperience";
 import axios from "axios";
 import useSWRInfinite from "swr/infinite";
 import FilterComponent from "./component/Filter";
+import { API_MARKETING } from "@/service/constants";
 
 // ... (giữ nguyên các định nghĩa interface và hằng số)
 interface FilterCriteria {
@@ -50,7 +51,7 @@ const RoomsPage: React.FC = () => {
     params.append("page", (pageIndex + 1).toString());
     params.append("size", PAGE_SIZE.toString());
 
-    return `http://next-room-cicd-env.eba-duriufh6.ap-southeast-2.elasticbeanstalk.com/marketing/post/post-filter?${params.toString()}`;
+    return `${API_MARKETING}/post/post-filter?${params.toString()}`;
   };
 
   // Fetcher function for SWR

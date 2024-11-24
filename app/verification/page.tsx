@@ -1,4 +1,5 @@
 "use client";
+import { API_USER } from "@/service/constants";
 import React, { useState, useEffect } from "react";
 import {
   BsCheckCircleFill,
@@ -168,7 +169,7 @@ const EmailVerificationPage: React.FC = () => {
   const handleResendEmail = async () => {
     try {
       const response = await fetch(
-        "http://user-cicd-env.eba-wjfksigh.ap-southeast-2.elasticbeanstalk.com/user/resend-verification",
+        `${API_USER}/resend-verification`,
         {
           method: "POST",
           headers: {

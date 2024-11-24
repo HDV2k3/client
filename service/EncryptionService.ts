@@ -1,4 +1,4 @@
-import { API_URL } from "./constants";
+import { API_URL_CHATTING } from "./constants";
 
 interface DecryptionResponse {
   data: string;
@@ -19,7 +19,7 @@ class EncryptionService {
 
     try {
       const response = await fetch(
-        `${API_URL}/api/v1/encryption/decrypt?senderId=${senderId}&receiverId=${receiverId}`,
+        `${API_URL_CHATTING}/api/v1/encryption/decrypt?senderId=${senderId}&receiverId=${receiverId}`,
         {
           method: "POST",
           headers: {
@@ -52,7 +52,7 @@ class EncryptionService {
     if (!token) throw new Error("Token is missing");
 
     try {
-      const response = await fetch(`${API_URL}/api/v1/encryption/private-key`, {
+      const response = await fetch(`${API_URL_CHATTING}/api/v1/encryption/private-key`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
