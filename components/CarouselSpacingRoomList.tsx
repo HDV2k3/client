@@ -33,17 +33,16 @@ const CarouselSpacing: React.FC<CarouselSpacingProps> = ({
               name={room.roomInfo.name}
               price={room.pricingDetails.basePrice}
               fixPrice={room.fixPrice}
-              imageUrls={
-                room.roomInfo.postImages.map((img) => img.urlImagePost) || []
-              }
+              imageUrls={room.roomInfo.postImages.map((img) => img.urlImagePost) || []}
               address={room.roomInfo.address}
               type={room.roomInfo.type}
               capacity={room.roomInfo.capacity}
               totalArea={0}
               createdDate={""}
               description={""}
-              status={""}
-            />
+              status={""} 
+              createdBy={room.createdBy} 
+              contactInfo={room.contactInfo}            />
           </CarouselItem>
         ))}
 
