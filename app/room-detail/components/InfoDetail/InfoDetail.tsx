@@ -1,6 +1,12 @@
 "use client";
 import React from "react";
-import { FaCheckCircle, FaShower, FaPlug } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaShower,
+  FaPlug,
+  FaBed,
+  FaUsers,
+} from "react-icons/fa";
 import { EnvironmentFilled, TagFilled } from "@ant-design/icons";
 import { convertToVND } from "../../../../utils/convertToVND";
 import Image from "next/image";
@@ -31,7 +37,6 @@ const ServicePrice: React.FC<{
 interface IProps {
   room: Room;
 }
-
 const InfoDetail: React.FC<IProps> = ({ room }) => {
   const glitterStyle = `
     @keyframes glitter {
@@ -52,6 +57,12 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
   const hasPromotionalPrice =
     (room.fixPrice ?? 0) < room.pricingDetails.basePrice;
 
+  // Determine the status message based on room's status
+  const roomStatusMessage =
+    room.status === "active"
+      ? "Phòng hiện đang trống"
+      : "Phòng đã có người thuê";
+
   return (
     <div className="float-right px-2">
       <style>{glitterStyle}</style>
@@ -60,16 +71,55 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
           <span className="glitter-text">{room.title}</span>
         </div>
       </div>
+      {/* Room Address, Type, and Additional Details in Grid Layout */}
+      <div className="grid grid-cols-3 gap-6 mb-4 text-sm">
+        {/* Room Address */}
+        <div className="flex items-center">
+          <EnvironmentFilled className="mr-2" />
+          <span>{room.roomInfo.address}</span>
+        </div>
 
-      <div className="flex items-center mb-2 text-sm">
-        <EnvironmentFilled className="mr-2" />
-        <span>{room.roomInfo.address}</span>
-      </div>
-      <div className="flex items-center mb-2 text-sm">
-        <TagFilled className="mr-2" />
-        <span>{room.roomInfo.type}</span>
+        {/* Room Type */}
+        <div className="flex items-center">
+          <TagFilled className="mr-2" />
+          <span>{room.roomInfo.type}</span>
+        </div>
+
+        {/* Additional Room Details */}
+        <div className="flex items-center">
+          <span className="mr-2 ">Diện tích:</span>
+          <span>{room.roomInfo.totalArea} m²</span>
+        </div>
+
+        <div className="flex items-center mb-2 text-sm">
+          <FaUsers className="mr-2 " />
+          <span className="mr-2 ">:</span>
+          <span>{room.roomInfo.capacity} người</span>
+        </div>
+
+        <div className="flex items-center mb-2 text-sm">
+          <FaBed className="mr-2 " />
+          <span className="mr-2 ">Phòng ngủ:</span>
+          <span>{room.roomInfo.numberOfBedrooms}</span>
+        </div>
+
+        <div className="flex items-center mb-2 text-sm">
+          <FaShower className="mr-2 " />
+          <span className="mr-2 ">Nhà tắm:</span>
+          <span>{room.roomInfo.numberOfBathrooms}</span>
+        </div>
       </div>
 
+      {/* Display Room Status */}
+      <div className="mb-4 text-sm text-gray-600">
+        <span
+          className={`font-bold ${room.status === "available" ? "text-green-600" : "text-red-600"}`}
+        >
+          {roomStatusMessage}
+        </span>
+      </div>
+
+      {/* Utilities and Pricing */}
       <div className="text-xl font-bold mb-4">
         <h3 className="text-base font-semibold underline mb-2">
           Tiện ích Phòng
@@ -87,14 +137,8 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             <UtilityItem label="Phòng ngủ" />
           )}
         </div>
-        <h3 className="text-base font-semibold underline mb-2">Tiện Nghi</h3>
-        <div className="flex flex-wrap mb-2">
-          {Object.entries(room.roomUtility.amenitiesAvailability)
-            .filter(([, value]) => value)
-            .map(([key]) => (
-              <UtilityItem key={key} label={key} />
-            ))}
-        </div>
+
+        {/* Service Prices */}
         <h3 className="text-base font-semibold underline mb-2">Giá dịch vụ</h3>
         <div className="flex mb-4">
           <ServicePrice
@@ -108,6 +152,8 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             price={`${convertToVND(room.pricingDetails.waterCost)} / m³`}
           />
         </div>
+
+        {/* Additional Fees */}
         <div className="flex flex-wrap mb-4 text-sm">
           {room.pricingDetails.additionalFees.map((fee) => (
             <ServicePrice
@@ -118,12 +164,8 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
             />
           ))}
         </div>
-        <div className=" text-sm">
-          <span className="mr-2 text-gray-600">Lưu ý:</span>
-          <span className="italic text-gray-600">
-            Hình ảnh có thể thay đổi theo thời gian!
-          </span>
-        </div>
+
+        {/* Rental Price */}
         <h3 className="text-base font-semibold underline text-gray-600 mb-2">
           Giá thuê Phòng
         </h3>
@@ -149,13 +191,15 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
           )}
         </div>
       </div>
-      <div>
-        <div className="flex justify-start">
+
+      {/* Contact and Zalo Button */}
+      <div className="flex justify-between mb-5">
+        <div className="flex justify-start ">
           <Link href={`/messages`} passHref>
             <Button>liên hệ ngay: {room.createdBy}</Button>
           </Link>
         </div>
-        <div className="flex justify-end mb-5">
+        <div className="flex justify-end">
           <a
             href="https://zalo.me/0329615309"
             target="_blank"
@@ -175,5 +219,7 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
     </div>
   );
 };
+
+
 
 export default InfoDetail;

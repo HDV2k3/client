@@ -3,6 +3,8 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AppHeader from "../components/Header/Header";
 import AppFooter from "../components/Footer";
 import "../styles/globals.css"; // Import global styles
+import Chat from "@/components/Chat";
+import BackToTop from "@/components/BackToTop";
 
 export const metadata = {
   title: "NextRoom",
@@ -19,6 +21,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           {/* Remove padding from the main content */}
           <main className="flex-grow pt-0 bg-gray-100">{children}</main>
           <AppFooter />
+          <BackToTop />
+          <Chat />
         </AntdRegistry>
       </body>
     </html>

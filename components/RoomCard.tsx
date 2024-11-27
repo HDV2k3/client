@@ -8,7 +8,7 @@ import {
   TagFilled,
 } from "@ant-design/icons";
 import "../styles/RoomCardProminent.css";
-import { FaUser } from "react-icons/fa";
+import { FaPhone, FaUser } from "react-icons/fa";
 import { Carousel } from "antd"; // Thêm Carousel
 
 interface RoomCardProps {
@@ -124,12 +124,13 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
             )}
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-gray-500 text-sm">
-              Người đăng: {createdBy}{" "}
+            <span className="flex items-center text-gray-500 text-sm">
+              <FaUser className="mr-2 text-gray-600" />
+              <span className="mr-2">{createdBy}</span>
               <CheckCircleFilled className="text-green-500" />
             </span>
-            <span className="text-gray-500 text-sm">
-              Liên hệ: {contactInfo}
+            <span className="flex items-center text-gray-500 text-sm">
+              <FaPhone className="mr-2 text-gray-600" />: {contactInfo}
             </span>
           </div>
         </div>

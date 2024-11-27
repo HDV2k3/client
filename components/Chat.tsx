@@ -1,6 +1,9 @@
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import { FiMessageSquare, FiX, FiSend } from "react-icons/fi";
 import { FaRobot, FaUser } from "react-icons/fa";
+import axios from "axios";
+import { API_CHAT_BOT } from "@/service/constants";
 
 interface Message {
   text: string;
@@ -14,7 +17,11 @@ const Chat: React.FC = () => {
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const apiFileQuestions =
+    "http://localhost:8080/ai/gemini-1-5-flash-002/file-and-question";
+  const apiQuestions = "http://localhost:8080/ai/chat/{text}";
+  const apiHistory = "http://localhost:8080/ai/chat/history/{text}";
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -46,7 +53,7 @@ const Chat: React.FC = () => {
       setInputMessage("");
 
       try {
-        const response = await fetch("http://localhost:5000/api/chat", {
+        const response = await fetch(`${API_CHAT_BOT}/chat`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -89,10 +96,19 @@ const Chat: React.FC = () => {
     <>
       <button
         onClick={toggleChat}
-        className="fixed bottom-4 right-4 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition duration-300 z-50"
-      >
-        <FiMessageSquare size={24} />
-      </button>
+        className="fixed bottom-4 right-4 p-4 rounded-full shadow-lg hover:scale-105 transition duration-300 z-50"
+        style={{
+          backgroundImage:
+            "url('https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/logo%2FLogo.png?alt=media&token=99ab8a9e-a5e3-4990-ad30-0c8ffd4dc884')", // Đường dẫn đến ảnh
+          backgroundSize: "70%", // Đảm bảo ảnh lấp đầy toàn bộ nút
+          backgroundPosition: "center", // Căn giữa ảnh
+          border: "none", // Loại bỏ viền mặc định
+          width: "50px",
+          height: "50px",
+          cursor: "pointer",
+          backgroundColor: "#60A5FA",
+        }}
+      ></button>
 
       {isChatOpen && (
         <div className="fixed bottom-4 right-24 w-96 h-[500px] bg-white shadow-xl rounded-lg overflow-hidden flex flex-col">
