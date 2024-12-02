@@ -1,0 +1,17 @@
+services:
+  nextjs:
+    build:
+      context: .
+    image: devhuynh2003/fe-web:latest
+    container_name: fe-web
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run start

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
-import { API_USER } from "@/service/constants";
+import { notificationServiceVerify_Email } from "../services/notification";
 
 interface NotificationState {
   isOpen: boolean;
@@ -42,7 +42,7 @@ const VerifyEmailPage: React.FC = () => {
 
       try {
         const response = await fetch(
-          `${API_USER}/users/verify-email?token=${tokenVerify}`,
+          `${process.env.NEXT_PUBLIC_API_URL_USER}/users/verify-email?token=${tokenVerify}`,
           {
             method: "GET",
             headers: {
@@ -52,11 +52,7 @@ const VerifyEmailPage: React.FC = () => {
         );
 
         if (!response.ok) {
-          throw new Error(
-            response.status === 400
-              ? "Invalid or expired verification token"
-              : "Verification failed. Please try again."
-          );
+          notificationServiceVerify_Email.verifyError();
         }
 
         setNotification({
@@ -65,7 +61,7 @@ const VerifyEmailPage: React.FC = () => {
           title: "Verification Successful",
           message: "Your email has been verified successfully!",
         });
-
+        notificationServiceVerify_Email.verifySuccess();
         // Redirect after successful verification
         setTimeout(() => {
           router.push("/login");

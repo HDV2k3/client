@@ -10,7 +10,6 @@ import RealEstateExperience from "./component/RealEstateExperience";
 import axios from "axios";
 import useSWRInfinite from "swr/infinite";
 import FilterComponent from "./component/Filter";
-import { API_MARKETING } from "@/service/constants";
 
 // ... (giữ nguyên các định nghĩa interface và hằng số)
 interface FilterCriteria {
@@ -21,6 +20,7 @@ interface FilterCriteria {
   hasPromotion?: boolean;
   sortByPrice?: string;
   sortByCreated?: string;
+  ward?: string;
 }
 
 const PAGE_SIZE = 8; // Adjust as necessary
@@ -38,6 +38,7 @@ const RoomsPage: React.FC = () => {
       if (filters.maxPrice)
         params.append("maxPrice", filters.maxPrice.toString());
       if (filters.district) params.append("district", filters.district);
+      if (filters.ward) params.append("ward", filters.ward);
       if (filters.type) params.append("type", filters.type);
       if (filters.hasPromotion)
         params.append("hasPromotion", filters.hasPromotion.toString());
@@ -50,8 +51,8 @@ const RoomsPage: React.FC = () => {
     // Append pagination info
     params.append("page", (pageIndex + 1).toString());
     params.append("size", PAGE_SIZE.toString());
-
-    return `${API_MARKETING}/post/post-filter?${params.toString()}`;
+    console.log(params.toString());
+    return `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${params.toString()}`;
   };
 
   // Fetcher function for SWR
@@ -130,10 +131,10 @@ const RoomsPage: React.FC = () => {
               <LoadMoreButton
                 isLoadingInitialData={isLoadingInitialData}
                 isReachingEnd={isReachingEnd}
-                loadMore={() => setSize(size + 1)}
-                reset={resetFilters}
-                roomsLength={rooms.length}
-                isLoadingMore={isLoadingMore ?? false}
+                loadMore={() => setSize(size + 1)} // Tải thêm trang tiếp theo
+                reset={resetFilters} // Đặt lại bộ lọc
+                roomsLength={rooms.length} // Tổng số phòng đã tải
+                isLoadingMore={isLoadingMore ?? false} // Trạng thái đang tải thêm
               />
             </>
           )}

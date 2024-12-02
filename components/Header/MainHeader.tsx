@@ -48,7 +48,15 @@ const MainHeader: React.FC<MainHeaderProps> = ({
       router.push("/messages");
     }
   };
-
+  const handlePostClick = () => {
+    if (!hasToken()) {
+      // Nếu không có token, chuyển hướng đến trang đăng nhập
+      router.push(`/login?callbackUrl=${window.location.href}`);
+    } else {
+      // Nếu có token, chuyển hướng đến trang tin nhắn
+      router.push("/dang-tin");
+    }
+  };
   return (
     <div className="flex items-center justify-between flex-wrap">
       <div className="flex items-center space-x-4 mb-2 sm:mb-0">
@@ -91,6 +99,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <Tooltip title="Đăng tin">
           <Button
             icon={<FormOutlined />}
+            onClick={handlePostClick}
             style={{
               backgroundColor: "#FF8800",
               color: "#FFF",

@@ -3,7 +3,7 @@ import { Avatar, List, Typography, Spin } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { API_URL_CHATTING } from "@/service/constants";
+
 
 const { Text } = Typography;
 
@@ -34,7 +34,7 @@ const MessageList: React.FC = () => {
         }
 
         const response = await axios.get(
-          `${API_URL_CHATTING}/api/v1/chat/user-history?userId=${userId}`,
+          `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/user-history?userId=${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

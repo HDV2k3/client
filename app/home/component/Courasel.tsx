@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "antd";
 import Image from "next/image";
-import { API_MARKETING } from "@/service/constants";
 
 type PostImage = {
   name: string;
@@ -40,7 +39,7 @@ const Courasel: React.FC = () => {
     const fetchCarouselData = async () => {
       try {
         const response = await fetch(
-          `${API_MARKETING}/carousel/all`
+          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/carousel/all`
         );
 
         if (!response.ok) {

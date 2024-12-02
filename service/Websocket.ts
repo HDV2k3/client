@@ -3,8 +3,6 @@ import { Client } from "@stomp/stompjs";
 
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
-import { SOCKET_URL } from "./constants";
 import EncryptionService from "./EncryptionService";
 const firebaseConfig = {
   apiKey: "AIzaSyA4Ag0VmCDlE_Fe0MN_Gf4FxSPfkIJl8Dc",
@@ -22,7 +20,8 @@ class WebSocketConnection {
   client: Client;
   constructor() {
     this.client = new Client({
-      webSocketFactory: () => new SockJS(SOCKET_URL),
+      webSocketFactory: () =>
+        new SockJS(process.env.NEXT_PUBLIC_API_URL_SOCKET),
       connectHeaders: {},
       debug: function (str) {
         console.log("[STOMP DEBUG]:", str);

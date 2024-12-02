@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { API_MARKETING } from "@/service/constants";
+
 
 interface PostImage {
   name: string;
@@ -56,7 +56,7 @@ const PromotionSection: React.FC = () => {
     const fetchPromotions = async () => {
       try {
         const response = await fetch(
-          `${API_MARKETING}/incentive-program/get-all`
+          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/incentive-program/get-all`
         );
         const result: ApiResponse = await response.json();
 

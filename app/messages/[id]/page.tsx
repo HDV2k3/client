@@ -399,7 +399,7 @@ import axios from "axios";
 import EncryptionService from "../../../service/EncryptionService";
 import { useParams, useRouter } from "next/navigation";
 import { getChatHistory, markMessagesAsDelivered } from "@/service/ChatService";
-import { API_URL_CHATTING, API_USER } from "@/service/constants";
+
 const { Title } = Typography;
 
 interface MessageResponse {
@@ -453,7 +453,7 @@ const ChatDetail: React.FC = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `${API_USER}/users/get-by-id/${receiverId}`
+          `${process.env.NEXT_PUBLIC_API_URL_USER}/users/get-by-id/${receiverId}`
         );
         const firstName = response.data.data.firstName;
         const lastName = response.data.data.lastName;
@@ -535,7 +535,7 @@ const ChatDetail: React.FC = () => {
 
       try {
         const response = await axios.get<MessageResponse>(
-          `${API_URL_CHATTING}/api/v1/chat/history`,
+          `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/history`,
           {
             params: { senderId, receiverId },
             headers: { Authorization: `Bearer ${token}` },

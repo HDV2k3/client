@@ -34,26 +34,70 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
     Array<{ label: string; min: number; max: number }>
   >([]);
 
-  const districts = [
-    "Quận 1",
-    "Quận 2",
-    "Quận 3",
-    "Quận 4",
-    "Quận 5",
-    "Quận 6",
-    "Quận 7",
-    "Quận 8",
-    "Quận 9",
-    "Quận 10",
-    "Quận 11",
-    "Quận 12",
-    "Bình Thạnh",
-    "Gò Vấp",
-    "Phú Nhuận",
-    "Tân Bình",
-    "Tân Phú",
-    "Thủ Đức",
-  ];
+  // const districts = [
+  //   "Quận 1",
+  //   "Quận 2",
+  //   "Quận 3",
+  //   "Quận 4",
+  //   "Quận 5",
+  //   "Quận 6",
+  //   "Quận 7",
+  //   "Quận 8",
+  //   "Quận 9",
+  //   "Quận 10",
+  //   "Quận 11",
+  //   "Quận 12",
+  //   "Bình Thạnh",
+  //   "Gò Vấp",
+  //   "Phú Nhuận",
+  //   "Tân Bình",
+  //   "Tân Phú",
+  //   "Thủ Đức",
+  // ];
+  const districts: Record<string, string[]> = {
+    "Quận 1": [
+      "Phường Bến Nghé",
+      "Phường Bến Thành",
+      "Phường Cầu Kho",
+      "Phường Cầu Ông Lãnh",
+    ],
+    "Quận 2": [
+      "Phường Thảo Điền",
+      "Phường An Phú",
+      "Phường Bình An",
+      "Phường An Khánh",
+    ],
+    // ...
+  };
+  const [selectedDistrict, setSelectedDistrict] = useState<string>(""); // Quận được chọn
+  const [wards, setWards] = useState<string[]>([]); // Danh sách phường
+  const [selectedWard, setSelectedWard] = useState<string>(""); // Phường được chọn
+
+  const handleWardChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const ward = event.target.value;
+
+    // Cập nhật phường được chọn
+    setSelectedWard(ward);
+
+    // Cập nhật bộ lọc
+    setFilters((prev) => ({ ...prev, ward }));
+  };
+
+  const handleDistrictChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const district = event.target.value;
+
+    // Cập nhật quận được chọn
+    setSelectedDistrict(district);
+
+    // Cập nhật danh sách phường tương ứng
+    setWards(districts[district as keyof typeof districts] || []);
+
+    // Cập nhật bộ lọc
+    setFilters((prev) => ({ ...prev, district }));
+    console.log(filters);
+  };
 
   const propertyTypes = [
     "Căn hộ",
@@ -163,7 +207,7 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
       className="space-y-6 bg-white p-6 rounded-lg shadow-md"
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
+        {/* <div>
           <label
             htmlFor="district"
             className="block text-sm font-medium text-gray-700"
@@ -184,8 +228,54 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
               </option>
             ))}
           </select>
+        </div> */}
+        {/* Dropdown chọn Quận */}
+        <div>
+          <label
+            htmlFor="district"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Quận/Huyện
+          </label>
+          <select
+            id="district"
+            name="district"
+            value={selectedDistrict}
+            onChange={handleDistrictChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          >
+            <option value="">Chọn Quận/Huyện</option>
+            {Object.keys(districts).map((district) => (
+              <option key={district} value={district}>
+                {district}
+              </option>
+            ))}
+          </select>
         </div>
 
+        {/* Dropdown chọn Phường */}
+        <div>
+          <label
+            htmlFor="ward"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Phường/Xã
+          </label>
+          <select
+            id="ward"
+            name="ward"
+            value={selectedWard}
+            onChange={handleWardChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          >
+            <option value="">Chọn Phường/Xã</option>
+            {wards.map((ward) => (
+              <option key={ward} value={ward}>
+                {ward}
+              </option>
+            ))}
+          </select>
+        </div>
         <div>
           <label
             htmlFor="type"

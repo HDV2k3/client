@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import TopNavigation from "./TopNavigation";
 import MainHeader from "./MainHeader";
-import { API_USER } from "@/service/constants";
+
 
 const Header = () => {
   const [userName, setUserName] = useState("Tài Khoản");
@@ -32,7 +32,7 @@ const Header = () => {
     if (token) {
       try {
         const response = await axios.get(
-          `${API_USER}/users/me`,
+          `${process.env.NEXT_PUBLIC_API_URL_USER}/users/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

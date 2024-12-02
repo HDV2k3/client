@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { API_MARKETING } from "@/service/constants";
+
 
 interface PostImage {
   name: string;
@@ -56,7 +56,7 @@ const RealEstateExperience: React.FC = () => {
     const fetchExperiences = async () => {
       try {
         const response = await fetch(
-          `${API_MARKETING}/experience/all`
+          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/experience/all`
         );
         const result: ApiResponse = await response.json();
 

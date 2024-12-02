@@ -1,6 +1,6 @@
 import useSWRInfinite from "swr/infinite";
 import axios from "axios";
-import { API_MARKETING } from "@/service/constants";
+
 
 const PAGE_SIZE = 8;
 
@@ -8,7 +8,7 @@ const PAGE_SIZE = 8;
 const useSearchResults = (keyword: string) => {
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && !previousPageData.data.data.length) return null;
-    return `${API_MARKETING}/search/${keyword}?page=${pageIndex + 1}&size=${PAGE_SIZE}`;
+    return `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/search/${keyword}?page=${pageIndex + 1}&size=${PAGE_SIZE}`;
   };
 
   const fetcher = async (url: string) => {

@@ -1,12 +1,9 @@
-
 // service/Marketing.ts
 
-import { API_MARKETING } from "./constants";
-
 export const fetchPostsByPage = async (page: number, pageSize: number) => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const response = await fetch(
-    `${API_MARKETING}/post/search?page=${page}&size=${pageSize}`,
+    `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/search?page=${page}&size=${pageSize}`,
     {
       method: "GET",
       headers: {
@@ -26,7 +23,7 @@ export const fetchPostsByPage = async (page: number, pageSize: number) => {
 export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
   try {
     const response = await fetch(
-      `${API_MARKETING}/post/list-post-featured?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/list-post-featured?page=${page}&size=${size}`
     );
     const data = await response.json();
     return data;
@@ -35,11 +32,11 @@ export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
     throw error;
   }
 };
+console.log(process.env.NEXT_PUBLIC_API_URL_MARKETING);
 export const fetchPostsAllByPage = async (page: number, size: number) => {
   try {
     const response = await fetch(
-      `${API_MARKETING}/post/all?page=${page}&size=${size}`
-
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/all?page=${page}&size=${size}`
     );
     const data = await response.json();
     return data;
@@ -54,7 +51,7 @@ export const fetchPostsPromotionalByPage = async (
 ) => {
   try {
     const response = await fetch(
-      `${API_MARKETING}/post/list-post-promotional?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/list-post-promotional?page=${page}&size=${size}`
     );
     const data = await response.json();
     return data;
@@ -66,7 +63,7 @@ export const fetchPostsPromotionalByPage = async (
 export const fetchPostsById = async (id: string) => {
   try {
     const response = await fetch(
-      `${API_MARKETING}/post/post-by-id/${id}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-by-id/${id}`
     );
     const data = await response.json();
     return data;
@@ -86,7 +83,7 @@ export const fetchPostsSamePrice = async (
     };
 
     const response = await fetch(
-      `${API_MARKETING}/post/searching?page=${page}&size=${size}`,
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/searching?page=${page}&size=${size}`,
       {
         method: "POST",
         headers: {
@@ -119,7 +116,7 @@ export const fetchPostsSameDistrict = async (
     };
 
     const response = await fetch(
-      `${API_MARKETING}/post/searching?page=${page}&size=${size}`,
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/searching?page=${page}&size=${size}`,
       {
         method: "POST",
         headers: {
@@ -144,7 +141,7 @@ export const fetchPostsSameDistrict = async (
 export const fetchPostPromotionalById = async (id: string) => {
   try {
     const response = await fetch(
-      `${API_MARKETING}/post/post-promotional-by-id/${id}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-promotional-by-id/${id}`
     );
     const data = await response.json();
     return data;
@@ -157,7 +154,7 @@ export const fetchPostPromotionalById = async (id: string) => {
 export const fetchPostsByRoomPage = async (page: number, size: number) => {
   try {
     const response = await fetch(
-      `${API_MARKETING}/post/filter-post?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/filter-post?page=${page}&size=${size}`
     );
     const data = await response.json();
     return data;

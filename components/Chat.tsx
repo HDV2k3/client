@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { FiMessageSquare, FiX, FiSend } from "react-icons/fi";
 import { FaRobot, FaUser } from "react-icons/fa";
 import axios from "axios";
-import { API_CHAT_BOT } from "@/service/constants";
 
 interface Message {
   text: string;
@@ -17,11 +16,7 @@ const Chat: React.FC = () => {
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const apiFileQuestions =
-    "http://localhost:8080/ai/gemini-1-5-flash-002/file-and-question";
-  const apiQuestions = "http://localhost:8080/ai/chat/{text}";
-  const apiHistory = "http://localhost:8080/ai/chat/history/{text}";
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -53,13 +48,16 @@ const Chat: React.FC = () => {
       setInputMessage("");
 
       try {
-        const response = await fetch(`${API_CHAT_BOT}/chat`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ message: inputMessage }),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL_CHAT_BOT}/chat`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: inputMessage }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");

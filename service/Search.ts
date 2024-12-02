@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { API_MARKETING } from "./constants";
+
 
 type Product = {
   title: string;
@@ -28,7 +28,7 @@ export default async function handler(
 
   // External API endpoint to fetch products
   const apiEndpoint =
-    `${API_MARKETING}/post/searching`;
+    `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/searching`;
 
   try {
     // Fetch products from the external API
