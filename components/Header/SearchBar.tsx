@@ -48,51 +48,44 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="w-full sm:w-auto mx-4 mb-2 sm:mb-0 flex-grow md:flex-grow-0 md:min-w-[500px]">
-      <div className="relative" ref={dropdownRef}>
-        <div className="flex h-8">
-          <div className="relative flex-grow">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
-              <Search className="w-4 h-4 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              className="w-full h-full pl-8 pr-3 text-sm text-gray-700 bg-white border-0 rounded-l focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="Tìm kiếm sản phẩm trên NextLife"
-              value={searchValue}
-              onChange={(e) => {
-                setSearchValue(e.target.value);
-                setIsOpen(true);
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch(searchValue);
-                }
-              }}
-              onFocus={() => setIsOpen(true)}
-            />
-            {isOpen && ( // Remove searchValue condition
-              <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg">
-                {filteredSuggestions.map((suggestion, index) => (
-                  <div
-                    key={index}
-                    className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 text-gray-700"
-                    onClick={() => handleSelect(suggestion.value)}
-                  >
-                    {suggestion.value}
-                  </div>
-                ))}
+    <div className="relative flex items-center w-full">
+      <div className="flex-grow">
+        <input
+          type="text"
+          className="w-full h-8 px-8 py-2 text-sm text-gray-700 bg-white border rounded-l focus:outline-none focus:ring-1 focus:ring-blue-500"
+          placeholder="Tìm kiếm sản phẩm trên NextLife"
+          value={searchValue}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+            setIsOpen(true);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleSearch(searchValue);
+            }
+          }}
+          onFocus={() => setIsOpen(true)}
+        />
+        {isOpen && filteredSuggestions.length > 0 && (
+          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg">
+            {filteredSuggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 text-gray-700"
+                onClick={() => handleSearch(suggestion.value)}
+              >
+                {suggestion.value}
               </div>
-            )}
+            ))}
           </div>
-          <button
-            onClick={() => handleSearch(searchValue)}
-            className="px-4 h-full text-sm text-white bg-[#60A5FA] hover:bg-[#3B82F6] rounded-r border-0 transition-colors"
-          >
-            Tìm
-          </button>
-        </div>
+        )}
       </div>
+      <button
+        onClick={() => handleSearch(searchValue)}
+        className="px-4 h-8 text-sm text-white bg-blue-500 rounded-r hover:bg-blue-600"
+      >
+        Tìm
+      </button>
     </div>
   );
 };

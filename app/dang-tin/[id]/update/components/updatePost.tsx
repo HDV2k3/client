@@ -1,27 +1,32 @@
 import React from "react";
 import { Form, Button, message } from "antd";
-import { notificationService } from "../service/notificationService";
-import BasicInfoSection from "./BasicInfoSection";
-import RoomDetailsSection from "./RoomInfoEdit";
-import RoomPricingSection from "./PricingDetails";
-import RoomUtilitiesSection from "./RoomUtilities";
-import ContactInfoSection from "./ContactInfoSection";
-import AdsSection from "./AdsSection";
+import { notificationService } from "../../../service/notificationService";
+
+import AdsSectionUpdate from "./AdsSection";
+import BasicInfoSectionUpdate from "./BasicInfoSection";
+import RoomDetailsSectionUpdate from "./RoomInfoEdit";
+import RoomPricingSectionUpdate from "./PricingDetails";
+import RoomUtilitiesSectionUpdate from "./RoomUtilities";
+import ContactInfoSectionUpdate from "./ContactInfoSection";
 
 interface RoomFormProps {
+  roomData?: RoomFinal;
   onSubmit: (data: RoomFinal) => void;
 }
 
-const RoomListingForm: React.FC<RoomFormProps> = ({ onSubmit }) => {
+const RoomListingFormUpdate: React.FC<RoomFormProps> = ({
+  roomData,
+  onSubmit,
+}) => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
     const roomListingData = {
       ...values,
-      availableFromDate: values.availableFromDate.toISOString(),
+      // availableFromDate: values.availableFromDate.toISOString(),
       roomInfo: {
         ...values.roomInfo,
-        availableFromDate: values.availableFromDate.toISOString(),
+        // availableFromDate: values.availableFromDate.toISOString(),
         width: values.roomInfo.width,
         height: values.roomInfo.height,
         totalArea: values.roomInfo.width * values.roomInfo.height,
@@ -59,14 +64,18 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ onSubmit }) => {
         form={form}
         layout="vertical"
         onFinish={handleSubmit}
+        initialValues={{
+          ...roomData,
+        }}
         className="space-y-6 bg-white p-8 rounded-lg shadow-md"
       >
-        <AdsSection />
-        <BasicInfoSection />
-        <RoomDetailsSection />
-        <RoomPricingSection />
-        <RoomUtilitiesSection />
-        <ContactInfoSection />
+        <AdsSectionUpdate />
+        <BasicInfoSectionUpdate />
+        <RoomDetailsSectionUpdate />
+        <RoomPricingSectionUpdate />
+        <RoomUtilitiesSectionUpdate />
+        <ContactInfoSectionUpdate />
+        {/* Room Images */}
 
         <Form.Item>
           <Button
@@ -82,4 +91,4 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ onSubmit }) => {
   );
 };
 
-export default RoomListingForm;
+export default RoomListingFormUpdate;

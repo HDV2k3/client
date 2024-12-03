@@ -113,7 +113,7 @@ const Chat: React.FC = () => {
           <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
             <div className="flex items-center">
               <FaRobot className="mr-2" size={24} />
-              <h2 className="text-xl font-bold">AI Real Estate Assistant</h2>
+              <h2 className="text-xl font-bold">AI NEXTLIFE BẤT ĐỘNG SẢN</h2>
             </div>
             <button
               onClick={toggleChat}

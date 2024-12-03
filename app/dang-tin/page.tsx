@@ -4,8 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { notification } from "antd";
 import axios from "axios";
-import RoomListingForm from "./component/createPosts";
-
+import RoomListingForm from "./[id]/update/components/updatePost";
 
 const NewRoomPage: React.FC = () => {
   const router = useRouter();
@@ -32,9 +31,9 @@ const NewRoomPage: React.FC = () => {
         notification.success({
           message: "Room created successfully!",
         });
-
+        localStorage.setItem("roomData", JSON.stringify(roomData));
         // Redirect to the image upload page for the newly created room
-        router.push(`/managementRoom/${createdRoomId}/upload-images`);
+        router.push(`/dang-tin/${createdRoomId}/upload-images`);
       }
     } catch (error) {
       console.error("Room creation failed:", error);
@@ -44,10 +43,7 @@ const NewRoomPage: React.FC = () => {
     }
   };
 
-  return (
-
-    <RoomListingForm onSubmit={handleSubmit}/>
-  );
+  return <RoomListingForm onSubmit={handleSubmit} />;
 };
 
 export default NewRoomPage;

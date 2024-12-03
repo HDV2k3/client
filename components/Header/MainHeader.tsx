@@ -6,12 +6,14 @@ import {
   FormOutlined,
   MessageOutlined,
   ShoppingOutlined,
+  SolutionOutlined,
 } from "@ant-design/icons";
 import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
 import NotificationButton from "./NotificationButton";
 import SettingsButton from "./SettingsButton";
 import { useRouter } from "next/navigation";
+import MyAds from "./MyAds";
 
 interface MainHeaderProps {
   userName: string;
@@ -19,6 +21,7 @@ interface MainHeaderProps {
   onLogout: () => void;
   logOut: string;
   profile: string;
+  deposit: string;
 }
 
 const MainHeader: React.FC<MainHeaderProps> = ({
@@ -27,39 +30,36 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   onLogout,
   logOut,
   profile,
+  deposit,
 }) => {
   const router = useRouter();
 
-  // Hàm kiểm tra xem có token không
   const hasToken = (): boolean => {
-    // Kiểm tra trong cookie hoặc localStorage
     return (
       !!document.cookie.includes("token") || !!localStorage.getItem("token")
     );
   };
 
-  // Hàm xử lý khi nhấp vào tin nhắn
   const handleMessagesClick = () => {
     if (!hasToken()) {
-      // Nếu không có token, chuyển hướng đến trang đăng nhập
       router.push(`/login?callbackUrl=${window.location.href}`);
     } else {
-      // Nếu có token, chuyển hướng đến trang tin nhắn
       router.push("/messages");
     }
   };
+
   const handlePostClick = () => {
     if (!hasToken()) {
-      // Nếu không có token, chuyển hướng đến trang đăng nhập
-      router.push(`/login?callbackUrl=${window.location.href}`);
+ 
+     router.push(`/login?callbackUrl=${window.location.href}`);
     } else {
-      // Nếu có token, chuyển hướng đến trang tin nhắn
       router.push("/dang-tin");
     }
   };
   return (
-    <div className="flex items-center justify-between flex-wrap">
-      <div className="flex items-center space-x-4 mb-2 sm:mb-0">
+    <div className="flex items-center justify-between w-full py-2 ">
+      {/* Logo và Menu Dropdown */}
+      <div className="flex items-center space-x-4">
         <Link href="/">
           <span className="text-xl sm:text-2xl font-bold text-white">
             NextLife
@@ -68,8 +68,12 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <MenuDropdown />
       </div>
 
-      <SearchBar />
+      {/* Thanh Tìm Kiếm */}
+      <div className="flex-1 mx-4">
+        <SearchBar />
+      </div>
 
+      {/* Các nút chức năng */}
       <div className="flex items-center space-x-2 sm:space-x-4">
         <Tooltip title="Thông báo">
           <NotificationButton />
@@ -80,20 +84,23 @@ const MainHeader: React.FC<MainHeaderProps> = ({
             type="text"
             icon={<MessageOutlined />}
             style={{ color: "#FFF" }}
-            onClick={handleMessagesClick} // Gọi hàm kiểm tra khi nhấp vào tin nhắn
+            onClick={handleMessagesClick}
           />
         </Tooltip>
 
         <Tooltip title="Cài đặt">
           <SettingsButton />
         </Tooltip>
-
+        <Tooltip title="Tin đăng">
+          <MyAds />
+        </Tooltip>
         <UserMenu
           userName={userName}
           isLoggedIn={isLoggedIn}
           onLogout={onLogout}
           logOut={logOut}
           profile={profile}
+          deposit={deposit}
         />
 
         <Tooltip title="Đăng tin">

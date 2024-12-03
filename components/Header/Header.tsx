@@ -5,12 +5,12 @@ import axios from "axios";
 import TopNavigation from "./TopNavigation";
 import MainHeader from "./MainHeader";
 
-
 const Header = () => {
   const [userName, setUserName] = useState("Tài Khoản");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [logOut, setlogOut] = useState("");
   const [profile, setProfile] = useState("");
+  const [deposit, setDeposit] = useState("Nạp tiền");
   const router = useRouter();
 
   const handleLogout = useCallback(() => {
@@ -76,7 +76,7 @@ const Header = () => {
 
   return (
     <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto  sm:px-6 lg:px-8">
         {/* Top Navigation */}
         <TopNavigation />
 
@@ -87,6 +87,7 @@ const Header = () => {
           onLogout={handleLogout}
           logOut={logOut}
           profile={profile}
+          deposit={deposit}
         />
       </div>
     </header>
