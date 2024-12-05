@@ -34,6 +34,7 @@ const RegisterPage: React.FC = () => {
         notificationServiceRegister.createSuccess();
         const responseData = await response.json();
         localStorage.setItem("userEmail", formData.email);
+        localStorage.setItem("userPassword", formData.password);
         localStorage.setItem(
           "verifiedToken",
           responseData.data.verificationToken

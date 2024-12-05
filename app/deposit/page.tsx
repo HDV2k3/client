@@ -7,19 +7,21 @@ import {
   QrcodeOutlined,
 } from "@ant-design/icons";
 import {
-  Card,
   Modal,
   Input,
   Button,
-  Tooltip,
-  Typography,
   Select,
   Form,
 } from "antd";
 import { motion } from "framer-motion";
+import axios from "axios";
+import { message } from "antd";
+import { useRouter } from "next/navigation";
+import Title from "antd/es/typography/Title";
+import { Text } from "lucide-react";
+import { Rule } from "antd/es/form";
+import { Option } from "antd/es/mentions";
 
-const { Title, Text } = Typography;
-const { Option } = Select;
 interface PaymentMethod {
   key: string;
   name: string;
@@ -30,7 +32,7 @@ interface PaymentMethod {
     name: string;
     label: string;
     type: string;
-    options?: string[]; // Optional for select fields
+    options?: string[];
   }[];
 }
 
@@ -41,10 +43,7 @@ const paymentMethods = [
     icon: <MobileOutlined className="text-4xl text-pink-500" />,
     color: "bg-pink-50",
     description: "Nạp tiền nhanh chóng qua ví điện tử Momo",
-    fields: [
-      { name: "momoPhone", label: "Số điện thoại Momo", type: "text" },
-      { name: "momoAmount", label: "Số tiền nạp", type: "number" },
-    ],
+    fields: [{ name: "momoAmount", label: "Số tiền nạp", type: "number" }],
   },
   {
     key: "vnpay",
@@ -53,37 +52,8 @@ const paymentMethods = [
     color: "bg-blue-50",
     description: "Thanh toán qua hệ thống ngân hàng VNPay",
     fields: [
-      {
-        name: "vnpayBank",
-        label: "Chọn ngân hàng",
-        type: "select",
-        options: ["Vietcombank", "BIDV", "Techcombank"],
-      },
       { name: "vnpayAmount", label: "Số tiền nạp", type: "number" },
-    ],
-  },
-  {
-    key: "vietcombank",
-    name: "Vietcombank",
-    icon: <BankOutlined className="text-4xl text-green-600" />,
-    color: "bg-green-50",
-    description: "Nạp tiền trực tiếp từ tài khoản Vietcombank",
-    fields: [
-      { name: "vcbAccountNumber", label: "Số tài khoản", type: "text" },
-      { name: "vcbAmount", label: "Số tiền nạp", type: "number" },
-    ],
-  },
-  {
-    key: "stripe",
-    name: "Stripe",
-    icon: <CreditCardOutlined className="text-4xl text-indigo-500" />,
-    color: "bg-indigo-50",
-    description: "Thanh toán quốc tế an toàn và tiện lợi",
-    fields: [
-      { name: "stripeCardNumber", label: "Số thẻ", type: "text" },
-      { name: "stripeExpiry", label: "Ngày hết hạn", type: "text" },
-      { name: "stripeCVV", label: "CVV", type: "text" },
-      { name: "stripeAmount", label: "Số tiền nạp", type: "number" },
+      { name: "vnpayOrderInfo", label: "Nội dung nạp tiền", type: "text" },
     ],
   },
 ];
@@ -93,34 +63,108 @@ const AdvancedDepositPage = () => {
     null
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
+  const router = useRouter();
 
-  const handleMethodSelect = (method: any) => {
+  const handleMethodSelect = (method: PaymentMethod) => {
     setSelectedMethod(method);
     setIsModalVisible(true);
   };
 
-  const handleDeposit = () => {
+  const handleDeposit = async () => {
     if (!selectedMethod) {
-      console.error("No payment method selected");
+      message.error("Vui lòng chọn phương thức thanh toán");
       return;
     }
 
-    form
-      .validateFields()
-      .then((values) => {
-        console.log("Deposit Details:", values);
-        // Xử lý logic nạp tiền
-        Modal.success({
-          title: "Nạp Tiền Thành Công",
-          content: `Bạn đã nạp ${values[`${selectedMethod!.key}Amount`]} VND qua ${selectedMethod!.name}`,
-        });
-        setIsModalVisible(false);
-        form.resetFields();
-      })
-      .catch((errorInfo) => {
-        console.log("Validation Failed:", errorInfo);
+    try {
+      setIsLoading(true);
+      const values = await form.validateFields();
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        message.error("Vui lòng đăng nhập để thực hiện giao dịch");
+        return;
+      }
+
+      let endpoint = "";
+      let params = {};
+
+      if (selectedMethod.key === "vnpay") {
+        endpoint = `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/vnPay/submitOrder`;
+        params = {
+          params: {
+            amount: values.vnpayAmount,
+            orderInfo: values.vnpayOrderInfo,
+            token,
+          },
+        };
+      } else if (selectedMethod.key === "momo") {
+        endpoint = `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/momo/payment`;
+        params = {
+          params: {
+            amount: values.momoAmount,
+            token,
+          },
+        };
+      }
+
+      const response = await axios.post(endpoint, null, params);
+
+      if (response.data?.data) {
+        message.success("Chuyển đến trang thanh toán");
+        const result = response.data.data;
+        router.push(result);
+      } else {
+        throw new Error("Invalid response from server");
+      }
+
+      setIsModalVisible(false);
+      form.resetFields();
+    } catch (error: any) {
+      if (error.response) {
+        message.error(
+          error.response.data?.message || "Có lỗi xảy ra khi xử lý giao dịch"
+        );
+      } else if (error.request) {
+        message.error("Không thể kết nối đến máy chủ");
+      } else {
+        message.error("Có lỗi xảy ra, vui lòng thử lại sau");
+      }
+      console.error("Deposit error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getFieldRules = (field: { type: string; label: string }) => {
+    const rules: Rule[] = [
+      {
+        required: true,
+        message: `Vui lòng nhập ${field.label.toLowerCase()}`,
+      },
+    ];
+
+    if (field.type === "number") {
+      rules.push({
+        validator: async (_, value) => {
+          if (!value) {
+            return Promise.reject(`Vui lòng nhập ${field.label.toLowerCase()}`);
+          }
+          const numberValue = parseFloat(value);
+          if (isNaN(numberValue)) {
+            return Promise.reject("Vui lòng nhập số hợp lệ");
+          }
+          if (numberValue < 10000) {
+            return Promise.reject("Số tiền tối thiểu là 10,000 VND");
+          }
+          return Promise.resolve();
+        },
       });
+    }
+
+    return rules;
   };
 
   return (
@@ -129,7 +173,7 @@ const AdvancedDepositPage = () => {
         Nạp Tiền An Toàn & Nhanh Chóng
       </Title>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
         {paymentMethods.map((method) => (
           <motion.div
             key={method.key}
@@ -159,6 +203,7 @@ const AdvancedDepositPage = () => {
             key="submit"
             type="primary"
             onClick={handleDeposit}
+            loading={isLoading}
             className="bg-blue-500 hover:bg-blue-600"
           >
             Xác Nhận Nạp Tiền
@@ -169,33 +214,33 @@ const AdvancedDepositPage = () => {
         {selectedMethod && (
           <Form form={form} layout="vertical">
             {selectedMethod.fields.map((field) => (
-             <Form.Item
-             key={field.name}
-             name={field.name}
-             label={field.label}
-             rules={[
-               {
-                 required: true,
-                 message: `Vui lòng nhập ${field.label.toLowerCase()}`,
-               },
-             ]}
-           >
-             {field.type === "select" && field.options ? (
-               <Select placeholder={`Chọn ${field.label.toLowerCase()}`}>
-                 {field.options.map((option) => (
-                   <Option key={option} value={option}>
-                     {option}
-                   </Option>
-                 ))}
-               </Select>
-             ) : (
-               <Input
-                 type={field.type}
-                 placeholder={`Nhập ${field.label.toLowerCase()}`}
-               />
-             )}
-           </Form.Item>
-           
+              <Form.Item
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                rules={getFieldRules(field)}
+              >
+                {field.type === "select" && field.options ? (
+                  <Select placeholder={`Chọn ${field.label.toLowerCase()}`}>
+                    {field.options.map((option) => (
+                      <Option key={option} value={option}>
+                        {option}
+                      </Option>
+                    ))}
+                  </Select>
+                ) : (
+                  <Input
+                    type={field.type}
+                    placeholder={`Nhập ${field.label.toLowerCase()}`}
+                    onChange={(e) => {
+                      if (field.type === "number") {
+                        const value = e.target.value.replace(/[^0-9]/g, "");
+                        form.setFieldValue(field.name, value);
+                      }
+                    }}
+                  />
+                )}
+              </Form.Item>
             ))}
           </Form>
         )}
