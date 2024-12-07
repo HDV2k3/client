@@ -38,4 +38,6 @@ interface Room {
   createdDate: number;
   lastModifiedDate: number;
   status: string;
+  statusShowCheck: string;
+  index:string;
 }

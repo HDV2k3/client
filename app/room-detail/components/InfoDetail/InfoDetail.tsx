@@ -59,9 +59,13 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
 
   // Determine the status message based on room's status
   const roomStatusMessage =
-    room.status === "active"
+    room.statusShowCheck === "ACTIVE"
       ? "Phòng hiện đang trống"
-      : "Phòng đã có người thuê";
+      : room.statusShowCheck === "PENDING"
+        ? "Phòng đang thi công"
+        : room.statusShowCheck === "REJECTED"
+          ? "Phòng đã hết"
+          : "Trạng thái không xác định";
 
   return (
     <div className="float-right px-2">
@@ -219,7 +223,5 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
     </div>
   );
 };
-
-
 
 export default InfoDetail;

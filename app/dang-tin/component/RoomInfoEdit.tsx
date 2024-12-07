@@ -8,14 +8,14 @@ const RoomDetailsSection: React.FC = () => {
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg">
-      <h3 className="text-xl font-semibold mb-4">Room Details</h3>
+      <h3 className="text-xl font-semibold mb-4">Thông tin trong phòng</h3>
       <div className="grid md:grid-cols-5 gap-6">
         <Form.Item
           name={["roomInfo", "name"]}
           label="Tên phòng"
           rules={[{ required: true, message: "Tên phòng là bắt buộc" }]}
         >
-          <Input placeholder="Room 101" />
+          <Input placeholder="Phòng 101" />
         </Form.Item>
         <Form.Item
           name={["roomInfo", "type"]}
@@ -23,18 +23,16 @@ const RoomDetailsSection: React.FC = () => {
           rules={[{ required: true, message: "Chọn loại phòng" }]}
         >
           <Select placeholder="Chọn loại phòng">
-            {["Studio", "Apartment", "Private Room", "Shared Room"].map(
-              (type) => (
-                <Option key={type} value={type}>
-                  {type}
-                </Option>
-              )
-            )}
+            {["Studio", "Ký túc xá", "Duplex", "Apartment"].map((type) => (
+              <Option key={type} value={type}>
+                {type}
+              </Option>
+            ))}
           </Select>
         </Form.Item>
-        <Form.Item name={["roomInfo", "style"]} label="Room Style">
+        <Form.Item name={["roomInfo", "style"]} label="Phong cách của phòng">
           <Select placeholder="phong cách của phòng">
-            {["Modern", "Classic", "Minimalist", "Industrial"].map((style) => (
+            {["Hiện đại", "cổ điển", "Tối giản"].map((style) => (
               <Option key={style} value={style}>
                 {style}
               </Option>
@@ -43,7 +41,7 @@ const RoomDetailsSection: React.FC = () => {
         </Form.Item>
         <Form.Item name={["roomInfo", "floor"]} label="Sàn phòng">
           <Select placeholder="sàn của phòng">
-            {["Modern", "Classic", "Minimalist", "Industrial"].map((style) => (
+            {["Hiện đại", "gỗ", "gạch men", "xi măng"].map((style) => (
               <Option key={style} value={style}>
                 {style}
               </Option>

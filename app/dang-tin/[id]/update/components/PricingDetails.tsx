@@ -13,7 +13,9 @@ interface PricingDetails {
 interface PricingDetailsFormProps {
   pricingDetails?: PricingDetails;
 }
-const RoomPricingSectionUpdate:React.FC<PricingDetailsFormProps> = ({ pricingDetails }) => {
+const RoomPricingSectionUpdate: React.FC<PricingDetailsFormProps> = ({
+  pricingDetails,
+}) => {
   return (
     <div className="bg-gray-100 p-6 rounded-lg mt-6">
       <h3 className="text-xl font-semibold mb-4">Pricing</h3>
@@ -29,19 +31,6 @@ const RoomPricingSectionUpdate:React.FC<PricingDetailsFormProps> = ({ pricingDet
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
             defaultValue={pricingDetails?.basePrice}
-          />
-        </Form.Item>
-        <Form.Item
-          name="fixPrice"
-          label="chương trình giảm giá (Có hoặc không)"
-          rules={[{ required: false, type: "number", min: 0 }]}
-        >
-          <InputNumber
-            className="w-full"
-            formatter={(value) =>
-              `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            }
-            defaultValue={pricingDetails?.fixPrice}
           />
         </Form.Item>
         <Form.Item
@@ -83,7 +72,13 @@ const RoomPricingSectionUpdate:React.FC<PricingDetailsFormProps> = ({ pricingDet
                       { required: true, message: "Loại phí là bắt buộc" },
                     ]}
                   >
-                    <Input defaultValue={pricingDetails?.additionalFees.find((fee) => fee.type === field.name.toString())?.type} />
+                    <Input
+                      defaultValue={
+                        pricingDetails?.additionalFees.find(
+                          (fee) => fee.type === field.name.toString()
+                        )?.type
+                      }
+                    />
                   </Form.Item>
                   <Form.Item
                     name={[field.name, "amount"]}
@@ -94,7 +89,11 @@ const RoomPricingSectionUpdate:React.FC<PricingDetailsFormProps> = ({ pricingDet
                       min={0}
                       placeholder="Số tiền"
                       style={{ width: "100%" }}
-                      defaultValue={pricingDetails?.additionalFees.find((fee) => fee.type === field.name.toString())?.amount}
+                      defaultValue={
+                        pricingDetails?.additionalFees.find(
+                          (fee) => fee.type === field.name.toString()
+                        )?.amount
+                      }
                     />
                   </Form.Item>
                   <CloseOutlined

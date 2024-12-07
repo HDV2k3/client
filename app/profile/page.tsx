@@ -9,35 +9,20 @@ import EditProfileModal from "./component/EditProfileModal";
 
 const { Sider, Content } = Layout;
 
-const UserProfile: React.FC = () => {
+interface UserProfileCardProps {
+  userData: UserData;
+  onEdit: () => void;
+  onUpload: (info: any) => void;
+}
+
+const UserProfile: React.FC<UserProfileCardProps> = ({
+  userData,
+  onEdit,
+  onUpload,
+}) => {
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-
-  const userData: UserData = {
-    name: "Nguyễn Văn A",
-    email: "nguyenvana@example.com",
-    phone: "0123456789",
-    dayOfBirth: "2003-02-08",
-    balance: 50000000,
-    avatar: null,
-  };
-
-  const depositHistory: DepositRecord[] = [
-    {
-      id: 1,
-      method: "Momo",
-      amount: 10000000,
-      date: "2024-03-15",
-      status: "success",
-    },
-    {
-      id: 2,
-      method: "VNPay",
-      amount: 20000000,
-      date: "2024-04-20",
-      status: "processing",
-    },
-  ];
+  const fullName = localStorage.getItem("fullName");
 
   const handleProfileEdit = (values: any) => {
     console.log("Profile update:", values);
@@ -56,13 +41,7 @@ const UserProfile: React.FC = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "profile":
-        return (
-          <UserProfileCard
-            userData={userData}
-            onEdit={() => setIsEditModalVisible(true)}
-            onUpload={handleUpload}
-          />
-        );
+        return <UserProfileCard onEdit={() => setIsEditModalVisible(true)} />;
       case "balance":
         return <BalanceCard />;
       case "deposit-history":
@@ -78,8 +57,8 @@ const UserProfile: React.FC = () => {
         <SidebarMenu
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          avatar={userData.avatar}
-          name={userData.name}
+          avatar={userData?.avatar || ""}
+          name={fullName || ""}
         />
       </Sider>
       <Content className="p-6">{renderContent()}</Content>

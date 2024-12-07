@@ -32,7 +32,7 @@ export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
     throw error;
   }
 };
-console.log(process.env.NEXT_PUBLIC_API_URL_MARKETING);
+
 export const fetchPostsAllByPage = async (page: number, size: number) => {
   try {
     const response = await fetch(

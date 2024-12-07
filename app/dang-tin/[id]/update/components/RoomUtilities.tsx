@@ -1,142 +1,6 @@
-// import React, { useState } from "react";
-// import { Form, Switch, Input, Button } from "antd";
-// import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
-// interface RoomUtility {
-//   furnitureAvailability: Record<string, boolean>;
-//   amenitiesAvailability: Record<string, boolean>;
-// }
-
-// interface RoomUtilityFormProps {
-//   roomUtility?: RoomUtility;
-// }
-// const RoomUtilitiesSectionUpdate: React.FC<RoomUtilityFormProps> = ({
-//   roomUtility,
-// }) => {
-//   const [furnitureUtilities, setFurnitureUtilities] = useState<string[]>([]);
-
-//   const [amenitiesUtilities, setAmenitiesUtilities] = useState<string[]>([]);
-
-//   const [newUtility, setNewUtility] = useState<string>("");
-
-//   const addUtility = (type: "furniture" | "amenities") => {
-//     if (newUtility.trim()) {
-//       const setUtilities =
-//         type === "furniture" ? setFurnitureUtilities : setAmenitiesUtilities;
-//       setUtilities((prev) => [...prev, newUtility.trim()]);
-//       setNewUtility("");
-//     }
-//   };
-
-//   const removeUtility = (type: "furniture" | "amenities", utility: string) => {
-//     const setUtilities =
-//       type === "furniture" ? setFurnitureUtilities : setAmenitiesUtilities;
-//     setUtilities((prev) => prev.filter((item) => item !== utility));
-//   };
-
-//   return (
-//     <div>
-//       {/* Furniture Section */}
-//       <div className="bg-gray-100 p-6 rounded-lg mt-6">
-//         <h3 className="text-xl font-semibold mb-4">Nội thất có sẵn</h3>
-//         <div className="grid md:grid-cols-3 gap-4">
-//           {furnitureUtilities.map((utility) => (
-//             <Form.Item
-//               key={utility}
-//               name={[
-//                 "roomUtility",
-//                 "furnitureAvailability",
-//                 utility.replace(/\s/g, ""),
-//               ]}
-//               valuePropName="checked"
-//             >
-//               <div className="flex items-center">
-//                 <Switch
-//                   checkedChildren={utility}
-//                   unCheckedChildren={utility}
-//                   defaultValue={roomUtility?.furnitureAvailability[utility]}
-//                 />
-//                 <Button
-//                   danger
-//                   icon={<MinusOutlined />}
-//                   onClick={() => removeUtility("furniture", utility)}
-//                   className="ml-2"
-//                 />
-//               </div>
-//             </Form.Item>
-//           ))}
-//         </div>
-//         <div className="mt-4 flex">
-//           <Input
-//             placeholder="Add new furniture utility"
-//             value={newUtility}
-//             onChange={(e) => setNewUtility(e.target.value)}
-//             className="mr-2"
-//           />
-//           <Button
-//             type="primary"
-//             icon={<PlusOutlined />}
-//             onClick={() => addUtility("furniture")}
-//           >
-//             Add
-//           </Button>
-//         </div>
-//       </div>
-
-//       {/* Amenities Section */}
-//       <div className="bg-gray-100 p-6 rounded-lg mt-6">
-//         <h3 className="text-xl font-semibold mb-4">Tiện nghi có sẵn</h3>
-//         <div className="grid md:grid-cols-3 gap-4">
-//           {amenitiesUtilities.map((utility) => (
-//             <Form.Item
-//               key={utility}
-//               name={[
-//                 "roomUtility",
-//                 "amenitiesAvailability",
-//                 utility.replace(/\s/g, ""),
-//               ]}
-//               valuePropName="checked"
-//             >
-//               <div className="flex items-center">
-//                 <Switch
-//                   checkedChildren={utility}
-//                   unCheckedChildren={utility}
-//                   defaultValue={roomUtility?.amenitiesAvailability[utility]}
-//                 />
-//                 <Button
-//                   danger
-//                   icon={<MinusOutlined />}
-//                   onClick={() => removeUtility("amenities", utility)}
-//                   className="ml-2"
-
-//                 />
-//               </div>
-//             </Form.Item>
-//           ))}
-//         </div>
-//         <div className="mt-4 flex">
-//           <Input
-//             placeholder="Add new amenity"
-//             value={newUtility}
-//             onChange={(e) => setNewUtility(e.target.value)}
-//             className="mr-2"
-//           />
-//           <Button
-//             type="primary"
-//             icon={<PlusOutlined />}
-//             onClick={() => addUtility("amenities")}
-//           >
-//             Add
-//           </Button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default RoomUtilitiesSectionUpdate;
-import React, { useState } from "react";
-import { Form, Switch, Input, Button } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import React, { useEffect } from "react";
+import { Form, Input, Button, Space, Checkbox } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 interface RoomUtility {
   furnitureAvailability: Record<string, boolean>;
@@ -147,133 +11,117 @@ interface RoomUtilityFormProps {
   roomUtility?: RoomUtility;
 }
 
-const RoomUtilitiesSectionUpdate: React.FC<RoomUtilityFormProps> = ({
+const RoomUtilitiesSection: React.FC<RoomUtilityFormProps> = ({
   roomUtility,
 }) => {
-  const [furnitureUtilities, setFurnitureUtilities] = useState<string[]>([]);
-  const [amenitiesUtilities, setAmenitiesUtilities] = useState<string[]>([]);
-  const [newUtility, setNewUtility] = useState<string>("");
+  const [form] = Form.useForm();
 
-  const addUtility = (type: "furniture" | "amenities") => {
-    if (newUtility.trim()) {
-      const setUtilities =
-        type === "furniture" ? setFurnitureUtilities : setAmenitiesUtilities;
-      setUtilities((prev) => [...prev, newUtility.trim()]);
-      setNewUtility("");
+  // Set initial values for the form when the component mounts
+  useEffect(() => {
+    if (roomUtility) {
+      form.setFieldsValue({
+        furnitureAvailability: Object.keys(
+          roomUtility.furnitureAvailability
+        ).map((key) => ({
+          key,
+          value: roomUtility.furnitureAvailability[key],
+        })),
+        amenitiesAvailability: Object.keys(
+          roomUtility.amenitiesAvailability
+        ).map((key) => ({
+          key,
+          value: roomUtility.amenitiesAvailability[key],
+        })),
+      });
     }
-  };
-
-  const removeUtility = (type: "furniture" | "amenities", utility: string) => {
-    const setUtilities =
-      type === "furniture" ? setFurnitureUtilities : setAmenitiesUtilities;
-    setUtilities((prev) => prev.filter((item) => item !== utility));
-  };
+  }, [roomUtility, form]);
 
   return (
-    <Form
-      layout="vertical"
-      initialValues={{
-        roomUtility: {
-          furnitureAvailability: roomUtility?.furnitureAvailability || {},
-          amenitiesAvailability: roomUtility?.amenitiesAvailability || {},
-        },
-      }}
-    >
-      {/* Furniture Section */}
-      <div className="bg-gray-100 p-6 rounded-lg mt-6">
-        <h3 className="text-xl font-semibold mb-4">Nội thất có sẵn</h3>
-        <div className="grid md:grid-cols-3 gap-4">
-          {furnitureUtilities.map((utility) => (
-            <Form.Item
-              key={utility}
-              name={[
-                "roomUtility",
-                "furnitureAvailability",
-                utility.replace(/\s/g, ""),
-              ]}
-              valuePropName="checked"
-            >
-              <div className="flex items-center">
-                <Switch
-                  checkedChildren={utility}
-                  unCheckedChildren={utility}
-                  checked={roomUtility?.furnitureAvailability[utility]}
-                />
-                <Button
-                  danger
-                  icon={<MinusOutlined />}
-                  onClick={() => removeUtility("furniture", utility)}
-                  className="ml-2"
-                />
-              </div>
-            </Form.Item>
-          ))}
-        </div>
-        <div className="mt-4 flex">
-          <Input
-            placeholder="Add new furniture utility"
-            value={newUtility}
-            onChange={(e) => setNewUtility(e.target.value)}
-            className="mr-2"
-          />
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => addUtility("furniture")}
+    <>
+      {/* Furniture Availability List */}
+      <Form.List name="furnitureAvailability">
+        {(subFields, subOpt) => (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              rowGap: 16,
+            }}
           >
-            Add
-          </Button>
-        </div>
-      </div>
+            {subFields.map((subField) => (
+              <Space key={subField.key} align="center">
+                <Form.Item
+                  name={[subField.name, "key"]}
+                  noStyle
+                  rules={[{ required: true, message: "Name required" }]}
+                >
+                  <Input
+                    placeholder="Furniture name"
+                    defaultValue={subField.key}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name={[subField.name, "value"]}
+                  valuePropName="checked"
+                  noStyle
+                >
+                  <Checkbox>có sẵn</Checkbox>
+                </Form.Item>
+                <CloseOutlined
+                  onClick={() => {
+                    subOpt.remove(subField.name);
+                  }}
+                />
+              </Space>
+            ))}
+            <Button type="dashed" onClick={() => subOpt.add()} block>
+              + Thêm nội thất
+            </Button>
+          </div>
+        )}
+      </Form.List>
 
-      {/* Amenities Section */}
-      <div className="bg-gray-100 p-6 rounded-lg mt-6">
-        <h3 className="text-xl font-semibold mb-4">Tiện nghi có sẵn</h3>
-        <div className="grid md:grid-cols-3 gap-4">
-          {amenitiesUtilities.map((utility) => (
-            <Form.Item
-              key={utility}
-              name={[
-                "roomUtility",
-                "amenitiesAvailability",
-                utility.replace(/\s/g, ""),
-              ]}
-              valuePropName="checked"
-            >
-              <div className="flex items-center">
-                <Switch
-                  checkedChildren={utility}
-                  unCheckedChildren={utility}
-                  checked={roomUtility?.amenitiesAvailability[utility]}
-                />
-                <Button
-                  danger
-                  icon={<MinusOutlined />}
-                  onClick={() => removeUtility("amenities", utility)}
-                  className="ml-2"
-                />
-              </div>
-            </Form.Item>
-          ))}
-        </div>
-        <div className="mt-4 flex">
-          <Input
-            placeholder="Add new amenity"
-            value={newUtility}
-            onChange={(e) => setNewUtility(e.target.value)}
-            className="mr-2"
-          />
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            onClick={() => addUtility("amenities")}
+      {/* Amenities Availability List */}
+      <Form.List name="amenitiesAvailability">
+        {(subFields, subOpt) => (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              rowGap: 16,
+            }}
           >
-            Add
-          </Button>
-        </div>
-      </div>
-    </Form>
+            {subFields.map((subField) => (
+              <Space key={subField.key} align="center">
+                <Form.Item
+                  name={[subField.name, "key"]}
+                  noStyle
+                  rules={[{ required: true, message: "Name required" }]}
+                >
+                  <Input placeholder="Amenity name" />
+                </Form.Item>
+                <Form.Item
+                  name={[subField.name, "value"]}
+                  valuePropName="checked"
+                  noStyle
+                >
+                  <Checkbox>có sẵn</Checkbox>
+                </Form.Item>
+                <CloseOutlined
+                  onClick={() => {
+                    subOpt.remove(subField.name);
+                  }}
+                />
+              </Space>
+            ))}
+            <Button type="dashed" onClick={() => subOpt.add()} block>
+              + Thêm tiện nghi
+            </Button>
+          </div>
+        )}
+      </Form.List>
+    </>
   );
 };
 
-export default RoomUtilitiesSectionUpdate;
+export default RoomUtilitiesSection;

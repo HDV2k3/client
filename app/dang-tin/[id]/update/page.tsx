@@ -11,13 +11,17 @@ const EditRoomPage = () => {
   const router = useRouter();
   const [roomData, setRoomData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("token");
   // Lấy thông tin phòng từ API
   useEffect(() => {
     const fetchRoomData = async () => {
+      const token = localStorage.getItem("token");
+
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-by-id/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-by-id/${id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
         );
         setRoomData(response.data.data);
         setLoading(false);
@@ -34,6 +38,7 @@ const EditRoomPage = () => {
 
   const handleSubmit = async (updatedRoomData: RoomFinal) => {
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/${id}`,
         updatedRoomData,
@@ -43,7 +48,7 @@ const EditRoomPage = () => {
       );
       if (response.status === 200) {
         notification.success({ message: "Room updated successfully!" });
-        router.push(`/dang-tin/${id}`); // Chuyển hướng về trang chi tiết phòng
+        router.push(`/`); // Chuyển hướng về trang chi tiết phòng
       }
     } catch (error) {
       console.error(error);

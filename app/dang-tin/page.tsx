@@ -4,14 +4,13 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { notification } from "antd";
 import axios from "axios";
-import RoomListingForm from "./[id]/update/components/updatePost";
+import CreatePage from "./component/CreatePage";
 
 const NewRoomPage: React.FC = () => {
   const router = useRouter();
-
   const handleSubmit = async (roomData: RoomFinal) => {
     const token = localStorage.getItem("token");
-
+    console.log("createData", roomData);
     try {
       // Submit the new room details (without images)
       const response = await axios.post(
@@ -43,7 +42,11 @@ const NewRoomPage: React.FC = () => {
     }
   };
 
-  return <RoomListingForm onSubmit={handleSubmit} />;
+  return (
+    <div>
+      <CreatePage onSubmit={handleSubmit} />
+    </div>
+  );
 };
 
 export default NewRoomPage;

@@ -3,7 +3,7 @@ import type { CollapseProps } from "antd";
 import { Collapse } from "antd";
 
 const text = `
-Nâng cấp gói vip để mở giới hạn bài viết
+Bạn chỉ cần nộp tiền để sử dụng các dịch vụ quảng cáo đi kèm
 `;
 const text1 = `
 Được thêm các tính năng với bài viết được ưu tiên xuất hiện ở đầu trang tăng tỉ lệ tiếp cận khách hàng
@@ -14,7 +14,7 @@ Contact: Email:dacviethuynh@gmail.com | SĐT: 0329615309
 const items: CollapseProps["items"] = [
   {
     key: "1",
-    label: "Số lượt đăng tin miễn phí của bạn còn 5 lần",
+    label: "Miễn phí đăng tin thỏa sức mua bán",
     children: <p>{text}</p>,
   },
   {

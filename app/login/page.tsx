@@ -6,7 +6,6 @@ import Link from "next/link";
 import React, { useState, useEffect, Suspense } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

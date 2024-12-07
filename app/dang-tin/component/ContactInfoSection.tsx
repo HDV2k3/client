@@ -18,7 +18,7 @@ const ContactInfoSection: React.FC = () => {
         </Form.Item>
         <Form.Item name="statusShow" label="Trạng thái của phòng">
           <Select placeholder="chọn trạng thái">
-            {["Còn phòng", "Sắp hết hạn", "Đang thi công"].map((status) => (
+            {["Còn phòng", "Hết phòng", "Đang thi công"].map((status) => (
               <Option key={status} value={status}>
                 {status}
               </Option>

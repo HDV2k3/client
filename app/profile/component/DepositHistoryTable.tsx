@@ -25,6 +25,7 @@ interface ApiResponse {
 const DepositHistoryTable: React.FC = () => {
   const [data, setData] = useState<OrderRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const userId = localStorage.getItem("userId");
   const [pagination, setPagination] = useState({
     current: 1, // Bắt đầu từ trang 1
     pageSize: 5, // 5 phần tử trên mỗi trang
@@ -35,7 +36,7 @@ const DepositHistoryTable: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get<ApiResponse>(
-        `http://localhost:8084/payment/order/all?userId=1&page=${page}&size=${pageSize}`,
+        `http://localhost:8084/payment/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -68,7 +69,7 @@ const DepositHistoryTable: React.FC = () => {
 
   useEffect(() => {
     fetchData(1, pagination.pageSize); // Bắt đầu từ trang 1
-  }, []);
+  }, [pagination.pageSize]);
 
   const columns = [
     {

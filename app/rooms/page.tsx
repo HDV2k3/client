@@ -11,7 +11,6 @@ import axios from "axios";
 import useSWRInfinite from "swr/infinite";
 import FilterComponent from "./component/Filter";
 
-// ... (giữ nguyên các định nghĩa interface và hằng số)
 interface FilterCriteria {
   minPrice?: string;
   maxPrice?: string;
@@ -58,6 +57,7 @@ const RoomsPage: React.FC = () => {
   // Fetcher function for SWR
   const fetcher = async (url: string) => {
     const response = await axios.get(url);
+    console.log("URL", url);
     if (response.data.responseCode === 101000) {
       return response.data.data; // Assuming data contains the rooms list and pagination info
     } else {

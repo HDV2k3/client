@@ -1,4 +1,3 @@
-// components/RoomListingForm/RoomDetailsSection.tsx
 import React from "react";
 import { Form, Input, InputNumber, Space, Button } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
@@ -6,7 +5,7 @@ import { CloseOutlined } from "@ant-design/icons";
 const RoomPricingSection: React.FC = () => {
   return (
     <div className="bg-gray-100 p-6 rounded-lg mt-6">
-      <h3 className="text-xl font-semibold mb-4">Pricing</h3>
+      <h3 className="text-xl font-semibold mb-4">Chi tiết giá</h3>
       <div className="grid md:grid-cols-4 gap-5">
         <Form.Item
           name={["pricingDetails", "basePrice"]}
@@ -18,17 +17,8 @@ const RoomPricingSection: React.FC = () => {
             formatter={(value) =>
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
-          />
-        </Form.Item>
-        <Form.Item
-          name="fixPrice"
-          label="chương trình giảm giá (Có hoặc không)"
-          rules={[{ required: false, type: "number", min: 0 }]}
-        >
-          <InputNumber
-            className="w-full"
-            formatter={(value) =>
-              `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            parser={(value) =>
+              value?.replace(/₫\s?|,/g, "") as unknown as number
             }
           />
         </Form.Item>
@@ -41,6 +31,9 @@ const RoomPricingSection: React.FC = () => {
             formatter={(value) =>
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
+            parser={(value) =>
+              value?.replace(/₫\s?|,/g, "") as unknown as number
+            }
           />
         </Form.Item>
         <Form.Item name={["pricingDetails", "waterCost"]} label="Giá tiền nước">
@@ -49,51 +42,70 @@ const RoomPricingSection: React.FC = () => {
             formatter={(value) =>
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
+            parser={(value) =>
+              value?.replace(/₫\s?|,/g, "") as unknown as number
+            }
           />
         </Form.Item>
-        <Form.List name={["pricingDetails", "additionalFees"]}>
-          {(fields, { add, remove }) => (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                rowGap: 16,
-              }}
-            >
-              {fields.map((field) => (
-                <Space key={field.key} align="center">
-                  <Form.Item
-                    name={[field.name, "type"]}
-                    noStyle
-                    rules={[
-                      { required: true, message: "Loại phí là bắt buộc" },
-                    ]}
-                  >
-                    <Input placeholder="Loại phí" />
-                  </Form.Item>
-                  <Form.Item
-                    name={[field.name, "amount"]}
-                    noStyle
-                    rules={[{ required: true, message: "Số tiền là bắt buộc" }]}
-                  >
-                    <InputNumber
-                      min={0}
-                      placeholder="Số tiền"
-                      style={{ width: "100%" }}
+
+        <div className="col-span-4">
+          <Form.List name={["pricingDetails", "additionalFees"]}>
+            {(fields, { add, remove }) => (
+              <div>
+                <div className="mb-4">
+                  <h4 className="text-lg font-medium">
+                    Các khoản phí phát sinh
+                  </h4>
+                </div>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space key={key} className="mb-2" align="baseline">
+                    <Form.Item
+                      {...restField}
+                      name={[name, "type"]}
+                      rules={[
+                        { required: true, message: "Vui lòng nhập loại phí" },
+                      ]}
+                    >
+                      <Input placeholder="Loại phí" style={{ width: 200 }} />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, "amount"]}
+                      rules={[
+                        { required: true, message: "Vui lòng nhập số tiền" },
+                      ]}
+                    >
+                      <InputNumber
+                        placeholder="Số tiền"
+                        style={{ width: 200 }}
+                        formatter={(value) =>
+                          `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        }
+                        parser={(value) =>
+                          value?.replace(/₫\s?|,/g, "") as unknown as number
+                        }
+                      />
+                    </Form.Item>
+                    <CloseOutlined
+                      onClick={() => remove(name)}
+                      style={{ color: "red", cursor: "pointer" }}
                     />
-                  </Form.Item>
-                  <CloseOutlined
-                    onClick={() => remove(field.name)}
-                    style={{ color: "red", cursor: "pointer" }}
-                  />
-                </Space>
-              ))}
-              <Button type="dashed" onClick={() => add()} block>
-                + Thêm Phí Phát Sinh
-              </Button>
-            </div>
-          )}
-        </Form.List>
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="dashed"
+                    onClick={() => add()}
+                    block
+                    className="mt-2"
+                  >
+                    + Thêm Phí Phát Sinh
+                  </Button>
+                </Form.Item>
+              </div>
+            )}
+          </Form.List>
+        </div>
       </div>
     </div>
   );

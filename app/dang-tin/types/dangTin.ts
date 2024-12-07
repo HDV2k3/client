@@ -60,4 +60,5 @@ interface RoomFinal {
   furnitureAvailability?: { key: string; value: boolean }[];
   amenitiesAvailability?: { key: string; value: boolean }[];
   statusShowCheck: String;
+
 }
