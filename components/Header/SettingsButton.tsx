@@ -6,7 +6,11 @@ import {
   GlobalOutlined,
 } from "@ant-design/icons";
 
-const SettingsButton = () => {
+type Props = {
+  viewportWidth?: number;
+};
+
+const SettingsButton = ({ viewportWidth = 1024 }: Props) => {
   const [theme, setTheme] = useState("light"); // Trạng thái cho chế độ sáng/tối
   const [language, setLanguage] = useState("vi"); // Trạng thái ngôn ngữ
 
@@ -35,8 +39,12 @@ const SettingsButton = () => {
         <Button
           type="text"
           icon={<SettingOutlined />}
-          style={{ color: "#FFF" }}
-        />
+          style={{
+            color: viewportWidth < 1000 ? 'black' : "#FFF",
+          }}
+        >
+          {viewportWidth < 1000 && <span>Cài dặt</span>}
+        </Button>
       </Tooltip>
     </Popover>
   );

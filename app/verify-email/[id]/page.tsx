@@ -29,6 +29,8 @@ const VerifyEmailPage: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
   const tokenVerify = useParams().id;
 
+  let tokenAuth = '';
+
   useEffect(() => {
     const verifyEmail = async () => {
       if (!tokenVerify) {
@@ -53,6 +55,7 @@ const VerifyEmailPage: React.FC = () => {
           }
         );
 
+
         if (!response.ok) {
           notificationServiceVerify_Email.verifyError();
         }
@@ -64,6 +67,7 @@ const VerifyEmailPage: React.FC = () => {
           message: "Your email has been verified successfully!",
         });
         notificationServiceVerify_Email.verifySuccess();
+
         const email = localStorage.getItem("userEmail");
         const password = localStorage.getItem("userPassword");
         try {
@@ -78,14 +82,16 @@ const VerifyEmailPage: React.FC = () => {
           if (response.data && response.data.data.token) {
             const token = response.data.data.token;
             setToken(token);
+            tokenAuth = token;
+            localStorage.setItem('token', token);
           }
-        } catch (error) {}
+        } catch (error) { }
         try {
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/create`, {
+          await fetch(`${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/create`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${tokenAuth}`,
             },
           });
         } catch (error) {

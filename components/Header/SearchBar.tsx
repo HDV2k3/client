@@ -17,8 +17,8 @@ const SearchBar = () => {
 
   const filteredSuggestions = searchValue
     ? suggestions.filter((item) =>
-        item.value.toLowerCase().includes(searchValue.toLowerCase())
-      )
+      item.value.toLowerCase().includes(searchValue.toLowerCase())
+    )
     : suggestions; // If no search value, show all suggestions
 
   const handleSearch = (value: string) => {
@@ -52,7 +52,7 @@ const SearchBar = () => {
       <div className="flex-grow">
         <input
           type="text"
-          className="w-full h-8 px-8 py-2 text-sm text-gray-700 bg-white border rounded-l focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full h-8 px-2 py-2 text-sm text-gray-700 bg-white border rounded-l focus:outline-none focus:ring-1 focus:ring-blue-500"
           placeholder="Tìm kiếm sản phẩm trên NextLife"
           value={searchValue}
           onChange={(e) => {
@@ -82,7 +82,7 @@ const SearchBar = () => {
       </div>
       <button
         onClick={() => handleSearch(searchValue)}
-        className="px-4 h-8 text-sm text-white bg-blue-500 rounded-r hover:bg-blue-600"
+        className="px-2 h-8 text-sm text-white bg-blue-500 rounded-r hover:bg-blue-600"
       >
         Tìm
       </button>

@@ -44,7 +44,8 @@ const BalanceCard: React.FC = () => {
       try {
         setIsLoading(true);
         const response = await axios.get<UserPaymentResponse>(
-          "http://localhost:8084/payment/userPayment/getUserPayment",
+          // "http://localhost:8084/payment/userPayment/getUserPayment",
+          `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/getUserPayment`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

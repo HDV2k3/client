@@ -2,7 +2,7 @@ import React from "react";
 import RoomCardProminent from "../../../../../components/RoomCard";
 import { SkeletonCard } from "../../../../../components/SkeletonCard";
 import Link from "next/link";
-
+import { converStringToSlug } from '../../../../../utils/converStringToSlug';
 interface RoomListProps {
   rooms: Room[];
   isLoadingMore: boolean;
@@ -22,7 +22,8 @@ const SameDistrictRoomList: React.FC<RoomListProps> = ({
             img.urlImagePost || "/default-image.jpg"
         );
         return (
-          <Link key={room.id} href={`/room-detail/${room.id}`}>
+          // <Link key={room.id} href={`/room-detail/${room.id}`}>
+          <Link href={`/room-detail/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
             <RoomCardProminent
               id={room.id}
               name={room.roomInfo.name}

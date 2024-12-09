@@ -2,6 +2,8 @@ import React from "react";
 import RoomCardProminent from "../../../../../components/RoomCard";
 import { SkeletonCard } from "../../../../../components/SkeletonCard";
 import Link from "next/link";
+import { converStringToSlug } from '../../../../../utils/converStringToSlug';
+
 
 interface FeaturedRoomListProps {
   rooms: Room[];
@@ -22,7 +24,8 @@ const SamePriceRoomList: React.FC<FeaturedRoomListProps> = ({
             img.urlImagePost || "/default-image.jpg"
         );
         return (
-          <Link key={room.id} href={`/room-detail/${room.id}`}>
+          // <Link key={room.id} href={`/room-detail/${room.id}`}>
+          <Link key={room?.id} href={`/room-detail/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
             <RoomCardProminent
               id={room.id}
               name={room.roomInfo.name}
@@ -35,9 +38,9 @@ const SamePriceRoomList: React.FC<FeaturedRoomListProps> = ({
               description={room.description}
               status={room.status}
               type={room.roomInfo.type}
-              capacity={room.roomInfo.capacity} 
-              createdBy={room.createdBy} 
-              contactInfo={room.contactInfo}            />
+              capacity={room.roomInfo.capacity}
+              createdBy={room.createdBy}
+              contactInfo={room.contactInfo} />
           </Link>
         );
       })}

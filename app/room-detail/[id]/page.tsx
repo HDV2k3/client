@@ -13,6 +13,7 @@ import usePostsSameDistrictRooms from "../../../hooks/usePostSameDistrict";
 import SameDistrictRoomList from "../components/InfoDetail/components/PostSameDistrict";
 import { useMemo } from "react";
 import "../styles/info-detail-wrapper.css";
+import { getIdBySlug } from "@/utils/converStringToSlug";
 // Loading and Error States
 function Loading() {
   return <div className="text-center py-10">Loading...</div>;
@@ -81,7 +82,7 @@ function RoomDetailContent({ roomData }: { readonly roomData: any }) {
 // Detail Fetching Components
 function RegularRoomDetail({ id }: { readonly id: string }) {
   const { roomData, isLoading, isError } = useRoomDetail(id);
-
+  console.log('check data room detail: ', roomData);
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message="Error loading room details" />;
   if (!roomData) return <ErrorMessage message="Room details not available" />;
@@ -105,7 +106,7 @@ function PromotionalRoomDetail({ id }: { readonly id: string }) {
 function RoomDetail() {
   const params = useParams();
   const searchParams = useSearchParams();
-  const id = params?.id as string | undefined;
+  const id = getIdBySlug(params?.id as string);
   const roomType = searchParams?.get("type");
 
   if (!id) return <ErrorMessage message="Invalid room ID" />;

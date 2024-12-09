@@ -10,6 +10,8 @@ import {
 import "../styles/RoomCardProminent.css";
 import { FaPhone, FaUser } from "react-icons/fa";
 import { Carousel } from "antd"; // Thêm Carousel
+import { converStringToSlug } from './../utils/converStringToSlug';
+
 
 interface RoomCardProps {
   id: string;
@@ -26,6 +28,7 @@ interface RoomCardProps {
   capacity: number;
   createdBy: string;
   contactInfo: string;
+  title?: string;
 }
 
 const RoomCardProminent: React.FC<RoomCardProps> = ({
@@ -39,11 +42,11 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
   capacity,
   createdBy,
   contactInfo,
+  title
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <Link href={`/room-detail/${id}`} passHref>
+    <Link key={id} href={`/room-detail/${converStringToSlug(title || name)}-${id}.html`} passHref>
       <div
         className="room-card bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer flex flex-col justify-between"
         onMouseEnter={() => setIsHovered(true)}

@@ -49,6 +49,7 @@
     "react-router-dom": "^6.28.0",
     "react-slick": "^0.30.2",
     "sass": "^1.77.8",
+    "slugify": "^1.6.6",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "styled-components": "^6.1.13",
