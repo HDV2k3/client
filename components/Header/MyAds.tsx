@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import { SolutionOutlined } from "@ant-design/icons";
 type Props = {
   viewportWidth?: number;

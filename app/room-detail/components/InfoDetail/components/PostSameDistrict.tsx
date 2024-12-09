@@ -22,24 +22,25 @@ const SameDistrictRoomList: React.FC<RoomListProps> = ({
             img.urlImagePost || "/default-image.jpg"
         );
         return (
-          // <Link key={room.id} href={`/room-detail/${room.id}`}>
-          <Link href={`/room-detail/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
-            <RoomCardProminent
-              id={room.id}
-              name={room.roomInfo.name}
-              price={room.pricingDetails.basePrice}
-              fixPrice={room.fixPrice}
-              imageUrls={imageUrls}
-              totalArea={room.roomInfo.totalArea}
-              address={room.roomInfo.address}
-              createdDate={new Date(room.createdDate * 1000).toLocaleString()}
-              description={room.description}
-              status={room.status}
-              type={room.roomInfo.type}
-              capacity={room.roomInfo.capacity}
-              createdBy={room.createdBy}
-              contactInfo={room.contactInfo}
-            />
+          <Link key={room.id} href={`/room-detail/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
+            <div key={room.id}>
+              <RoomCardProminent
+                id={room.id}
+                name={room.roomInfo.name}
+                price={room.pricingDetails.basePrice}
+                fixPrice={room.fixPrice}
+                imageUrls={imageUrls}
+                totalArea={room.roomInfo.totalArea}
+                address={room.roomInfo.address}
+                createdDate={new Date(room.createdDate * 1000).toLocaleString()}
+                description={room.description}
+                status={room.status}
+                type={room.roomInfo.type}
+                capacity={room.roomInfo.capacity}
+                createdBy={room.createdBy}
+                contactInfo={room.contactInfo}
+              />
+            </div>
           </Link>
         );
       })}

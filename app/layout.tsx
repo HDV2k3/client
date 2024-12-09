@@ -5,7 +5,7 @@ import AppFooter from "../components/Footer";
 import "../styles/globals.css"; // Import global styles
 import Chat from "@/components/Chat";
 import BackToTop from "@/components/BackToTop";
-
+import NextTopLoader from '../components/Header/NextTopLoader';
 export const metadata = {
   title: "NextRoom",
   description:
@@ -18,6 +18,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="flex flex-col min-h-screen">
         <AntdRegistry>
           <AppHeader />
+          <NextTopLoader />
           {/* Remove padding from the main content */}
           <main className="flex-grow pt-0 bg-gray-100">{children}</main>
           <AppFooter />

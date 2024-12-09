@@ -2,7 +2,7 @@ import EncryptionService from "../../service/EncryptionService";
 import { Avatar, List, Typography, Spin } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 
 
 const { Text } = Typography;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, message } from "antd";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import TabContent from "./TabContent";
 import {
   CheckCircleOutlined,

@@ -8,7 +8,7 @@ import RoomDetailsSectionUpdate from "./RoomInfoEdit";
 import RoomPricingSectionUpdate from "./PricingDetails";
 import RoomUtilitiesSectionUpdate from "./RoomUtilities";
 import ContactInfoSectionUpdate from "./ContactInfoSection";
-import RoomImageUpload from "@/app/dang-tin/component/uploadImages";
+import RoomImageUpload from "@/app/dang-tin/component/UploadImages";
 import dayjs from "dayjs";
 
 import type { DatePickerProps } from "antd";
@@ -76,9 +76,9 @@ const RoomListingFormUpdate: React.FC<RoomFormProps> = ({
         ...values.pricingDetails,
         additionalFees: values.pricingDetails?.additionalFees
           ? values.pricingDetails.additionalFees.map((fee: any) => ({
-              type: fee.type,
-              amount: fee.amount,
-            }))
+            type: fee.type,
+            amount: fee.amount,
+          }))
           : [],
       },
       roomUtility: {

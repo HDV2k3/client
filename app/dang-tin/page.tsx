@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import { notification } from "antd";
 import axios from "axios";
 import CreatePage from "./component/CreatePage";

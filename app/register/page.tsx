@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import RegistrationForm from "./component/RegistrationForm";
 import { notificationService } from "../dang-tin/service/notificationService"; // Import notification service
 import { notification } from "antd";

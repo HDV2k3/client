@@ -1,6 +1,6 @@
 import { Dropdown, Button } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 
 interface UserMenuProps {
   viewportWidth?: number;

@@ -13,7 +13,7 @@ import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
 import NotificationButton from "./NotificationButton";
 import SettingsButton from "./SettingsButton";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import MyAds from "./MyAds";
 import useViewportWidth from '../../hooks/useWitdhViewPoint';
 
