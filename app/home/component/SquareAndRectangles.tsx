@@ -153,7 +153,7 @@ const DistrictDisplay = () => {
   if (!isClient) return null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {randomDistricts.map((district, index) => (
           <motion.div
@@ -162,10 +162,9 @@ const DistrictDisplay = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             className={`relative overflow-hidden rounded-lg shadow-lg
-              ${
-                index === 0
-                  ? "md:col-span-4 md:row-span-2 h-[250px] lg:h-[300px]"
-                  : "h-[200px] lg:h-[280px]"
+              ${index === 0
+                ? "md:col-span-4 md:row-span-2 h-[250px] lg:h-[300px]"
+                : "h-[200px] lg:h-[280px]"
               }`}
           >
             <div

@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useRoomDetail } from "../../../hooks/useRoomDetail";
 import { useRoomPromotionalDetail } from "../../../hooks/useRoomPromotionalDetail";
 import SquareAndRectanglesImageDetail from "../components/ImageDetail/SquareAndRectanglesImageDetail";
-import MapDetail from "../../../app/room-detail/components/map-detail/map-detail";
+import MapDetail from "../components/map-detail/map-detail";
 import InfoDetail from "../components/InfoDetail/InfoDetail";
 import usePostsSamePriceRooms from "../../../hooks/usePostsSamePrice";
 import SamePriceRoomList from "../components/InfoDetail/components/PostsSamePrice";
@@ -54,7 +54,7 @@ function RoomDetailContent({ roomData }: { readonly roomData: any }) {
   );
 
   return (
-    <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <div className="container mx-auto px-4 md:px-6 lg:px-8 mt-[20px]">
       <div className="flex flex-col md:flex-row md:gap-6 lg:gap-8">
         <div className="w-full md:w-1/2 lg:w-2/3 mb-2">
           <SquareAndRectanglesImageDetail room={roomData} />
@@ -82,7 +82,6 @@ function RoomDetailContent({ roomData }: { readonly roomData: any }) {
 // Detail Fetching Components
 function RegularRoomDetail({ id }: { readonly id: string }) {
   const { roomData, isLoading, isError } = useRoomDetail(id);
-  console.log('check data room detail: ', roomData);
   if (isLoading) return <Loading />;
   if (isError) return <ErrorMessage message="Error loading room details" />;
   if (!roomData) return <ErrorMessage message="Room details not available" />;

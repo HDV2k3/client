@@ -1,7 +1,12 @@
+'use client';
+
 import Link from "next/link";
 import { Button } from "antd";
+import useLanguge from "@/hooks/useLanguge";
 
 const TopNavigation = () => {
+  const { lang, LangugeOptions } = useLanguge();
+
   return (
     <div className="hidden sm:flex justify-between items-center text-sm mb-2">
       <div className="flex space-x-4">
@@ -38,7 +43,7 @@ const TopNavigation = () => {
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
           >
-            <span style={{ color: "#FBBF24" }}>Đóng góp ý kiến</span>
+            <span style={{ color: "#FBBF24" }}>{LangugeOptions[lang]?.topNavigation.ContributeComments}</span>
           </Button>
         </Link>
         <Link href="error">
@@ -46,7 +51,7 @@ const TopNavigation = () => {
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
           >
-            <span style={{ color: "#FBBF24" }}>Tải ứng dụng</span>
+            <span style={{ color: "#FBBF24" }}>{LangugeOptions[lang]?.topNavigation.DownloadApp}</span>
           </Button>
         </Link>
         <Link href="tro-giup">
@@ -54,7 +59,7 @@ const TopNavigation = () => {
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
           >
-            <span style={{ color: "#FBBF24" }}>Trợ giúp</span>
+            <span style={{ color: "#FBBF24" }}>{LangugeOptions[lang]?.topNavigation.Help}</span>
           </Button>
         </Link>
       </div>

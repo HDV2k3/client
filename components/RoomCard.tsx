@@ -46,7 +46,7 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <Link key={id} href={`/room-detail/${converStringToSlug(title || name)}-${id}.html`} passHref>
+    <Link key={id} href={`/r/${converStringToSlug(title || name)}-${id}.html`} passHref>
       <div
         className="room-card bg-white shadow-lg rounded-lg overflow-hidden relative cursor-pointer flex flex-col justify-between"
         onMouseEnter={() => setIsHovered(true)}

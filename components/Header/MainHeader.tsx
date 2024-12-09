@@ -16,6 +16,7 @@ import SettingsButton from "./SettingsButton";
 import { useRouter } from '@/hooks/useRouter';
 import MyAds from "./MyAds";
 import useViewportWidth from '../../hooks/useWitdhViewPoint';
+import useLanguge from "@/hooks/useLanguge";
 
 interface MainHeaderProps {
   userName: string;
@@ -34,6 +35,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
   profile,
   deposit,
 }) => {
+  const { lang, getLanguge, setLanguge, LangugeOptions } = useLanguge();
   const router = useRouter();
   const viewportWidth = useViewportWidth();
 
@@ -53,7 +55,6 @@ const MainHeader: React.FC<MainHeaderProps> = ({
 
   const handlePostClick = () => {
     if (!hasToken()) {
-
       router.push(`/login?callbackUrl=${window.location.href}`);
     } else {
       router.push("/dang-tin");

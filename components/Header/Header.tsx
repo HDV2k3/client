@@ -78,10 +78,7 @@ const Header = () => {
   return (
     <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
       <div className="container mx-auto  sm:px-6 lg:px-8">
-        {/* Top Navigation */}
         <TopNavigation />
-
-        {/* Main Header (User Info, Logout, Profile) */}
         <MainHeader
           userName={userName}
           isLoggedIn={isLoggedIn}

@@ -8,13 +8,17 @@ import {
   FaRegEdit,
 } from "react-icons/fa";
 
+import { useRouter } from '@/hooks/useRouter';
+
 const IconRow = () => {
+  const router = useRouter();
+
   const services = [
     {
       icon: FaHome,
       text: "Phòng Trọ",
       alt: "Icon for houses",
-      link: "/nha-rieng",
+      link: "/phong-tro",
     },
     {
       icon: FaBuilding,
@@ -49,7 +53,8 @@ const IconRow = () => {
   ];
 
   const handleClick = (link: string) => {
-    window.location.href = link;
+    // window.location.href = link;
+    router.push(link);
   };
 
   return (

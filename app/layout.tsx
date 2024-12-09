@@ -20,8 +20,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           <AppHeader />
           <NextTopLoader />
           {/* Remove padding from the main content */}
-          <main className="flex-grow pt-0 bg-gray-100">{children}</main>
-          <AppFooter />
+          <main className="flex-grow pt-0 bg-gray-100 max-w-full overflow-scroll">
+            <div className="max-w-full h-auto flex justify-center">
+              <div className="w-full max-w-[1280px] h-100% border-red-800">
+                {children}
+              </div>
+            </div>
+            <AppFooter />
+          </main>
           <BackToTop />
           <Chat />
         </AntdRegistry>
