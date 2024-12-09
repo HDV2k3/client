@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { TagFilled } from "@ant-design/icons";
-import { API_MARKETING } from "@/service/constants";
+
 
 type Banner = {
   id: string;
@@ -24,7 +24,7 @@ const PromotionBanner: React.FC = () => {
     const fetchBanners = async () => {
       try {
         const response = await fetch(
-          `${API_MARKETING}/banner/all`
+          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/banner/all`
         );
 
         if (!response.ok) {

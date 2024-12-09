@@ -1,5 +1,5 @@
 "use client";
-import { API_USER } from "@/service/constants";
+
 import React, { useState, useEffect } from "react";
 import {
   BsCheckCircleFill,
@@ -8,6 +8,7 @@ import {
   BsInfoCircleFill,
 } from "react-icons/bs";
 import { FaTimes, FaEnvelope } from "react-icons/fa";
+import { notificationServiceVerify } from "./services/notification";
 
 interface NotificationModalProps {
   isOpen: boolean;
@@ -169,7 +170,7 @@ const EmailVerificationPage: React.FC = () => {
   const handleResendEmail = async () => {
     try {
       const response = await fetch(
-        `${API_USER}/resend-verification`,
+        `${process.env.NEXT_PUBLIC_API_URL_USER}/users/resend-verification`,
         {
           method: "POST",
           headers: {
@@ -184,13 +185,14 @@ const EmailVerificationPage: React.FC = () => {
         setModal({
           isOpen: true,
           type: "success",
-          title: "Success",
-          message: "Verification email has been resent successfully!",
+          title: "Thành công!",
+          message: "Email xác minh đã được gửi lại thành công!",
         });
+        notificationServiceVerify.verifySuccess();
         setCountdown(60);
         setIsResendDisabled(true);
       } else {
-        throw new Error("Failed to resend verification email");
+        notificationServiceVerify.verifyError();
       }
     } catch (error) {
       setModal({
@@ -199,6 +201,7 @@ const EmailVerificationPage: React.FC = () => {
         title: "Error",
         message: (error as Error).message,
       });
+      notificationServiceVerify.verifyError();
     }
   };
 
@@ -210,18 +213,19 @@ const EmailVerificationPage: React.FC = () => {
             <FaEnvelope className="h-8 w-8 text-blue-600" />
           </div>
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-            Check your email
+            Vui lòng kiểm tra Email để kích hoạt tài khoản!
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            We have sent a verification link to your email address. Please check
-            your inbox and click the link to verify your account.
+            Chúng tôi đã gửi liên kết xác minh đến địa chỉ email của bạn. Vui
+            lòng kiểm tra hộp thư đến của bạn và nhấp vào liên kết để xác minh
+            tài khoản của bạn.
           </p>
         </div>
 
         <div className="mt-8 space-y-6">
           <div className="text-center">
             <p className="text-sm text-gray-500">
-              Didn&apos;t receive the email? Check your spam folder or
+              Không nhận được email? Kiểm tra thư mục thư rác hoặc
             </p>
             <button
               onClick={handleResendEmail}
@@ -230,7 +234,7 @@ const EmailVerificationPage: React.FC = () => {
             >
               {isResendDisabled
                 ? `Resend email (${countdown}s)`
-                : "Click to resend verification email"}
+                : "Nhấp để gửi lại email xác minh"}
             </button>
           </div>
 
@@ -239,7 +243,7 @@ const EmailVerificationPage: React.FC = () => {
               href="/login"
               className="text-sm font-medium text-blue-600 hover:text-blue-500"
             >
-              Return to login
+              Quay lại trang đăng nhập
             </a>
           </div>
         </div>

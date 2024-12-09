@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import React, { useState, useEffect, Suspense } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { API_USER } from "@/service/constants";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -47,7 +46,7 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `${API_USER}/auth/login`,
+        `${process.env.NEXT_PUBLIC_API_URL_USER}/auth/login`,
         {
           email,
           password,

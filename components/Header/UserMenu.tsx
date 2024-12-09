@@ -1,5 +1,5 @@
 import { Dropdown, Button } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
@@ -8,6 +8,7 @@ interface UserMenuProps {
   onLogout: () => void;
   logOut: string;
   profile: string;
+  deposit: string;
 }
 
 const UserMenu = ({
@@ -16,6 +17,7 @@ const UserMenu = ({
   onLogout,
   logOut,
   profile,
+  deposit,
 }: UserMenuProps) => {
   const router = useRouter();
 
@@ -30,19 +32,29 @@ const UserMenu = ({
       label: logOut,
       onClick: onLogout,
     },
+    {
+      key: "3",
+      label: deposit,
+      onClick: () => router.push("/deposit"),
+    },
   ];
 
-  return (
-    <Dropdown menu={{ items: userMenuItems }}>
-      <Button
-        type="text"
-        icon={<UserOutlined />}
-        style={{ color: "#FFF" }}
-        onClick={() => !isLoggedIn && router.push("/login")}
-      >
+  return isLoggedIn ? (
+    <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
+      <Button type="text" icon={<UserOutlined />} style={{ color: "#FFF" }}>
         <span className="hidden sm:inline">{userName}</span>
+        <DownOutlined style={{ marginLeft: 8 }} />
       </Button>
     </Dropdown>
+  ) : (
+    <Button
+      type="text"
+      icon={<UserOutlined />}
+      style={{ color: "#FFF" }}
+      onClick={() => router.push("/login")}
+    >
+      <span className="hidden sm:inline">Đăng nhập</span>
+    </Button>
   );
 };
 

@@ -7,7 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card";
-import { API_USER } from "@/service/constants";
+import { notificationServiceVerify_Email } from "../services/notification";
+import axios from "axios";
 
 interface NotificationState {
   isOpen: boolean;
@@ -25,6 +26,7 @@ const VerifyEmailPage: React.FC = () => {
     title: "",
     message: "",
   });
+  const [token, setToken] = useState<string | null>(null);
   const tokenVerify = useParams().id;
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const VerifyEmailPage: React.FC = () => {
 
       try {
         const response = await fetch(
-          `${API_USER}/users/verify-email?token=${tokenVerify}`,
+          `${process.env.NEXT_PUBLIC_API_URL_USER}/users/verify-email?token=${tokenVerify}`,
           {
             method: "GET",
             headers: {
@@ -52,11 +54,7 @@ const VerifyEmailPage: React.FC = () => {
         );
 
         if (!response.ok) {
-          throw new Error(
-            response.status === 400
-              ? "Invalid or expired verification token"
-              : "Verification failed. Please try again."
-          );
+          notificationServiceVerify_Email.verifyError();
         }
 
         setNotification({
@@ -65,7 +63,37 @@ const VerifyEmailPage: React.FC = () => {
           title: "Verification Successful",
           message: "Your email has been verified successfully!",
         });
+        notificationServiceVerify_Email.verifySuccess();
+        const email = localStorage.getItem("userEmail");
+        const password = localStorage.getItem("userPassword");
+        try {
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL_USER}/auth/login`,
+            {
+              email,
+              password,
+            }
+          );
 
+          if (response.data && response.data.data.token) {
+            const token = response.data.data.token;
+            setToken(token);
+          }
+        } catch (error) {}
+        try {
+          await fetch(`${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/create`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        } catch (error) {
+          console.error("Error verifying email:", error);
+        }
+        setToken("");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userPassword");
         // Redirect after successful verification
         setTimeout(() => {
           router.push("/login");

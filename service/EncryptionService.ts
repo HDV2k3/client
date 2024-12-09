@@ -1,5 +1,3 @@
-import { API_URL_CHATTING } from "./constants";
-
 interface DecryptionResponse {
   data: string;
   status: string;
@@ -19,7 +17,7 @@ class EncryptionService {
 
     try {
       const response = await fetch(
-        `${API_URL_CHATTING}/api/v1/encryption/decrypt?senderId=${senderId}&receiverId=${receiverId}`,
+        `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/encryption/decrypt?senderId=${senderId}&receiverId=${receiverId}`,
         {
           method: "POST",
           headers: {
@@ -52,11 +50,14 @@ class EncryptionService {
     if (!token) throw new Error("Token is missing");
 
     try {
-      const response = await fetch(`${API_URL_CHATTING}/api/v1/encryption/private-key`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/encryption/private-key`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Failed to get private key: ${response.status}`);
