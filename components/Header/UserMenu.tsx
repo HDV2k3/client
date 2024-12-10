@@ -1,8 +1,9 @@
 import { Dropdown, Button } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 
 interface UserMenuProps {
+  viewportWidth?: number;
   userName: string;
   isLoggedIn: boolean;
   onLogout: () => void;
@@ -12,6 +13,7 @@ interface UserMenuProps {
 }
 
 const UserMenu = ({
+  viewportWidth = 1800,
   userName,
   isLoggedIn,
   onLogout,
@@ -41,7 +43,7 @@ const UserMenu = ({
 
   return isLoggedIn ? (
     <Dropdown menu={{ items: userMenuItems }} trigger={["click"]}>
-      <Button type="text" icon={<UserOutlined />} style={{ color: "#FFF" }}>
+      <Button type="text" icon={<UserOutlined />} style={{ color: viewportWidth < 700 ? 'black' : "#FFF" }}>
         <span className="hidden sm:inline">{userName}</span>
         <DownOutlined style={{ marginLeft: 8 }} />
       </Button>
@@ -50,7 +52,7 @@ const UserMenu = ({
     <Button
       type="text"
       icon={<UserOutlined />}
-      style={{ color: "#FFF" }}
+      style={{ color: viewportWidth < 700 ? 'black' : "#FFF" }}
       onClick={() => router.push("/login")}
     >
       <span className="hidden sm:inline">Đăng nhập</span>

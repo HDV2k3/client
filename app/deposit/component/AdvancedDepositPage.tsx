@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MobileOutlined, QrcodeOutlined } from "@ant-design/icons";
 import { message, Form, Typography } from "antd";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import PaymentMethodCard from "./PaymentMethodCard";
 import DepositModal from "./DepositModal";
 

@@ -7,6 +7,7 @@ import RoomListingForm from "../update/components/updatePost";
 import { useParams, useRouter } from "next/navigation";
 import RoomImageUpload from "../../component/UploadImages";
 
+
 const UploadPage: React.FC = () => {
   const router = useRouter();
   const { id } = useParams();

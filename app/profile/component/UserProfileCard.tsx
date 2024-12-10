@@ -47,7 +47,8 @@ const UserProfileCard: React.FC<{ onEdit: () => void }> = ({ onEdit }) => {
       }
 
       const response = await axios.get(
-        "http://localhost:8080/user/users/my-info",
+        // "http://localhost:8080/user/users/my-info",
+        `${process.env.NEXT_PUBLIC_API_URL_USER}/users/my-info`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

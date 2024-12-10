@@ -53,6 +53,7 @@ const LoginPage: React.FC = () => {
         }
       );
 
+
       if (response.data && response.data.data.token) {
         const token = response.data.data.token;
 

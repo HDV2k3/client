@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from '@/hooks/useRouter';
 import axios from "axios";
 import TopNavigation from "./TopNavigation";
 import MainHeader from "./MainHeader";
@@ -76,22 +76,18 @@ const Header = () => {
   }, [fetchUserData]);
 
   return (
-    <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
-      <div className="container mx-auto  sm:px-6 lg:px-8">
-        {/* Top Navigation */}
-        <TopNavigation />
-
-        {/* Main Header (User Info, Logout, Profile) */}
-        <MainHeader
-          userName={userName}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          logOut={logOut}
-          profile={profile}
-          deposit={deposit}
-        />
-      </div>
-    </header>
+    // <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
+    //   <div className="container mx-auto  sm:px-6 lg:px-8">
+    <MainHeader
+      userName={userName}
+      isLoggedIn={isLoggedIn}
+      onLogout={handleLogout}
+      logOut={logOut}
+      profile={profile}
+      deposit={deposit}
+    />
+    // </div >
+    // </header >
   );
 };
 

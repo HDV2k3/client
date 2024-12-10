@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Button, Tooltip } from "antd";
 import { BellOutlined } from "@ant-design/icons";
-import NotificationModal from "../modal/NotificationModal"; // Đường dẫn đến NotificationModal
+import NotificationModal from "../modal/NotificationModal"; // Adjust the import path as needed
 
-const NotificationButton = () => {
+type Props = {
+  viewportWidth?: number;
+};
+
+const NotificationButton = ({ viewportWidth = 1024 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -20,13 +24,17 @@ const NotificationButton = () => {
         <Button
           type="text"
           icon={<BellOutlined />}
-          style={{ color: "#FFF" }}
+          style={{ color: viewportWidth < 1000 ? "black" : "#FFF" }}
           onClick={handleOpenModal}
-        />
+        >
+          {viewportWidth < 700 && <span>Thông báo</span>}
+        </Button>
       </Tooltip>
 
-      {/* Gọi NotificationModal và truyền trạng thái mở */}
-      <NotificationModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      {/* Conditionally render NotificationModal */}
+      {isModalOpen && (
+        <NotificationModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };

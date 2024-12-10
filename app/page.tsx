@@ -1,3 +1,5 @@
+'use server'
+
 // app/page.tsx
 import React from "react";
 import HomePage from "./home/page"; // Import the HomePage component
@@ -7,4 +9,3 @@ const RootPage: React.FC = () => {
 };
 
 export default RootPage;
-    

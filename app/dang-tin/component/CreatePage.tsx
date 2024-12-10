@@ -65,9 +65,9 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
         ...values.pricingDetails,
         additionalFees: values.pricingDetails?.additionalFees
           ? values.pricingDetails.additionalFees.map((fee: any) => ({
-              type: fee.type,
-              amount: fee.amount,
-            }))
+            type: fee.type,
+            amount: fee.amount,
+          }))
           : [],
       },
       roomUtility: {
@@ -92,21 +92,23 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
         onFinish={handleSubmit}
         className="space-y-6 bg-white p-8 rounded-lg shadow-md"
       >
-        <AdsSection />
-        <BasicInfoSection />
-        <RoomDetailsSection />
-        <RoomPricingSection />
-        <RoomUtilitiesSection />
-        <ContactInfoSection />
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700"
-          >
-            Tiếp tục thêm ảnh
-          </Button>
-        </Form.Item>
+        <div className="p-6">
+          <AdsSection />
+          <BasicInfoSection />
+          <RoomDetailsSection />
+          <RoomPricingSection />
+          <RoomUtilitiesSection />
+          <ContactInfoSection />
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
+              Tiếp tục thêm ảnh
+            </Button>
+          </Form.Item>
+        </div>
       </Form>
     </div>
   );

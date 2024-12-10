@@ -18,7 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <div className="border rounded-lg overflow-hidden shadow-lg bg-white">
-      <Image src={imageUrl} alt={name} className="w-full h-48 object-cover" />
+      <Image src={imageUrl} alt={name} width={1000} height={1000} className="w-full h-48 object-cover" />
       <div className="p-4">
         <h2 className="text-xl font-bold mb-2">{name}</h2>
         <p className="text-gray-700 mb-4">{description}</p>

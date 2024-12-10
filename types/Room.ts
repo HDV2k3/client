@@ -2,6 +2,7 @@ interface Room {
   [x: string]: any;
   id: string;
   roomInfo: {
+    roomId: string;
     name: string;
     description: string;
     address: string;
@@ -39,5 +40,5 @@ interface Room {
   lastModifiedDate: number;
   status: string;
   statusShowCheck: string;
-  index:string;
+  index: string;
 }

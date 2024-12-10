@@ -36,7 +36,8 @@ const DepositHistoryTable: React.FC = () => {
     try {
       setLoading(true);
       const response = await axios.get<ApiResponse>(
-        `http://localhost:8084/payment/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
+        // `http://localhost:8084/payment/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
+        `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

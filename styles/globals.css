@@ -20,18 +20,25 @@
   .text-balance {
     text-wrap: balance;
   }
+
   /* Custom scrollbar styles */
   .scrollbar {
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: var(--foreground) var(--background); /* For Firefox */
+    scrollbar-width: thin;
+    /* For Firefox */
+    scrollbar-color: var(--foreground) var(--background);
+    /* For Firefox */
   }
+
   .scrollbar::-webkit-scrollbar {
-    width: 8px; /* For Webkit browsers */
+    width: 8px;
+    /* For Webkit browsers */
   }
+
   .scrollbar::-webkit-scrollbar-thumb {
     background-color: var(--foreground);
     border-radius: var(--radius);
   }
+
   .scrollbar::-webkit-scrollbar-track {
     background-color: var(--background);
   }
@@ -65,6 +72,7 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
@@ -97,11 +105,104 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground scrollbar; /* Apply scrollbar styles */
+    @apply bg-background text-foreground scrollbar;
+    /* Apply scrollbar styles */
   }
+
   /* Override Ant Design header background */
   .ant-layout-header {
-    background: transparent !important; /* Make header background transparent */
+    background: transparent !important;
+    /* Make header background transparent */
   }
+}
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#__next {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex: 1;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+/* Scrollbar styles */
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-bg);
+  border-radius: 10px;
+  border: 3px solid var(--scrollbar-track-bg);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-bg);
+}
+
+/* Theme variables */
+:root {
+  /* Light mode colors */
+  --ig-primary-background: 255, 255, 255;
+  --ig-primary-text: 0, 0, 0;
+  --ig-secondary-text: 142, 142, 142;
+  --ig-primary-button: 0, 149, 246;
+
+  --scrollbar-track-bg: #fafafa;
+  --scrollbar-thumb-bg: #c1c1c1;
+  --scrollbar-thumb-hover-bg: #a0a0a0;
+
+  /* Font settings */
+  --font-family-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --system-14-font-size: 14px;
+  --system-14-line-height: 18px;
+
+  /* Dark mode colors */
+  --ig-dark-background: 0, 0, 0;
+  --ig-primary-text-light: 255, 255, 255;
+}
+
+
+.light {
+  background-color: rgb(var(--ig-primary-background));
+  color: rgb(var(--ig-primary-text));
+  font-family: var(--font-family-system);
+  font-size: var(--system-14-font-size);
+  line-height: var(--system-14-line-height);
+  margin: 0;
+
+  --scrollbar-track-bg: #fafafa;
+  --scrollbar-thumb-bg: #c1c1c1;
+  --scrollbar-thumb-hover-bg: #a0a0a0;
+}
+
+.dark {
+  background-color: rgb(var(--ig-dark-background));
+  color: rgb(var(--ig-primary-text-light));
+  font-family: var(--font-family-system);
+  font-size: var(--system-14-font-size);
+  line-height: var(--system-14-line-height);
+  margin: 0;
+
+  --scrollbar-track-bg: #333;
+  --scrollbar-thumb-bg: #555;
+  --scrollbar-thumb-hover-bg: #777;
 }

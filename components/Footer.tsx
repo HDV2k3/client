@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
 import React from "react";
-import { Layout } from "antd";
-
 import Image from "next/image";
+import { Layout } from "antd";
 const { Footer } = Layout;
 
 const AppFooter: React.FC = () => {
@@ -14,6 +13,7 @@ const AppFooter: React.FC = () => {
         backgroundColor: "#fff",
       }}
     >
+      {/* <div className=" text-white py-4 bg-white "> */}
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-center ">
           <section className="w-full md:w-1/3 mb-4 mr-32">
@@ -164,6 +164,7 @@ const AppFooter: React.FC = () => {
           </address>
         </section>
       </div>
+      {/* </div> */}
     </Footer>
   );
 };

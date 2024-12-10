@@ -2,14 +2,16 @@ import React from "react";
 import RoomCardProminent from "../../../../../components/RoomCard";
 import { SkeletonCard } from "../../../../../components/SkeletonCard";
 import Link from "next/link";
+import { converStringToSlug } from '../../../../../utils/converStringToSlug';
 
-interface RoomListProps {
+
+interface FeaturedRoomListProps {
   rooms: Room[];
   isLoadingMore: boolean;
   PAGE_SIZE: number;
 }
 
-const SameDistrictRoomList: React.FC<RoomListProps> = ({
+const SamePriceRoomList: React.FC<FeaturedRoomListProps> = ({
   rooms,
   isLoadingMore,
   PAGE_SIZE,
@@ -22,7 +24,7 @@ const SameDistrictRoomList: React.FC<RoomListProps> = ({
             img.urlImagePost || "/default-image.jpg"
         );
         return (
-          <Link key={room.id} href={`/room-detail/${room.id}`}>
+          <Link key={room?.id} href={`/r/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
             <RoomCardProminent
               id={room.id}
               name={room.roomInfo.name}
@@ -37,8 +39,7 @@ const SameDistrictRoomList: React.FC<RoomListProps> = ({
               type={room.roomInfo.type}
               capacity={room.roomInfo.capacity}
               createdBy={room.createdBy}
-              contactInfo={room.contactInfo}
-            />
+              contactInfo={room.contactInfo} />
           </Link>
         );
       })}
@@ -50,4 +51,4 @@ const SameDistrictRoomList: React.FC<RoomListProps> = ({
   );
 };
 
-export default SameDistrictRoomList;
+export default SamePriceRoomList;

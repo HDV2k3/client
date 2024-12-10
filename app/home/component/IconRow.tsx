@@ -8,13 +8,16 @@ import {
   FaRegEdit,
 } from "react-icons/fa";
 
+import Link from "next/link";
+
 const IconRow = () => {
+
   const services = [
     {
       icon: FaHome,
       text: "Phòng Trọ",
       alt: "Icon for houses",
-      link: "/nha-rieng",
+      link: "/phong-tro",
     },
     {
       icon: FaBuilding,
@@ -48,18 +51,14 @@ const IconRow = () => {
     },
   ];
 
-  const handleClick = (link: string) => {
-    window.location.href = link;
-  };
-
   return (
     <div className="container mx-auto px-4 py-6 bg-white shadow-sm">
       <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2">
         {services.map((service, index) => (
-          <button
+          <Link
+            href={service.link}
             key={index}
             className="flex flex-col items-center justify-center p-3 rounded-lg transition duration-300 ease-in-out hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            onClick={() => handleClick(service.link)}
           >
             <div className="text-2xl mb-2 text-blue-600">
               {React.createElement(service.icon, {
@@ -71,7 +70,7 @@ const IconRow = () => {
               {service.text}
             </span>
             <span className="sr-only">{service.alt}</span>
-          </button>
+          </Link>
         ))}
       </div>
     </div>
