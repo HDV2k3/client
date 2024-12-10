@@ -4,11 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { CheckCircleFilled, EnvironmentFilled, TagFilled, } from "@ant-design/icons";
 import "../styles/RoomCardProminent.css";
-import { FaPhone, FaUser, FaRegBookmark } from "react-icons/fa";
+import { FaPhone, FaUser, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Carousel, message, Tooltip } from "antd";
 import { converStringToSlug } from './../utils/converStringToSlug';
+import { fetchCreateFavoritePost } from "@/service/FavoriteService";
 
 interface RoomCardProps {
+  roomId: string;
   id: string;
   name: string;
   price: number;
@@ -27,6 +29,7 @@ interface RoomCardProps {
 }
 
 const RoomCardProminent: React.FC<RoomCardProps> = ({
+  roomId,
   id,
   name,
   price = 0, // Đặt giá trị mặc định
@@ -40,9 +43,24 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
   title
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isBookmark, setIsBookmark] = useState<boolean>(false);
   const href = `/r/${converStringToSlug(title || name)}-${id}.html`;
-  const handleBookMark = () => {
-    message.success('boook mark here')
+  const handleBookMark = async () => {
+    try {
+      setIsBookmark(true);
+      // await fetchCreateFavoritePost(roomId);
+      const data = await fetchCreateFavoritePost(roomId);
+      if (!data) {
+        setIsBookmark(false);
+
+      }
+      message.success(`'boook mark here ${roomId}`)
+
+    } catch (e) {
+      console.error('Bookmark error:', e);
+    } finally {
+
+    }
   }
   const renderImage = () => {
     return (
@@ -133,12 +151,7 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
         <Link key={id} href={href} passHref>
           <>{renderImage()}</>
         </Link>
-        <button
-          className="absolute bottom-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-200 transition-colors z-10000"
-          onClick={handleBookMark}
-        >
-          <FaRegBookmark size={15} />
-        </button>
+
         {/* Hot Badge */}
         {fixPrice != null && (
           <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
@@ -150,31 +163,59 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
         </div>
       </div>
 
-      <Link key={id} href={href} passHref>
-        <div className="p-4 flex-grow flex flex-col justify-between">
-          {/* Layer 2: Room Information */}
-          <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-1 max-w-[300px] ">
-            {name}
-          </h3>
+      <div className="p-4 flex-grow flex flex-col justify-between">
+        {/* Layer 2: Room Information */}
+        <div className="flex w-full justify-between items-center  mb-3">
+          <Link key={id} href={href} passHref >
+            <h3 className="text-lg font-semibold text-gray-800 line-clamp-1 max-w-[300px] mb-0 ">
+              {name}
+            </h3>
+          </Link>
 
-          <div className="flex items-center text-sm mb-2">
-            <EnvironmentFilled className="mr-1" /> {address}
-          </div>
-
-          <div className="flex flex-wrap items-center space-x-2 mb-2 text-sm">
-            <span className="flex items-center px-2 bg-gray-100 rounded mb-2">
-              <TagFilled className="mr-1 text-xs" /> {type}
-            </span>
-            <span className="flex items-center px-2 bg-gray-100 rounded mb-2">
-              <FaUser className="mr-1 text-xs" /> {capacity} người
-            </span>
-          </div>
-
-          {/* Layer 3: Price Display */}
-          <>{renderPrice()}</>
-          <>{renderCreateAtAndContact()}</>
+          <button
+            // className="absolute bottom-2 right-2 p-2 rounded-full shadow-md hover:bg-gray-200 transition-colors z-10000"
+            onClick={handleBookMark}
+            style={{ background: 'none', boxShadow: 'none' }}
+          >
+            {isBookmark ? (
+              <FaBookmark
+                size={18}
+                style={{
+                  color: 'gray',
+                  cursor: 'pointer',
+                  transition: 'color 0.3s ease',
+                }}
+              />
+            ) : (
+              <FaRegBookmark
+                size={18}
+                style={{
+                  color: 'gray',
+                  cursor: 'pointer',
+                  transition: 'color 0.3s ease',
+                }}
+              />
+            )}
+          </button>
         </div>
-      </Link>
+
+        <div className="flex items-center text-sm mb-2">
+          <EnvironmentFilled className="mr-1" /> {address}
+        </div>
+
+        <div className="flex flex-wrap items-center space-x-2 mb-2 text-sm">
+          <span className="flex items-center px-2 bg-gray-100 rounded mb-2">
+            <TagFilled className="mr-1 text-xs" /> {type}
+          </span>
+          <span className="flex items-center px-2 bg-gray-100 rounded mb-2">
+            <FaUser className="mr-1 text-xs" /> {capacity} người
+          </span>
+        </div>
+
+        {/* Layer 3: Price Display */}
+        <>{renderPrice()}</>
+        <>{renderCreateAtAndContact()}</>
+      </div>
     </div>
   );
 };

@@ -20,6 +20,7 @@ const FeaturedRoomList: React.FC<FeaturedRoomListProps> = ({
         );
         return (
           <RoomCardProminent
+            roomId={room?.roomId}
             key={room.id}
             id={room.id}
             name={room.roomInfo.name}
