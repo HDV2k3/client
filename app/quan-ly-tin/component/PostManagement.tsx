@@ -31,21 +31,13 @@ const PostManagement: React.FC = () => {
           return;
         }
 
-        let status = "";
-        switch (activeTab) {
-          case "1":
-            status = "ACTIVE";
-            break;
-          case "2":
-            status = "EXPIRED";
-            break;
-          case "3":
-            status = "REJECTED";
-            break;
-          case "4":
-            status = "PENDING";
-            break;
-        }
+        const statusMap: { [key: string]: string } = {
+          "1": "ACTIVE",
+          "2": "EXPIRED",
+          "3": "REJECTED",
+          "4": "PENDING",
+        };
+        const status = statusMap[activeTab] || "ACTIVE";
 
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/byUser?page=${page}&size=5&status=${status}`,
@@ -66,7 +58,7 @@ const PostManagement: React.FC = () => {
     };
 
     fetchPosts(currentPage);
-  }, [currentPage, activeTab, router]);
+  }, [currentPage, activeTab]);
 
   const handleTabChange = (key: string) => {
     setActiveTab(key);

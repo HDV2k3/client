@@ -76,19 +76,18 @@ const Header = () => {
   }, [fetchUserData]);
 
   return (
-    <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
-      <div className="container mx-auto  sm:px-6 lg:px-8">
-        <TopNavigation />
-        <MainHeader
-          userName={userName}
-          isLoggedIn={isLoggedIn}
-          onLogout={handleLogout}
-          logOut={logOut}
-          profile={profile}
-          deposit={deposit}
-        />
-      </div>
-    </header>
+    // <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
+    //   <div className="container mx-auto  sm:px-6 lg:px-8">
+    <MainHeader
+      userName={userName}
+      isLoggedIn={isLoggedIn}
+      onLogout={handleLogout}
+      logOut={logOut}
+      profile={profile}
+      deposit={deposit}
+    />
+    // </div >
+    // </header >
   );
 };
 

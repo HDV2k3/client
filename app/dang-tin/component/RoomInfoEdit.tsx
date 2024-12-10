@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, InputNumber, Select, DatePicker } from "antd";
-import { typeRoom, styleRoom, floorRoom } from "../constant/index";
+import { typeRooms, styleRooms, floorRooms } from "../constant/index";
+import moment from "moment";
 
 const RoomDetailsSection: React.FC = () => {
   const { Option } = Select;
@@ -28,9 +29,9 @@ const RoomDetailsSection: React.FC = () => {
           rules={[{ required: true, message: "Chọn loại phòng" }]}
         >
           <Select placeholder="Chọn loại phòng" className="w-full">
-            {typeRoom.map((type) => (
-              <Option key={type} value={type}>
-                {type}
+            {typeRooms.map((item) => (
+              <Option key={item?.index} value={item?.index}>
+                {item?.label}
               </Option>
             ))}
           </Select>
@@ -41,9 +42,9 @@ const RoomDetailsSection: React.FC = () => {
           label="Phong cách của phòng"
         >
           <Select placeholder="Phong cách của phòng" className="w-full">
-            {styleRoom.map((style) => (
-              <Option key={style} value={style}>
-                {style}
+            {styleRooms.map((item) => (
+              <Option key={item?.index} value={item?.index}>
+                {item?.label}
               </Option>
             ))}
           </Select>
@@ -57,9 +58,9 @@ const RoomDetailsSection: React.FC = () => {
           label="Sàn phòng"
         >
           <Select placeholder="Sàn của phòng" className="w-full">
-            {floorRoom.map((floor) => (
-              <Option key={floor} value={floor}>
-                {floor}
+            {floorRooms.map((item) => (
+              <Option key={item?.index} value={item?.index}>
+                {item?.label}
               </Option>
             ))}
           </Select>
@@ -70,7 +71,11 @@ const RoomDetailsSection: React.FC = () => {
           label="Ngày mở cho thuê vào"
           rules={[{ required: true, message: "Vui lòng chọn ngày có sẵn" }]}
         >
-          <DatePicker className="w-full" />
+          <DatePicker className="w-full"
+            disabledDate={(current) => {
+              return current && current < moment().endOf("day");
+            }}
+          />
         </Form.Item>
       </div>
 

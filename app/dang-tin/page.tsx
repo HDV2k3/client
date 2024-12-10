@@ -23,7 +23,6 @@ const NewRoomPage: React.FC = () => {
       //     },
       //   }
       // );
-
       // if (response.status === 200) {
       //   const createdRoomId = response.data.data.id; // Get room ID from response
 
@@ -44,7 +43,6 @@ const NewRoomPage: React.FC = () => {
 
   return (
     <div>
-
       <CreatePage onSubmit={handleSubmit} />
     </div>
   );

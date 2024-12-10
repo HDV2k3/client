@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-import { Search } from "lucide-react";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef(null); // Reference to the dropdown menu
 
   const suggestions = [
     { value: "Studio" },
@@ -33,18 +33,21 @@ const SearchBar = () => {
     handleSearch(value);
   };
 
+  // Close the dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
         !(dropdownRef.current as HTMLElement).contains(event.target as Node)
       ) {
-        setIsOpen(false);
+        setIsOpen(false); // Close the dropdown when clicked outside
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Clean up the event listener
+    };
   }, []);
 
   return (
@@ -57,22 +60,25 @@ const SearchBar = () => {
           value={searchValue}
           onChange={(e) => {
             setSearchValue(e.target.value);
-            setIsOpen(true);
+            setIsOpen(true); // Open dropdown when user types
           }}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
-              handleSearch(searchValue);
+              handleSearch(searchValue); // Trigger search when Enter key is pressed
             }
           }}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => setIsOpen(true)} // Open dropdown when input is focused
         />
         {isOpen && filteredSuggestions.length > 0 && (
-          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg">
+          <div
+            ref={dropdownRef} // Attach the dropdown ref here
+            className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg"
+          >
             {filteredSuggestions.map((suggestion, index) => (
               <div
                 key={index}
                 className="px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 text-gray-700"
-                onClick={() => handleSearch(suggestion.value)}
+                onClick={() => handleSelect(suggestion.value)} // Use handleSelect to update search value and close dropdown
               >
                 {suggestion.value}
               </div>
@@ -82,9 +88,9 @@ const SearchBar = () => {
       </div>
       <button
         onClick={() => handleSearch(searchValue)}
-        className="px-2 h-8 text-sm text-white bg-blue-500 rounded-r hover:bg-blue-600"
+        className="px-2 h-[32px] text-sm text-white bg-blue-500 rounded-r hover:bg-blue-600"
       >
-        Tìm
+        <AiOutlineSearch style={{ fontSize: 15 }} />
       </button>
     </div>
   );

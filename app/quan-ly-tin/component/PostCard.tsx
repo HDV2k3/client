@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Modal, Image, Input, message } from "antd";
-
+import { useRouter } from '@/hooks/useRouter';
 interface PostCardProps {
   post: Room;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Room | null>(null);
 
@@ -46,8 +47,9 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     message.success(
       `Quảng cáo của bạn đã được lên lịch với số tiền: ${advertisementBudget} VNĐ.`
     );
-    // Thực hiện các hành động khác nếu cần (ví dụ: gửi yêu cầu lên server)
   };
+
+  const handleEdit = () => router.push(`/quan-ly-tin/edit/${post?.id}`)
 
   return (
     <div className="p-4 bg-white rounded-lg shadow">
@@ -74,19 +76,22 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             {post.description}
           </p>
         </div>
-        <span
-          className={`px-3 py-1 rounded-full text-sm ${
-            post.status === "ACTIVE"
+        <div className="flex">
+          <span onClick={handleEdit} className="px-3 py-1 cursor-pointer rounded-full text-sm bg-yellow-100 text-gray-800 mr-[10px]" >Edit</span>
+          <span
+            className={`px-3 py-1 rounded-full text-sm ${post.status === "ACTIVE"
               ? "bg-green-100 text-green-800"
               : post.status === "EXPIRED"
                 ? "bg-gray-100 text-gray-800"
                 : post.status === "REJECTED"
                   ? "bg-red-100 text-red-800"
                   : "bg-yellow-100 text-yellow-800"
-          }`}
-        >
-          {post.status}
-        </span>
+              }`}
+          >
+            {post.status}
+          </span>
+        </div>
+
       </div>
 
       <div className="flex gap-4 mt-4 text-sm text-gray-500">

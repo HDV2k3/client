@@ -1,6 +1,7 @@
 // components/RoomListingForm/BasicInfoSection.tsx
 import React from "react";
 import { Form, Input, DatePicker } from "antd";
+import moment from "moment";
 
 const BasicInfoSection: React.FC = () => {
   const { TextArea } = Input;
@@ -22,7 +23,12 @@ const BasicInfoSection: React.FC = () => {
             { required: true, message: "Vui lòng chọn ngày phòng trống" },
           ]}
         >
-          <DatePicker className="w-full" />
+          <DatePicker
+            className="w-full"
+            disabledDate={(current) => {
+              return current && current < moment().endOf("day");
+            }}
+          />
         </Form.Item>
       </div>
 

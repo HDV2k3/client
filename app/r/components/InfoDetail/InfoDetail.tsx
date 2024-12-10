@@ -38,6 +38,7 @@ interface IProps {
   room: Room;
 }
 const InfoDetail: React.FC<IProps> = ({ room }) => {
+  console.log('check room: ', room);
   const glitterStyle = `
     @keyframes glitter {
       0% { background-position: 0 0; }

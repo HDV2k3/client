@@ -1,14 +1,25 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from '@/hooks/useRouter';
-import RegistrationForm from "./component/RegistrationForm";
-import { notificationService } from "../dang-tin/service/notificationService"; // Import notification service
-import { notification } from "antd";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "@/hooks/useRouter";
+import dynamic from "next/dynamic";
 import { notificationServiceRegister } from "./services/notification";
+import getToken from "@/utils/getTokenLocalStorage";
+import { redirect } from "next/navigation";
+
+const RegistrationFormLazy = dynamic(() => import("./component/RegistrationForm"), {
+  loading: () => <p>Loading...</p>,
+});
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false); // Trạng thái loading
+  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isTokenChecked, setIsTokenChecked] = useState(false); // Token check state
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) redirect("/");
+    else setIsTokenChecked(true);
+  }, []);
 
   const handleRegistration = async (formData: {
     email: string;
@@ -17,7 +28,7 @@ const RegisterPage: React.FC = () => {
     lastName: string;
     dayOfBirth: string;
   }) => {
-    setIsLoading(true); // Bật trạng thái loading
+    setIsLoading(true);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL_USER}/users/create`,
@@ -39,7 +50,7 @@ const RegisterPage: React.FC = () => {
           "verifiedToken",
           responseData.data.verificationToken
         );
-        setTimeout(() => router.push("/verification"), 1000); // Chuyển hướng đến trang xác minh
+        setTimeout(() => router.push("/verification"), 1000);
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Registration failed");
@@ -47,9 +58,17 @@ const RegisterPage: React.FC = () => {
     } catch (error) {
       notificationServiceRegister.saveError();
     } finally {
-      setIsLoading(false); // Tắt trạng thái loading
+      setIsLoading(false);
     }
   };
+
+  if (!isTokenChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Checking authentication...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -60,7 +79,7 @@ const RegisterPage: React.FC = () => {
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <RegistrationForm
+          <RegistrationFormLazy
             onSubmit={handleRegistration}
             isLoading={isLoading}
           />
