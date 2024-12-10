@@ -8,12 +8,12 @@ import RoomDetailsSectionUpdate from "./RoomInfoEdit";
 import RoomPricingSectionUpdate from "./PricingDetails";
 import RoomUtilitiesSectionUpdate from "./RoomUtilities";
 import ContactInfoSectionUpdate from "./ContactInfoSection";
-import RoomImageUpload from "@/app/dang-tin/component/uploadImages";
 import dayjs from "dayjs";
 
 import type { DatePickerProps } from "antd";
 import en from "antd/es/date-picker/locale/en_US";
 import enUS from "antd/es/locale/en_US";
+import RoomImageUpload from "../../upload-images/page";
 interface RoomFormProps {
   roomData?: RoomFinal;
   onSubmit: (data: RoomFinal) => void;
@@ -130,11 +130,7 @@ const RoomListingFormUpdate: React.FC<RoomFormProps> = ({
         <ContactInfoSectionUpdate />
         {/* Room Images */}
         <Form.Item>
-          <RoomImageUpload
-            postId={roomData?.id || ""}
-            initialImages={roomData?.roomInfo?.postImages}
-            onChange={handleImagesChange}
-          />
+          <RoomImageUpload />
         </Form.Item>
         <Form.Item>
           <Button
