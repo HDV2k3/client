@@ -6,14 +6,14 @@ const RoomPricingSection: React.FC = () => {
   return (
     <div className="bg-gray-100 p-6 rounded-lg mt-6">
       <h3 className="text-xl font-semibold mb-4">Chi tiết giá</h3>
-      <div className="grid md:grid-cols-4 gap-5">
+      <div className="grid-cols-1 md:grid-cols-3 gap-4">
         <Form.Item
           name={["pricingDetails", "basePrice"]}
           label="Giá tiền cơ bản"
           rules={[{ required: true, type: "number", min: 0 }]}
         >
           <InputNumber
-            className="w-full"
+            style={{ width: '100%', minWidth: '150px' }}
             formatter={(value) =>
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -27,7 +27,7 @@ const RoomPricingSection: React.FC = () => {
           label="Giá tiền điện"
         >
           <InputNumber
-            className="w-full"
+            style={{ width: '100%', minWidth: '150px' }}
             formatter={(value) =>
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -38,7 +38,7 @@ const RoomPricingSection: React.FC = () => {
         </Form.Item>
         <Form.Item name={["pricingDetails", "waterCost"]} label="Giá tiền nước">
           <InputNumber
-            className="w-full"
+            style={{ width: '100%', minWidth: '150px' }}
             formatter={(value) =>
               `₫ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }

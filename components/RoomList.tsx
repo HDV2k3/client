@@ -11,7 +11,6 @@ const FeaturedRoomList: React.FC<FeaturedRoomListProps> = ({
   isLoadingMore,
   PAGE_SIZE,
 }) => {
-  console.log('check data rooms: ', rooms);
   return (
     <div className="featured-room-list mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
       {rooms.map((room) => {

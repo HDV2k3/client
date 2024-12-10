@@ -7,7 +7,7 @@ const BasicInfoSection: React.FC = () => {
 
   return (
     <>
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-6 mt-[20px]">
         <Form.Item
           name="title"
           label="Tiêu đề hiển thị"

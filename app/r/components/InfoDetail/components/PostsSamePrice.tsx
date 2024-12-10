@@ -24,7 +24,7 @@ const SamePriceRoomList: React.FC<FeaturedRoomListProps> = ({
             img.urlImagePost || "/default-image.jpg"
         );
         return (
-          <Link key={room?.id} href={`/room-detail/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
+          <Link key={room?.id} href={`/r/${converStringToSlug(room.roomInfo.name)}-${room.id}.html`}>
             <RoomCardProminent
               id={room.id}
               name={room.roomInfo.name}

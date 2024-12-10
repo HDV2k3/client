@@ -13,27 +13,27 @@ const NewRoomPage: React.FC = () => {
     console.log("createData", roomData);
     try {
       // Submit the new room details (without images)
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/create`, // Replace with your API endpoint
-        roomData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // const response = await axios.post(
+      //   `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/create`, // Replace with your API endpoint
+      //   roomData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
-      if (response.status === 200) {
-        const createdRoomId = response.data.data.id; // Get room ID from response
+      // if (response.status === 200) {
+      //   const createdRoomId = response.data.data.id; // Get room ID from response
 
-        notification.success({
-          message: "Room created successfully!",
-        });
-        localStorage.setItem("roomData", JSON.stringify(roomData));
-        // Redirect to the image upload page for the newly created room
-        router.push(`/dang-tin/${createdRoomId}/upload-images`);
-      }
+      //   notification.success({
+      //     message: "Room created successfully!",
+      //   });
+      //   localStorage.setItem("roomData", JSON.stringify(roomData));
+      //   // Redirect to the image upload page for the newly created room
+      //   router.push(`/dang-tin/${createdRoomId}/upload-images`);
+      // }
     } catch (error) {
       console.error("Room creation failed:", error);
       notification.error({
@@ -44,6 +44,7 @@ const NewRoomPage: React.FC = () => {
 
   return (
     <div>
+
       <CreatePage onSubmit={handleSubmit} />
     </div>
   );
