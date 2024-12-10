@@ -13,7 +13,7 @@ const typeRooms = [
     { index: 3, label: 'Studio' },
     { index: 4, label: 'Ký túc xá' },
     { index: 5, label: 'Duplex' },
-    { index: 6, label: 'Apartment' },
+    { index: 6, label: 'Căn hộ' },
 ]
 
 const styleRoom = [

@@ -1,4 +1,5 @@
 // service/Marketing.ts
+import queryString from "query-string";
 
 export const fetchPostsByPage = async (page: number, pageSize: number) => {
   const token = localStorage.getItem("token");
@@ -32,7 +33,6 @@ export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
     throw error;
   }
 };
-
 export const fetchPostsAllByPage = async (page: number, size: number) => {
   try {
     const response = await fetch(
@@ -150,7 +150,6 @@ export const fetchPostPromotionalById = async (id: string) => {
     throw error;
   }
 };
-
 export const fetchPostsByRoomPage = async (page: number, size: number) => {
   try {
     const response = await fetch(
@@ -163,3 +162,15 @@ export const fetchPostsByRoomPage = async (page: number, size: number) => {
     throw error;
   }
 };
+export const fetchPostByTypeRoomAndPage = async (type: number, page: number, size: number) => {
+  try {
+    const query = queryString.stringify({ type, page, size });
+    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/fil-type?${query}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching posts by type and page size:", error);
+    throw error;
+  }
+}

@@ -58,7 +58,8 @@
     "styled-components": "^6.1.13",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "query-string": "^9.1.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.7.0",

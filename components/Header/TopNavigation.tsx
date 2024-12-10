@@ -36,6 +36,14 @@ const TopNavigation = () => {
             <span style={{ color: "#FBBF24" }}>Next Other</span>
           </Button>{" "}
         </Link>
+        <Link href="products">
+          <Button
+            type="link"
+            className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
+          >
+            <span style={{ color: "#FBBF24" }}>Next Products</span>
+          </Button>
+        </Link>
       </div>
       <div className="flex space-x-4">
         <Link href="dong-gop-y-kien">
