@@ -15,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # Expose port
-EXPOSE 3000
+EXPOSE 3001
 
 # Khởi động ứng dụng
 CMD ["npm", "run", "start"]
