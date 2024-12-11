@@ -2,7 +2,7 @@ import Courasel from "../home/component/Courasel";
 import PromotionSection from "./component/PromotionSection";
 import RealEstateExperience from "./component/RealEstateExperience";
 import Stats from "./component/Stats";
-import { fetchCarouselData } from '@/service/actions/CarouselAction'
+import { fetchCarouselData } from '@/service/actions/HomeAction'
 
 type Props = {
     children: React.ReactNode;
