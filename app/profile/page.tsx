@@ -78,6 +78,10 @@
 
 import MainProfilePage from "./component/MainProfile";
 export default function ProfilePage() {
-  // return <MainProfilePage />
-  return <></>
+  return (
+    <div className="h-[900px] mb-[20px] mt-[20px]">
+      <MainProfilePage />
+    </div>
+  )
+  // return <></>
 }

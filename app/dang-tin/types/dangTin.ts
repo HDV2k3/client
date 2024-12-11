@@ -8,7 +8,10 @@ interface PostImage {
 interface RoomInfo {
   name: string;
   description: string;
+  district: number;
+  commune: number;
   address: string;
+  typeSale: number;
   type: string;
   style: string;
   floor: string;
@@ -60,5 +63,5 @@ interface RoomFinal {
   furnitureAvailability?: { key: string; value: boolean }[];
   amenitiesAvailability?: { key: string; value: boolean }[];
   statusShowCheck: String;
-
+  statusShow: string;
 }

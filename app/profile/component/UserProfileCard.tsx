@@ -35,48 +35,48 @@ const UserProfileCard: React.FC<{ onEdit: () => void }> = ({ onEdit }) => {
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState<string>("");
 
-  // Fetch user data from API
-  const fetchUserData = async () => {
-    try {
-      const token = localStorage.getItem("token");
+  // // Fetch user data from API
+  // const fetchUserData = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
 
-      if (!token) {
-        message.error("No authentication token found");
-        setLoading(false);
-        return;
-      }
+  //     if (!token) {
+  //       message.error("No authentication token found");
+  //       setLoading(false);
+  //       return;
+  //     }
 
-      const response = await axios.get(
-        // "http://localhost:8080/user/users/my-info",
-        `${process.env.NEXT_PUBLIC_API_URL_USER}/users/my-info`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  //     const response = await axios.get(
+  //       // "http://localhost:8080/user/users/my-info",
+  //       `${process.env.NEXT_PUBLIC_API_URL_USER}/users/my-info`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      setUserData(response.data.data);
-      setFullName(
-        `${response.data.data.firstName} ${response.data.data.lastName}`
-      );
+  //     setUserData(response.data.data);
+  //     setFullName(
+  //       `${response.data.data.firstName} ${response.data.data.lastName}`
+  //     );
 
-      localStorage.setItem(
-        "fullName",
-        `${response.data.data.firstName} ${response.data.data.lastName}`
-      );
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      message.error("Failed to fetch user information");
-      setLoading(false);
-    }
-  };
+  //     localStorage.setItem(
+  //       "fullName",
+  //       `${response.data.data.firstName} ${response.data.data.lastName}`
+  //     );
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //     message.error("Failed to fetch user information");
+  //     setLoading(false);
+  //   }
+  // };
 
-  // Fetch user data on component mount
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  // // Fetch user data on component mount
+  // useEffect(() => {
+  //   fetchUserData();
+  // }, []);
 
   // Show loading state or placeholder
   if (loading) {
