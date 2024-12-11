@@ -1,60 +1,49 @@
-name: Deploy Next.js application
+name: CI/CD Pipeline for NextLife Website
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
+      # Bước 1: Checkout mã nguồn
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Create .env file
-        run: echo "SITE_URL=${{ secrets.SITE_URL }}" >> .env
-
-      - name: Build docker image
-        run: docker build -t devhuynh2003/nextjs-app .
-
+      # Bước 2: Đăng nhập Docker Hub
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Push image to Docker Hub
-        run: docker push devhuynh2003/nextjs-app:latest
+      # Bước 3: Build và push Docker image
+      - name: Build and push Docker image
+        run: |
+          docker build -t devhuynh2003/fe-service:latest .
+          docker push devhuynh2003/fe-service:latest
 
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: Deploy to Server
+      # Bước 4: Triển khai lên VPS
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            CONTAINER_NAME="nextjs-app-container"
+            # Kéo image mới nhất từ Docker Hub
+            docker pull devhuynh2003/fe-service:latest
 
-            # Stop and remove the old container if it exists
-            if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
-              echo "Container '$CONTAINER_NAME' found. Stopping..."
-              docker stop $CONTAINER_NAME || true
-              echo "Removing container '$CONTAINER_NAME'..."
-              docker rm -f $CONTAINER_NAME || true
-            else
-              echo "Container '$CONTAINER_NAME' does not exist. No action taken."
-            fi
+            # Dừng và xóa container cũ (nếu có)
+            docker rm -f fe-service || true
 
-            # Remove the old image
-            echo "Removing old Docker image..."
-            docker rmi -f devhuynh2003/nextjs-app:latest || true
+            # Xóa các image cũ không còn sử dụng
+            docker images -f "dangling=true" -q | xargs docker rmi
 
-            # Pull the latest image
-            echo "Pulling the latest Docker image..."
-            docker pull devhuynh2003/nextjs-app:latest
-
-            # Run the new container
-            echo "Running the new container..."
-            docker run -d -p 3000:3000 --name nextjs-app-container devhuynh2003/nextjs-app:latest
+            # Tạo lại container mới từ image đã pull
+            docker run -d \
+            -p 3000:3000 \
+            --env-file /root/devhuynh/.env \
+            devhuynh2003/fe-service:latest
