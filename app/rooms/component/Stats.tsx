@@ -1,37 +1,49 @@
 import React from "react";
 import { FaHandshake, FaKey, FaBuilding, FaUserTie } from "react-icons/fa";
+import { AiOutlineBook, AiOutlineUsergroupAdd } from "react-icons/ai";
+type Props = {
+  data: any;
+}
 
-const Stats = () => {
+const Stats = ({ data }: Props) => {
+
   const stats = [
     {
       icon: FaHandshake,
       label: "Mua bán",
-      count: "148.165",
+      count: data?.quantityTypeSaleRent || "148.165",
       subLabel: "tin đăng mua bán",
     },
     {
       icon: FaKey,
       label: "Cho thuê",
-      count: "120.930",
+      count: data?.quantityTypeSale || "120.930",
       subLabel: "tin đăng cho thuê",
     },
     {
-      icon: FaBuilding,
-      label: "Dự án",
-      count: "4.154",
-      subLabel: "dự án",
+      icon: AiOutlineUsergroupAdd,
+      label: "Người dùng",
+      count: data?.quantityUser || "4.154",
+      subLabel: "tin dùng và quay lại",
     },
     {
       icon: FaUserTie,
       label: "Môi giới",
-      count: "245",
+      count: data?.quantityBroker || "245",
       subLabel: "chuyên trang",
     },
+    {
+      icon: AiOutlineBook,
+      label: "Tổng bài đăng",
+      count: data?.totalPosts || "245",
+      subLabel: "đã duyệt",
+    },
+
   ];
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
         {stats.map((stat, index) => (
           <div
             key={index}

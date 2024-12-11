@@ -1,26 +1,5 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
 import { Carousel } from "antd";
 import Image from "next/image";
-
-type PostImage = {
-  name: string;
-  type: string;
-  urlImagePost: string;
-};
-
-type CarouselData = {
-  id: string;
-  name: string;
-  postImages: PostImage[];
-};
-
-type ApiResponse = {
-  responseCode: number;
-  data: CarouselData[];
-  message: string;
-};
 
 const contentStyle: React.CSSProperties = {
   position: "relative",
@@ -34,62 +13,23 @@ type Props = {
   data?: any;
 }
 const Courasel = ({ data }: Props) => {
-  const [carouselData, setCarouselData] = useState<CarouselData[]>(data);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const fetchCarouselData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/carousel/all`
-  //       );
-
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch carousel data");
-  //       }
-
-  //       const data: ApiResponse = await response.json();
-
-  //       if (data.responseCode === 101000) {
-  //         setCarouselData(data.data);
-  //       } else {
-  //         throw new Error(data.message || "Failed to fetch carousel data");
-  //       }
-  //     } catch (err) {
-  //       setError(err instanceof Error ? err.message : "An error occurred");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCarouselData();
-  // }, []);
-
-  // if (loading) {
-  //   return (
-  //     <div style={contentStyle} className="flex items-center justify-center">
-  //       <div className="text-white">Loading carousel...</div>
-  //     </div>
-  //   );
-  // }
-
-  // if (error) {
-  //   return (
-  //     <div style={contentStyle} className="flex items-center justify-center">
-  //       <div className="text-white">Error: {error}</div>
-  //     </div>
-  //   );
-  // }
+  if (!data) {
+    return (
+      <div style={contentStyle} className="flex items-center justify-center">
+        <div className="text-white">Fetch data Courasel Error</div>
+      </div>
+    );
+  }
 
   return (
     <Carousel autoplay className="container my-3 mx-auto">
-      {carouselData[0]?.postImages.map((image, index) => (
+      {data[0]?.postImages.map((image: any, index: any) => (
         <div key={image.name}>
           <div style={contentStyle} className="h-fit">
             <Image
               src={image.urlImagePost}
               alt={`Image ${index + 1}`}
+              // objectFit="contain"
               className="md:object-cover object-contain w-full h-full"
               priority={index === 0} // Load the first image with priority
               height={350}

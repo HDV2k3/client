@@ -7,5 +7,8 @@ export default function ProfilePage() {
     <div className="h-full min-h-[900px] my-5">
       <MainProfilePage />
     </div>
-  );
+
+  )
 }
+
+

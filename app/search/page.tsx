@@ -1,7 +1,7 @@
-"use client";
 
 import dynamic from "next/dynamic";
 import PromotionBanner from "../home/component/PromotionBanner";
+import { fetchPromotionBannerAction } from "@/service/actions/HomeAction";
 // Dynamically import SearchPageClient with SSR disabled
 const Main = dynamic(
   () => import("../../app/search/component/SearchPageClient"),
@@ -10,10 +10,12 @@ const Main = dynamic(
   }
 );
 
-export default function SearchPage() {
+export default async function SearchPage() {
+  const dataPromotion = await fetchPromotionBannerAction();
+
   return (
     <>
-      <PromotionBanner />
+      <PromotionBanner data={dataPromotion} />
       <Main />
     </>
   );

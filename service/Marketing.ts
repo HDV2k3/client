@@ -1,4 +1,5 @@
 // service/Marketing.ts
+import axios from "axios";
 import queryString from "query-string";
 
 export const fetchPostsByPage = async (page: number, pageSize: number) => {
@@ -169,6 +170,17 @@ export const fetchPostByTypeRoomAndPage = async (type: number, page: number, siz
     const response = await fetch(url);
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error("Error fetching posts by type and page size:", error);
+    throw error;
+  }
+}
+export const fetchInfoRooms = async () => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/info-marketing`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return data?.data;
   } catch (error) {
     console.error("Error fetching posts by type and page size:", error);
     throw error;

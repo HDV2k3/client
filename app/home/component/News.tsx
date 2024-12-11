@@ -1,33 +1,10 @@
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-
-interface PostImage {
-  name: string;
-  type: string;
-  urlImagePost: string;
+type Props = {
+  data: any;
 }
 
-interface NewsItem {
-  id: string;
-  title: string;
-  description: string;
-  postImages: PostImage[];
-}
-
-interface ApiResponse {
-  responseCode: number;
-  data: {
-    currentPage: number;
-    totalPages: number;
-    pageSize: number;
-    totalElements: number;
-    data: NewsItem[];
-  };
-  message: string;
-}
-
-const ExperienceCard: React.FC<NewsItem> = ({
+const ExperienceCard: React.FC<any> = ({
   title,
   description,
   postImages,
@@ -37,6 +14,8 @@ const ExperienceCard: React.FC<NewsItem> = ({
       <Image
         src={postImages[0]?.urlImagePost || "/placeholder.jpg"}
         alt={title}
+        // height={1000}
+        // width={1000}
         layout="fill"
         objectFit="cover"
       />
@@ -48,41 +27,13 @@ const ExperienceCard: React.FC<NewsItem> = ({
   </div>
 );
 
-const Content = () => {
-  const [experiences, setExperiences] = useState<NewsItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/news/all`
-        );
-        const result: ApiResponse = await response.json();
-
-        // Kiểm tra responseCode và cập nhật dữ liệu
-        if (result.responseCode === 101000) {
-          setExperiences(result.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+const Content = ({ data }: Props) => {
 
   return (
     <div className="rounded-lg mt-5">
       <h2 className="text-2xl font-bold mb-4">Thị trường và xu hướng</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {experiences.map((exp) => (
+        {data.map((exp: any) => (
           <ExperienceCard key={exp.id} {...exp} />
         ))}
       </div>
