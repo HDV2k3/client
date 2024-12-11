@@ -49,7 +49,7 @@ const nextConfig = {
   },
 
   // Cấu hình Experimental
-  experimental: {
+ experimental: {
     appDir: true,
   },
 };

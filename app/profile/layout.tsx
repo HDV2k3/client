@@ -1,11 +1,8 @@
-type Props = {
+export default function LayoutProfile({
+    children,
+  }: {
     children: React.ReactNode;
-}
-
-export default function LayoutProfile({ children }: Props) {
-    return (
-        <>
-            {children}
-        </>
-    )
-}
+  }) {
+    return <>{children}</>;
+  }
+  

@@ -25,6 +25,7 @@ jobs:
           docker build -t devhuynh2003/fe-service:latest .
           docker push devhuynh2003/fe-service:latest
 
+          
       # Bước 4: Triển khai lên VPS
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -37,13 +38,15 @@ jobs:
             docker pull devhuynh2003/fe-service:latest
 
             # Dừng và xóa container cũ (nếu có)
-            docker rm -f fe-service || true
+            docker ps -q --filter "name=fe-service" | xargs -r docker stop
+            docker ps -aq --filter "name=fe-service" | xargs -r docker rm
 
             # Xóa các image cũ không còn sử dụng
-            docker images -f "dangling=true" -q | xargs docker rmi
+            docker images -f "dangling=true" -q | xargs -r docker rmi
 
-            # Tạo lại container mới từ image đã pull
+            # Chạy container mới từ image latest
             docker run -d \
-            -p 3000:3000 \
+            --name fe-service \
+            -p 3001:3001 \
             --env-file /root/devhuynh/.env \
             devhuynh2003/fe-service:latest
