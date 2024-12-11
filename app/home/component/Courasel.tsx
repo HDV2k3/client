@@ -31,7 +31,7 @@ const contentStyle: React.CSSProperties = {
 };
 
 type Props = {
-  data: any;
+  data?: any;
 }
 const Courasel = ({ data }: Props) => {
   const [carouselData, setCarouselData] = useState<CarouselData[]>(data);
