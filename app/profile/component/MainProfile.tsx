@@ -23,19 +23,19 @@ export default function MainProfilePage() {
     //     }
     // }, []);
 
-    const handleProfileEdit = (values: any) => {
-        console.log("Profile update:", values);
-        message.success("Cập nhật thông tin thành công!");
-        setIsEditModalVisible(false);
-    };
+    // const handleProfileEdit = (values: any) => {
+    //     console.log("Profile update:", values);
+    //     message.success("Cập nhật thông tin thành công!");
+    //     setIsEditModalVisible(false);
+    // };
 
-    const handleUpload = (info: any) => {
-        if (info.file.status === "done") {
-            message.success(`Tải ảnh ${info.file.name} thành công`);
-        } else if (info.file.status === "error") {
-            message.error(`Tải ảnh ${info.file.name} thất bại`);
-        }
-    };
+    // const handleUpload = (info: any) => {
+    //     if (info.file.status === "done") {
+    //         message.success(`Tải ảnh ${info.file.name} thành công`);
+    //     } else if (info.file.status === "error") {
+    //         message.error(`Tải ảnh ${info.file.name} thất bại`);
+    //     }
+    // };
 
     const renderContent = () => {
         switch (activeTab) {
@@ -51,7 +51,7 @@ export default function MainProfilePage() {
     };
 
     return (
-        <Layout className="min-h-screen bg-gray-100">
+        <Layout className="  bg-gray-100 h-[100%]">
             <Sider width={250} theme="light" className="shadow-md">
                 <SidebarMenu
                     activeTab={activeTab}

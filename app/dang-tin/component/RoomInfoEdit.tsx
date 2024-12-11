@@ -1,17 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, InputNumber, Select, DatePicker } from "antd";
-import { typeRooms, styleRooms, floorRooms } from "../constant/index";
+import { typeRooms, styleRooms, floorRooms, typeSales } from "../../../constants/TypeCreatePost";
 import moment from "moment";
+import { addressHCM, getCommuneByIdDistrict } from '@/constants/HCM_address';
 
-const RoomDetailsSection: React.FC = () => {
+interface Commune {
+  idDistrict: number;
+  idCommune: number;
+  name: string;
+}
+
+type Props = {
+  setValue: (fields: any) => void;
+}
+
+const RoomDetailsSection = ({ setValue }: Props) => {
+  const [dataCommune, setDataCommune] = useState<Commune[]>([]);
+  const [selectedDistrict, setSelectedDistrict] = useState<number>(-1);
+
   const { Option } = Select;
   const { TextArea } = Input;
+
+  const handleDistrictChange = (value: number) => {
+    setSelectedDistrict(value);
+    const communes = getCommuneByIdDistrict(value);
+    setDataCommune(communes);
+
+    setValue({
+      roomInfo: {
+        commune: undefined, // Đặt lại giá trị của commune
+      },
+    });
+  };
+
+  const renderDistrictAndCommune = () => {
+    return (
+      <>
+        <div className="grid grid-cols-1 gap-4">
+          <Form.Item
+            name={["roomInfo", "address"]}
+            label="Địa chỉ phòng"
+            rules={[{ required: true, message: "Vui lòng cung cấp địa chỉ" }]}
+          >
+            <Input placeholder="HCM" className="w-full" />
+          </Form.Item>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          {/* quan */}
+          <Form.Item
+            name={["roomInfo", "district"]}
+            label="Quận/Huyện"
+            rules={[{ required: true, message: "Vui lòng chọn quận/huyện" }]}
+          >
+            <Select placeholder="Chọn quận/huyện" className="w-full " onChange={handleDistrictChange} >
+              {addressHCM.district.map((district) => (
+                <Select.Option key={district.idDistrict} value={district.idDistrict}>
+                  {district.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          {/* phuong */}
+          <Form.Item
+            name={["roomInfo", "commune"]}
+            label="Phường Xã"
+            rules={[{ required: true, message: "Vui lòng chọn quận/huyện" }]}
+          >
+            <Select placeholder="Chọn phường/xã" className="w-full " disabled={selectedDistrict === -1} >
+              {dataCommune && <>
+                {dataCommune.map((item) => (
+                  <Select.Option key={item.idCommune} value={item.idCommune}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+              </>}
+            </Select>
+          </Form.Item>
+        </div>
+      </>
+    )
+  }
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg">
       <h3 className="text-xl font-semibold mb-4 text-gray-800">
         Thông tin trong phòng
       </h3>
+
+      {/* loai bai viet */}
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+        <Form.Item
+          name={["roomInfo", "typeSale"]}
+          label="Loại bài viết"
+          rules={[{ required: true, message: "Loại bài viết" }]}
+        >
+          <Select placeholder="Loại bài viết" className="w-full">
+            {typeSales.map((item) => (
+              <Option key={item?.index} value={item?.index}>
+                {item?.label}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </div>
 
       {/* Row 1 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -105,15 +198,7 @@ const RoomDetailsSection: React.FC = () => {
       </div>
 
       {/* Row 4 */}
-      <div className="grid grid-cols-1 gap-4">
-        <Form.Item
-          name={["roomInfo", "address"]}
-          label="Địa chỉ phòng"
-          rules={[{ required: true, message: "Vui lòng cung cấp địa chỉ" }]}
-        >
-          <Input placeholder="HCM" className="w-full" />
-        </Form.Item>
-      </div>
+      <>{renderDistrictAndCommune()}</>
 
       {/* Row 5 */}
       <div className="grid grid-cols-1 gap-4">

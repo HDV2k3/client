@@ -84,6 +84,8 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
     }
   };
 
+  // const handleSetValue 
+
   return (
     <div className="container mx-auto p-6 bg-gray-50">
       <Form
@@ -95,7 +97,7 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
         <div className="p-6">
           <AdsSection />
           <BasicInfoSection />
-          <RoomDetailsSection />
+          <RoomDetailsSection setValue={form.setFieldsValue} />
           <RoomPricingSection />
           <RoomUtilitiesSection />
           <ContactInfoSection />

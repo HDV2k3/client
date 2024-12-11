@@ -13,7 +13,6 @@ export const metadata = {
   description:
     "NextRoom - Your ultimate platform for finding and renting rooms with ease.",
 };
-// change
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className="h-full">
@@ -28,7 +27,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </header>
 
-          <main className="flex-grow pt-0 bg-gray-100 max-w-full overflow-scroll">
+          <main className="flex-grow pt-0 bg-gray-100 max-w-full overflow-x-hidden overflow-y-scroll h-[100%]">
             <div className="max-w-full h-auto flex justify-center">
               <div className="w-full max-w-[1280px] h-100% border-red-800">
                 {children}

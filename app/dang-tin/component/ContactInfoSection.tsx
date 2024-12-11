@@ -26,7 +26,7 @@ const ContactInfoSection: React.FC = () => {
 
         {/* Room Status */}
         <Form.Item
-          name="roomStatus"
+          name="statusShow"
           label="Trạng thái của phòng"
           rules={[{ required: true, message: "Vui lòng chọn trạng thái phòng" }]}
         >

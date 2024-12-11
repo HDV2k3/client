@@ -33,7 +33,6 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   const calculateSuggestedPrice = () => {
-    // Ví dụ: Giả sử 1 ngày quảng cáo có giá 10.000 VNĐ
     const suggestedPrice = advertisementDays * 10000;
     return suggestedPrice;
   };
@@ -49,7 +48,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     );
   };
 
-  const handleEdit = () => router.push(`/quan-ly-tin/edit/${post?.id}`)
+  const handleEdit = () => router.push(`/dang-tin/${post?.id}/update`)
 
   return (
     <div className="p-4 bg-white rounded-lg shadow">

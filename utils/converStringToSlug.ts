@@ -12,9 +12,9 @@ const converStringToSlug = (data: string) => {
 const getIdBySlug = (data: string) => {
     if (!data) return;
     const parts = data.replace('.html', '').split('-');
-    // Get the last element of the array
     const id = parts[parts.length - 1];
     return id;
 }
+
 export { converStringToSlug, getIdBySlug };
 

@@ -7,10 +7,10 @@ import "../styles/RoomCardProminent.css";
 import { FaPhone, FaUser, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Carousel, message, Tooltip } from "antd";
 import { converStringToSlug } from './../utils/converStringToSlug';
-import { fetchCreateFavoritePost } from "@/service/FavoriteService";
+import { axiosFavoriteBookmarkAction } from "@/service/FavoriteService";
 
 interface RoomCardProps {
-  roomId: string;
+  roomId?: string;
   id: string;
   name: string;
   price: number;
@@ -21,7 +21,7 @@ interface RoomCardProps {
   createdDate: string;
   description: string;
   status: string;
-  type: string;
+  type: number;
   capacity: number;
   createdBy: string;
   contactInfo: string;
@@ -48,14 +48,12 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
   const handleBookMark = async () => {
     try {
       setIsBookmark(true);
-      // await fetchCreateFavoritePost(roomId);
-      const data = await fetchCreateFavoritePost(roomId);
+      if (!roomId) return;
+      const data = await axiosFavoriteBookmarkAction(roomId);
       if (!data) {
         setIsBookmark(false);
-
       }
-      message.success(`'boook mark here ${roomId}`)
-
+      message.success(`Đã lưu tin của bạn`)
     } catch (e) {
       console.error('Bookmark error:', e);
     } finally {
@@ -173,7 +171,6 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
           </Link>
 
           <button
-            // className="absolute bottom-2 right-2 p-2 rounded-full shadow-md hover:bg-gray-200 transition-colors z-10000"
             onClick={handleBookMark}
             style={{ background: 'none', boxShadow: 'none' }}
           >

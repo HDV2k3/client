@@ -10,7 +10,7 @@ interface Message {
 }
 
 const Chat: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
@@ -129,25 +129,22 @@ const Chat: React.FC = () => {
                 className={`mb-4 flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`flex items-start space-x-2 max-w-[80%] ${
-                    message.sender === "user"
-                      ? "flex-row-reverse space-x-reverse"
-                      : ""
-                  }`}
+                  className={`flex items-start space-x-2 max-w-[80%] ${message.sender === "user"
+                    ? "flex-row-reverse space-x-reverse"
+                    : ""
+                    }`}
                 >
                   <div
-                    className={`p-2 rounded-lg ${
-                      message.sender === "user"
-                        ? "bg-blue-500 text-white"
-                        : "bg-white text-gray-800 border border-gray-300"
-                    }`}
+                    className={`p-2 rounded-lg ${message.sender === "user"
+                      ? "bg-blue-500 text-white"
+                      : "bg-white text-gray-800 border border-gray-300"
+                      }`}
                   >
                     {message.text}
                   </div>
                   <div
-                    className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                      message.sender === "user" ? "bg-blue-600" : "bg-gray-200"
-                    }`}
+                    className={`flex items-center justify-center w-8 h-8 rounded-full ${message.sender === "user" ? "bg-blue-600" : "bg-gray-200"
+                      }`}
                   >
                     {message.sender === "user" ? (
                       <FaUser className="text-white" size={12} />

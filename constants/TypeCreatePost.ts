@@ -1,12 +1,3 @@
-const typeRoom = [
-    'Phòng trọ',
-    'Nhà đất',
-    "Studio",
-    "Ký túc xá",
-    "Duplex",
-    "Apartment"
-];
-
 const typeRooms = [
     { index: 1, label: 'Phòng trọ' },
     { index: 2, label: 'Nhà đất' },
@@ -16,23 +7,15 @@ const typeRooms = [
     { index: 6, label: 'Căn hộ' },
 ]
 
-const styleRoom = [
-    "Hiện đại",
-    "cổ điển",
-    "Tối giản"
-]
+const getTypeRoomById = (id: number) => {
+    const room = typeRooms.find((item) => item.index === id);
+    return room?.label;
+}
 
 const styleRooms = [
     { index: 1, label: "Hiện đại" },
     { index: 2, label: "Cổ điển" },
     { index: 3, label: "Tối giản" },
-]
-
-const floorRoom = [
-    "Hiện đại",
-    "gỗ",
-    "gạch men",
-    "xi măng"
 ]
 
 const floorRooms = [
@@ -42,8 +25,14 @@ const floorRooms = [
     { index: 4, label: "Xi Măng" },
 ]
 
+const typeSales = [
+    { index: 1, label: 'Mua bán' },
+    { index: 2, label: 'Cho thuê' },
+]
+
 export {
-    typeRoom, typeRooms,
-    styleRoom, styleRooms,
-    floorRoom, floorRooms,
+    typeSales,
+    typeRooms, getTypeRoomById,
+    styleRooms,
+    floorRooms,
 }
