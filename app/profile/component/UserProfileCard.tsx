@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
@@ -10,7 +12,7 @@ import {
   message,
 } from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
-import type { UploadProps } from "antd";
+
 const { Title, Text } = Typography;
 
 interface UserData {
@@ -22,10 +24,9 @@ interface UserData {
   avatar: string | null;
 }
 
-const userId = Number(localStorage.getItem("userId"));
 const UserProfileCard: React.FC<{ onEdit: () => void }> = ({ onEdit }) => {
   const [userData, setUserData] = useState<UserData>({
-    id: userId,
+    id: 0,
     firstName: "",
     lastName: "",
     email: "",
@@ -35,50 +36,44 @@ const UserProfileCard: React.FC<{ onEdit: () => void }> = ({ onEdit }) => {
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState<string>("");
 
-  // // Fetch user data from API
-  // const fetchUserData = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
+  const fetchUserData = async () => {
+    try {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
 
-  //     if (!token) {
-  //       message.error("No authentication token found");
-  //       setLoading(false);
-  //       return;
-  //     }
+        if (!token || !userId) {
+          message.error("No authentication token found");
+          setLoading(false);
+          return;
+        }
 
-  //     const response = await axios.get(
-  //       // "http://localhost:8080/user/users/my-info",
-  //       `${process.env.NEXT_PUBLIC_API_URL_USER}/users/my-info`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL_USER}/users/my-info`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  //     setUserData(response.data.data);
-  //     setFullName(
-  //       `${response.data.data.firstName} ${response.data.data.lastName}`
-  //     );
+        setUserData(response.data.data);
+        const fullName = `${response.data.data.firstName} ${response.data.data.lastName}`;
+        setFullName(fullName);
+        localStorage.setItem("fullName", fullName);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      message.error("Failed to fetch user information");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  //     localStorage.setItem(
-  //       "fullName",
-  //       `${response.data.data.firstName} ${response.data.data.lastName}`
-  //     );
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error);
-  //     message.error("Failed to fetch user information");
-  //     setLoading(false);
-  //   }
-  // };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
-  // // Fetch user data on component mount
-  // useEffect(() => {
-  //   fetchUserData();
-  // }, []);
-
-  // Show loading state or placeholder
   if (loading) {
     return (
       <Card>
