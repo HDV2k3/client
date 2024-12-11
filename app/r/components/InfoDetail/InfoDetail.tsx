@@ -12,6 +12,8 @@ import { convertToVND } from "../../../../utils/convertToVND";
 import Image from "next/image";
 import { Button } from "antd";
 import Link from "next/link";
+import { findNameByType } from '@/constants/districts'
+import { getTypeRoomById } from "@/constants/TypeCreatePost";
 
 // Subcomponent for displaying utility items
 const UtilityItem: React.FC<{ label: string }> = ({ label }) => (
@@ -38,7 +40,6 @@ interface IProps {
   room: Room;
 }
 const InfoDetail: React.FC<IProps> = ({ room }) => {
-  console.log('check room: ', room);
   const glitterStyle = `
     @keyframes glitter {
       0% { background-position: 0 0; }
@@ -81,13 +82,13 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
         {/* Room Address */}
         <div className="flex items-center">
           <EnvironmentFilled className="mr-2" />
-          <span>{room.roomInfo.address}</span>
+          <span>{findNameByType(room.roomInfo.district)}</span>
         </div>
 
         {/* Room Type */}
         <div className="flex items-center">
           <TagFilled className="mr-2" />
-          <span>{room.roomInfo.type}</span>
+          <span>{getTypeRoomById(room.roomInfo.type)}</span>
         </div>
 
         {/* Additional Room Details */}

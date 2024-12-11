@@ -5,8 +5,10 @@ interface Room {
     roomId: string;
     name: string;
     description: string;
+    district: number;
+    commune: number;
     address: string;
-    type: string;
+    type: number;
     style: string;
     floor: string;
     postImages: Array<{ urlImagePost: string }>;

@@ -80,7 +80,7 @@ import MainProfilePage from "./component/MainProfile";
 export default function ProfilePage() {
   return (
     <div className="h-[900px] mb-[20px] mt-[20px]">
-      <MainProfilePage />
+      {/* <MainProfilePage /> */}
     </div>
   )
   // return <></>

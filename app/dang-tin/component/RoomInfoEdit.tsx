@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, InputNumber, Select, DatePicker } from "antd";
-import { typeRooms, styleRooms, floorRooms, typeSales } from "../constant/index";
+import { typeRooms, styleRooms, floorRooms, typeSales } from "../../../constants/TypeCreatePost";
 import moment from "moment";
-import { districtsType } from "@/constants/districts";
 import { addressHCM, getCommuneByIdDistrict } from '@/constants/HCM_address';
 
 interface Commune {

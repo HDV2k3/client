@@ -7,6 +7,10 @@ const typeRooms = [
     { index: 6, label: 'Căn hộ' },
 ]
 
+const getTypeRoomById = (id: number) => {
+    const room = typeRooms.find((item) => item.index === id);
+    return room?.label;
+}
 
 const styleRooms = [
     { index: 1, label: "Hiện đại" },
@@ -28,7 +32,7 @@ const typeSales = [
 
 export {
     typeSales,
-    typeRooms,
+    typeRooms, getTypeRoomById,
     styleRooms,
     floorRooms,
 }

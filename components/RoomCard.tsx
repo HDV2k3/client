@@ -21,7 +21,7 @@ interface RoomCardProps {
   createdDate: string;
   description: string;
   status: string;
-  type: string;
+  type: number;
   capacity: number;
   createdBy: string;
   contactInfo: string;
