@@ -44,6 +44,6 @@ jobs:
 
             # Tạo lại container mới từ image đã pull
             docker run -d \
-            -p 3000:3000 \
+            -p 3001:3001 \
             --env-file /root/devhuynh/.env \
             devhuynh2003/fe-service:latest
