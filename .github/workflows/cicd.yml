@@ -25,6 +25,7 @@ jobs:
           docker build -t devhuynh2003/fe-service:latest .
           docker push devhuynh2003/fe-service:latest
 
+          
       # Bước 4: Triển khai lên VPS
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
