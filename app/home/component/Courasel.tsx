@@ -30,54 +30,57 @@ const contentStyle: React.CSSProperties = {
   borderTopRightRadius: "5px",
 };
 
-const Courasel: React.FC = () => {
-  const [carouselData, setCarouselData] = useState<CarouselData[]>([]);
+type Props = {
+  data: any;
+}
+const Courasel = ({ data }: Props) => {
+  const [carouselData, setCarouselData] = useState<CarouselData[]>(data);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCarouselData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/carousel/all`
-        );
+  // useEffect(() => {
+  //   const fetchCarouselData = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/carousel/all`
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch carousel data");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch carousel data");
+  //       }
 
-        const data: ApiResponse = await response.json();
+  //       const data: ApiResponse = await response.json();
 
-        if (data.responseCode === 101000) {
-          setCarouselData(data.data);
-        } else {
-          throw new Error(data.message || "Failed to fetch carousel data");
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       if (data.responseCode === 101000) {
+  //         setCarouselData(data.data);
+  //       } else {
+  //         throw new Error(data.message || "Failed to fetch carousel data");
+  //       }
+  //     } catch (err) {
+  //       setError(err instanceof Error ? err.message : "An error occurred");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchCarouselData();
-  }, []);
+  //   fetchCarouselData();
+  // }, []);
 
-  if (loading) {
-    return (
-      <div style={contentStyle} className="flex items-center justify-center">
-        <div className="text-white">Loading carousel...</div>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div style={contentStyle} className="flex items-center justify-center">
+  //       <div className="text-white">Loading carousel...</div>
+  //     </div>
+  //   );
+  // }
 
-  if (error) {
-    return (
-      <div style={contentStyle} className="flex items-center justify-center">
-        <div className="text-white">Error: {error}</div>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div style={contentStyle} className="flex items-center justify-center">
+  //       <div className="text-white">Error: {error}</div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <Carousel autoplay className="container my-3 mx-auto">
