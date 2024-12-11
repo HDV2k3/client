@@ -98,8 +98,8 @@ const RoomsPage: React.FC = () => {
   return (
     <div className="px-4 py-2 sm:px-0 lg:px-0 max-w-screen-xl mx-auto">
       <div>
-        <Courasel />
-        <Stats />
+        {/* <Courasel /> */}
+        {/* <Stats /> */}
         <div className="sm:mb-8 mt-5">
           <TitleRoom title="Tất cả các phòng tại Next Room" />
 
@@ -140,10 +140,10 @@ const RoomsPage: React.FC = () => {
           )}
         </div>
 
-        <PromotionSection />
+        {/* <PromotionSection />
         <div className="bg-white rounded-lg">
           <RealEstateExperience />
-        </div>
+        </div> */}
       </div>
     </div>
   );
