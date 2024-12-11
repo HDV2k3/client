@@ -1,59 +1,27 @@
-"use client";
 import React from "react";
 import TitleRoom from "../../components/TitleRoom";
-import usePaginatedFeatureRooms from "../../hooks/usePaginatedFeaturedRooms";
-import usePaginatedPromotionalRooms from "../../hooks/usePaginatedPromotionalRooms";
-import CarouselSpacing from "../../components/CarouselSpacingRoomList";
-import FeaturedRoomList from "../../components/RoomList";
-import LoadMoreButton from "../../components/LoadMoreButton";
+import { fetchPostsFeaturedByPage, fetchPostsPromotionalByPage } from "@/service/Marketing";
+import MainRoomList from "./component/MainRoomList";
+import MainPromotions from "./component/MainRoomListPromotion";
 
-const HomePage: React.FC = () => {
-  const {
-    rooms: featureRooms,
-    isLoadingInitialData: isLoadingFeatureInitialData,
-    isLoadingMore: isLoadingFeatureMore,
-    isReachingEnd: isFeatureReachingEnd,
-    loadMore: loadMoreFeature,
-    reset: resetFeature,
-    error: featureError,
-  } = usePaginatedFeatureRooms();
+const HomePage = async () => {
+  const page = 1;
+  const size = 8;
 
-  const {
-    rooms: promotionalRooms,
-    isLoadingMore: isLoadingPromoMore,
-    error: promoError,
-  } = usePaginatedPromotionalRooms();
-
-  if (featureError || promoError) return <div>Failed to load rooms</div>;
-
+  const dataResponseRooms = await fetchPostsFeaturedByPage(page, size);
+  const dataRooms = dataResponseRooms?.data?.data;
+  const dataResponsePromotion = await fetchPostsPromotionalByPage(page, size);
+  const dataRoomsPromotions = dataResponsePromotion?.data?.data;
   return (
     <>
-      {/* Featured Rooms Section */}
       <div className="mb-6 sm:mb-8">
         <TitleRoom title="Phòng trọ nổi bật" />
-        <FeaturedRoomList
-          rooms={featureRooms}
-          isLoadingMore={isLoadingFeatureMore || false}
-          PAGE_SIZE={8}
-        />
-        <LoadMoreButton
-          isLoadingInitialData={isLoadingFeatureInitialData}
-          isReachingEnd={isFeatureReachingEnd || false}
-          loadMore={loadMoreFeature}
-          reset={resetFeature}
-          roomsLength={featureRooms.length}
-          isLoadingMore={isLoadingFeatureMore || false}
-        />
+        <MainRoomList data={dataRooms} page={page} size={size} />
       </div>
 
-      {/* Promotional Rooms Section */}
       <div className="mb-6 sm:mb-8">
         <TitleRoom title="Phòng ưu đãi" />
-        <CarouselSpacing
-          rooms={promotionalRooms}
-          PAGE_SIZE={10}
-          isLoadingMore={isLoadingPromoMore || false}
-        />
+        <MainPromotions data={dataRoomsPromotions} page={page} size={size} />
       </div>
     </>
   );
