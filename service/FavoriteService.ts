@@ -2,6 +2,7 @@
 
 import getToken from "@/utils/getTokenLocalStorage";
 import axios from "axios";
+import queryString from "query-string";
 
 export const fetchCreateFavoritePost = async (roomId: string) => {
     const token = getToken();
@@ -19,6 +20,26 @@ export const fetchCreateFavoritePost = async (roomId: string) => {
             }
         );
         console.log('check res', response);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating favorite post:", error);
+        throw error;
+    }
+}
+
+export const fetchFavoritePost = async (token: string, page: number, size: number) => {
+    const query = queryString.stringify({ page, size })
+    // const token = getToken(); if (!token) return null;
+    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/favorite/all?${query}`;
+    try {
+        const response = await axios.get(
+            url,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
         return response.data;
     } catch (error) {
         console.error("Error creating favorite post:", error);

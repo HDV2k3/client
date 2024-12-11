@@ -48,14 +48,11 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
   const handleBookMark = async () => {
     try {
       setIsBookmark(true);
-      // await fetchCreateFavoritePost(roomId);
       const data = await fetchCreateFavoritePost(roomId);
       if (!data) {
         setIsBookmark(false);
-
       }
-      message.success(`'boook mark here ${roomId}`)
-
+      message.success(`Đã lưu tin của bạn`)
     } catch (e) {
       console.error('Bookmark error:', e);
     } finally {

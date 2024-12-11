@@ -41,7 +41,7 @@ const IconRow = () => {
       icon: FaRegBookmark,
       text: "Tin Đã Lưu",
       alt: "Icon for saved posts",
-      link: "/tin-da-luu",
+      link: "/bookmark",
     },
     {
       icon: FaRegEdit,
