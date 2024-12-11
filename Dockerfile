@@ -1,3 +1,4 @@
+# Stage 1: Build application
 FROM node:20-alpine3.18 as builder
 
 WORKDIR /app
@@ -5,17 +6,24 @@ WORKDIR /app
 # Sao chép file package.json và package-lock.json trước để cache layer
 COPY package*.json ./
 
-# Cài đặt dependencies
+# Cài đặt dependencies và build ứng dụng
 RUN npm install
-
-# Sao chép toàn bộ mã nguồn vào container
 COPY . .
-
-# Xây dựng ứng dụng Next.js
 RUN npm run build
+
+# Stage 2: Production-ready image
+FROM node:20-alpine3.18
+
+WORKDIR /app
+
+# Sao chép build output từ stage 1
+COPY --from=builder /app ./
 
 # Expose port
 EXPOSE 3001
+
+# Đặt biến môi trường
+ENV PORT=3001
 
 # Khởi động ứng dụng
 CMD ["npm", "run", "start"]
