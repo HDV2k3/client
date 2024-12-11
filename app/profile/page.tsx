@@ -83,5 +83,4 @@ export default function ProfilePage() {
       {/* <MainProfilePage /> */}
     </div>
   )
-  // return <></>
 }

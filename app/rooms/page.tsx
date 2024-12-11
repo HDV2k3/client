@@ -96,56 +96,42 @@ const RoomsPage: React.FC = () => {
   };
 
   return (
-    <div className="px-4 py-2 sm:px-0 lg:px-0 max-w-screen-xl mx-auto">
-      <div>
-        {/* <Courasel /> */}
-        {/* <Stats /> */}
-        <div className="sm:mb-8 mt-5">
-          <TitleRoom title="Tất cả các phòng tại Next Room" />
-
-          <FilterComponent applyFilters={applyFilters} />
-
-          {isEmpty && isFiltered ? (
-            <div className="text-center py-10">
-              <h3 className="text-lg font-medium text-gray-900">
-                Không tìm thấy kết quả phù hợp
-              </h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Vui lòng thử lại với các tiêu chí khác.
-              </p>
-              <button
-                onClick={resetFilters}
-                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Đặt lại bộ lọc
-              </button>
-            </div>
-          ) : (
-            <>
-              <FeaturedRoomList
-                rooms={rooms}
-                isLoadingMore={isLoadingMore ?? false}
-                PAGE_SIZE={PAGE_SIZE}
-              />
-
-              <LoadMoreButton
-                isLoadingInitialData={isLoadingInitialData}
-                isReachingEnd={isReachingEnd}
-                loadMore={() => setSize(size + 1)} // Tải thêm trang tiếp theo
-                reset={resetFilters} // Đặt lại bộ lọc
-                roomsLength={rooms.length} // Tổng số phòng đã tải
-                isLoadingMore={isLoadingMore ?? false} // Trạng thái đang tải thêm
-              />
-            </>
-          )}
+    <>
+      <FilterComponent applyFilters={applyFilters} />
+      {isEmpty && isFiltered ? (
+        <div className="text-center py-10">
+          <h3 className="text-lg font-medium text-gray-900">
+            Không tìm thấy kết quả phù hợp
+          </h3>
+          <p className="mt-1 text-sm text-gray-500">
+            Vui lòng thử lại với các tiêu chí khác.
+          </p>
+          <button
+            onClick={resetFilters}
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Đặt lại bộ lọc
+          </button>
         </div>
+      ) : (
+        <>
+          <FeaturedRoomList
+            rooms={rooms}
+            isLoadingMore={isLoadingMore ?? false}
+            PAGE_SIZE={PAGE_SIZE}
+          />
 
-        {/* <PromotionSection />
-        <div className="bg-white rounded-lg">
-          <RealEstateExperience />
-        </div> */}
-      </div>
-    </div>
+          <LoadMoreButton
+            isLoadingInitialData={isLoadingInitialData}
+            isReachingEnd={isReachingEnd}
+            loadMore={() => setSize(size + 1)} // Tải thêm trang tiếp theo
+            reset={resetFilters} // Đặt lại bộ lọc
+            roomsLength={rooms.length} // Tổng số phòng đã tải
+            isLoadingMore={isLoadingMore ?? false} // Trạng thái đang tải thêm
+          />
+        </>
+      )}
+    </>
   );
 };
 
