@@ -7,10 +7,10 @@ import "../styles/RoomCardProminent.css";
 import { FaPhone, FaUser, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Carousel, message, Tooltip } from "antd";
 import { converStringToSlug } from './../utils/converStringToSlug';
-import { fetchCreateFavoritePost } from "@/service/FavoriteService";
+import { axiosFavoriteBookmarkAction } from "@/service/FavoriteService";
 
 interface RoomCardProps {
-  roomId: string;
+  roomId?: string;
   id: string;
   name: string;
   price: number;
@@ -48,7 +48,8 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
   const handleBookMark = async () => {
     try {
       setIsBookmark(true);
-      const data = await fetchCreateFavoritePost(roomId);
+      if (!roomId) return;
+      const data = await axiosFavoriteBookmarkAction(roomId);
       if (!data) {
         setIsBookmark(false);
       }
@@ -170,7 +171,6 @@ const RoomCardProminent: React.FC<RoomCardProps> = ({
           </Link>
 
           <button
-            // className="absolute bottom-2 right-2 p-2 rounded-full shadow-md hover:bg-gray-200 transition-colors z-10000"
             onClick={handleBookMark}
             style={{ background: 'none', boxShadow: 'none' }}
           >

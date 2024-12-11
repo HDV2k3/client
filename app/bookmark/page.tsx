@@ -1,34 +1,27 @@
 
 
 import ButtonBack from "@/components/Button/ButtonBack";
-import getToken from "@/utils/getTokenLocalStorage";
-import dynamic from "next/dynamic";
-const RenderListBookmarksLazy = dynamic(() => import('./components/RenderListBookmarks'), {
-    loading: () => <p>Loading book marks</p>,
-})
+import { getFavoriteBookmarkAction } from "@/service/actions/FavoriteAction";
+import RenderListBookmarks from './components/RenderListBookmarks';
 
 export default async function BookMarkPage() {
-
-    const token = getToken();
-    console.log('check token: ', token);
+    const page = 1;
+    const size = 5;
+    const data = await getFavoriteBookmarkAction(page, size);
+    const dataRooms = data?.data;
 
     return (
-        <div className="w-[100%] h-[100%] flex justify-center items-center">
-            <div className="w-[100%] max-w-[1000px] h-[80vh] mb-[20px] px-3 bg-white" >
-                <div className="h-[50px] w-[100%] flex items-center">
+        <div className="w-full h-full flex justify-center items-center mt-6">
+            <div className="w-full max-w-[1000px] h-[80vh] mb-6 px-3 bg-white rounded-lg shadow-lg">
+                <div className="h-[50px] flex items-center">
                     <ButtonBack />
-                    <span className='text-lg'>
-                        Tin đang lưu
-                    </span>
-                </div>
-                <div className="h-[50px]">
-                    <span className="text-2lg">
-                        Tin đăng đã lưu (2 / 100)
-                    </span>
+                    <span className='text-xl font-semibold'>Tin đang lưu</span>
                 </div>
 
-                <RenderListBookmarksLazy />
+                <div className="max-h-[810px]">
+                    <RenderListBookmarks data={dataRooms} page={page} size={size} />
+                </div>
             </div>
         </div>
-    )
+    );
 }

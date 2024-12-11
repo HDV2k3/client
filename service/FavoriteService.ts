@@ -4,11 +4,10 @@ import getToken from "@/utils/getTokenLocalStorage";
 import axios from "axios";
 import queryString from "query-string";
 
-export const fetchCreateFavoritePost = async (roomId: string) => {
+const axiosFavoriteBookmarkAction = async (roomId: string) => {
     const token = getToken();
     const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/favorite/create`;
     const body = { roomId };
-    // console.log('check body', roomId, body);
     try {
         const response = await axios.post(
             url,
@@ -19,7 +18,6 @@ export const fetchCreateFavoritePost = async (roomId: string) => {
                 },
             }
         );
-        console.log('check res', response);
         return response.data;
     } catch (error) {
         console.error("Error creating favorite post:", error);
@@ -27,12 +25,12 @@ export const fetchCreateFavoritePost = async (roomId: string) => {
     }
 }
 
-export const fetchFavoritePost = async (token: string, page: number, size: number) => {
-    const query = queryString.stringify({ page, size })
-    // const token = getToken(); if (!token) return null;
-    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/favorite/all?${query}`;
+const axiosDeleteFavoritePost = async (roomId: string) => {
+    const query = queryString.stringify({ roomId })
+    const token = getToken();
+    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/favorite/delete?${query}`;
     try {
-        const response = await axios.get(
+        const response = await axios.delete(
             url,
             {
                 headers: {
@@ -45,4 +43,9 @@ export const fetchFavoritePost = async (token: string, page: number, size: numbe
         console.error("Error creating favorite post:", error);
         throw error;
     }
+}
+
+export {
+    axiosDeleteFavoritePost,
+    axiosFavoriteBookmarkAction
 }
