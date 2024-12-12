@@ -26,7 +26,6 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
       )
     );
   }
-
   if (roomData?.roomUtility.amenitiesAvailability) {
     amenities.push(
       ...Object.entries(roomData?.roomUtility.amenitiesAvailability).map(
@@ -78,14 +77,10 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
     };
     try {
       onSubmit(roomListingData);
-      notificationService.room.saveSuccess(values.title);
-      message.success("Room listing submitted successfully!");
     } catch (error) {
       notificationService.room.saveError();
     }
   };
-
-  // const handleSetValue 
 
   return (
     <div className="container mx-auto p-6 bg-gray-50">
@@ -102,12 +97,12 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
           <RoomPricingSection />
           <RoomUtilitiesSection />
           <ContactInfoSection />
-          <AdvertisementForm setValue={form.setFieldsValue} />
+          <AdvertisementForm />
           <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-blue-600 hover:bg-blue-700 mt-[20px]"
             >
               Tiếp tục thêm ảnh
             </Button>
