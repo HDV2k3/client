@@ -22,6 +22,7 @@ export const fetchPostsByPage = async (page: number, pageSize: number) => {
   const data = await response.json();
   return data;
 };
+
 export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
   try {
     const response = await fetch(
