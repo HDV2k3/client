@@ -52,6 +52,7 @@ interface RoomFinal {
   pricingDetails: PricingDetails;
   contactInfo: string;
   additionalDetails: string;
+  typePackage: number;
 
   createdDate: number;
   lastModifiedDate: number;
