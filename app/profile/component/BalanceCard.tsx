@@ -1,41 +1,10 @@
-// import React from "react";
-// import { Card, Typography } from "antd";
-
-// const { Title } = Typography;
-
-// interface BalanceCardProps {
-//   balance: number;
-// }
-
-// const BalanceCard: React.FC<BalanceCardProps> = ({ balance }) => (
-//   <Card>
-//     <div className="text-center">
-//       <Title level={3}>Số Dư Tài Khoản</Title>
-//       <Title level={2} className="text-green-600">{balance.toLocaleString()} VND</Title>
-//     </div>
-//   </Card>
-// );
-
-// export default BalanceCard;
+'use client';
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Card, Typography } from "antd";
-
+import { Button, Card, message, Typography } from "antd";
 const { Title } = Typography;
 
-interface UserPaymentResponse {
-  responseCode: number;
-  data: {
-    balance: number;
-    userResponse: {
-      // other user details
-    };
-  };
-  message: string;
-}
-
 const BalanceCard: React.FC = () => {
-  const [balance, setBalance] = useState<number>(0);
+  const [balance, setBalance] = useState<number>(-1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,8 +12,7 @@ const BalanceCard: React.FC = () => {
     const fetchUserBalance = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get<UserPaymentResponse>(
-          // "http://localhost:8084/payment/userPayment/getUserPayment",
+        const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/getUserPayment`,
           {
             headers: {
@@ -52,11 +20,13 @@ const BalanceCard: React.FC = () => {
             },
           }
         );
+        const response = await res.json();
+        console.log('check res: ', response?.data?.balance);
 
-        if (response.data.message === "Success") {
-          setBalance(response.data.data.balance);
+        if (res.ok) {
+          setBalance(response.data.balance);
         } else {
-          setError("Failed to fetch balance");
+          message.error('Lỗi')
         }
       } catch (err) {
         setError("Error fetching balance");
@@ -69,6 +39,24 @@ const BalanceCard: React.FC = () => {
     fetchUserBalance();
   }, []);
 
+  const handleCreatePayment = async () => {
+    const userId = localStorage.getItem("userId")
+    const token = localStorage.getItem("token")
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/create/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const response = await res.json();
+    if (response.ok) {
+      message.success('Tạo ví thành công');
+      setBalance(0);
+    }
+  }
+
   if (isLoading) {
     return (
       <Card>
@@ -78,6 +66,15 @@ const BalanceCard: React.FC = () => {
         </div>
       </Card>
     );
+  }
+
+  if (balance === -1) {
+    return (
+      <>
+        chuaw co vis
+        <Button onClick={handleCreatePayment}>Taoj vi</Button>
+      </>
+    )
   }
 
   if (error) {
@@ -95,12 +92,19 @@ const BalanceCard: React.FC = () => {
 
   return (
     <Card>
-      <div className="text-center">
-        <Title level={3}>Số Dư Tài Khoản</Title>
-        <Title level={2} className="text-green-600">
-          {balance.toLocaleString()} VND
-        </Title>
-      </div>
+      {balance === -1 ?
+        <>
+          chuaw co vis
+          <Button onClick={handleCreatePayment}>Taoj vi</Button>
+        </>
+        : <>
+          <div className="text-center">
+            <Title level={3}>Số Dư Tài Khoản</Title>
+            <Title level={2} className="text-green-600">
+              {balance.toLocaleString()} VND
+            </Title>
+          </div>
+        </>}
     </Card>
   );
 };

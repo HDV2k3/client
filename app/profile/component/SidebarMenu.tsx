@@ -9,15 +9,15 @@ import {
 const { Title } = Typography;
 
 interface SidebarMenuProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  // activeTab: string;
+  // setActiveTab: (tab: string) => void;
   avatar?: string | null;
   name: string;
 }
 
 const SidebarMenu: React.FC<SidebarMenuProps> = ({
-  activeTab,
-  setActiveTab,
+  // activeTab,
+  // setActiveTab,
   avatar,
   name,
 }) => (
@@ -30,8 +30,8 @@ const SidebarMenu: React.FC<SidebarMenuProps> = ({
     </div>
     <Menu
       mode="inline"
-      selectedKeys={[activeTab]}
-      onSelect={({ key }) => setActiveTab(key)}
+    // selectedKeys={[activeTab]}
+    // onSelect={({ key }) => setActiveTab(key)}
     >
       <Menu.Item key="profile" icon={<UserOutlined />}>
         Thông Tin Cá Nhân
