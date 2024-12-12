@@ -5,7 +5,7 @@ import AppFooter from "../components/Footer";
 import "../styles/globals.css"; // Import global styles
 import Chat from "@/components/Chat";
 import BackToTop from "@/components/BackToTop";
-import NextTopLoader from '../components/Header/NextTopLoader';
+import NextTopLoader from "../components/Header/NextTopLoader";
 import TopNavigation from "@/components/Header/TopNavigation";
 
 export const metadata = {
@@ -19,10 +19,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="flex flex-col min-h-screen">
         <AntdRegistry>
           <NextTopLoader />
-
           <header className="bg-[#1E3A8A] py-2 sticky top-0 z-50">
             <div className="container mx-auto  sm:px-6 lg:px-8">
-              <TopNavigation />
+              <div className="hidden md:block">
+                <TopNavigation />
+              </div>
               <AppHeader />
             </div>
           </header>
