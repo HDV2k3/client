@@ -4,16 +4,17 @@ import RoomCardProminent from "@/components/RoomCard";
 import { SkeletonCard } from "@/components/SkeletonCard";
 import { fetchPostsFeaturedByPage } from "@/service/Marketing";
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
     data: any;
     page: number;
     size: number;
     type: number;
+    searchParam: string;
 }
 
-export default function MainRoomList({ data, page, size, type }: Props) {
+export default function MainRoomList({ data, page, size, type, searchParam }: Props) {
     const [dataRooms, setDataRooms] = useState<any[]>(data);
     const [isPage, setIsPage] = useState<number>(page);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
@@ -41,8 +42,40 @@ export default function MainRoomList({ data, page, size, type }: Props) {
             setIsLoadingMore(false)
         }
     }
+
+    const handleFetchDataSearch = async () => {
+        try {
+            setIsLoadingMore(true);
+            const newPage = isPage + 1;
+            const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${searchParam}`;
+            const res = await fetch(url);
+            const response = await res.json();
+            const dataRooms = response?.data?.data;
+            if (dataRooms.length > 0) {
+                setDataRooms((prev: any) => [
+                    ...prev,
+                    ...dataRooms,
+                ])
+                setIsPage(newPage);
+                setIsLoadingMore(false);
+            } else {
+                setIsReachingEnd(true);
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsLoadingMore(false)
+        }
+    }
+
+    useEffect(() => {
+        setDataRooms(data);
+    }, [data])
+
+    // const 
     const loadMore = async () => {
         if (type === 0) await handleFetchData();
+        if (type === 1) await handleFetchDataSearch();
     }
 
     const reset = () => {

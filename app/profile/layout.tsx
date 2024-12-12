@@ -55,7 +55,7 @@ export default function LayoutProfile({ children }: Props) {
             style={{ borderRadius: '8px', }}
           >
             <Link href={'/profile/history'} style={{ color: path === '/profile/history' ? "black" : '#ffffff' }}>
-              Lịch Sử Nạp Tiền
+              Lịch sử giao dịch
             </Link>
           </Menu.Item>
         </Menu>
