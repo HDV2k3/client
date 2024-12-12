@@ -5,6 +5,7 @@ import Stats from "./component/Stats";
 import { fetchCarouselData } from '@/service/actions/HomeAction'
 import MainPromotions from "../home/component/MainRoomListPromotion";
 import TitleRoom from "@/components/TitleRoom";
+import ComponentFilterPost from "./component/ComponentFilter";
 
 type Props = {
     children: React.ReactNode;
@@ -24,8 +25,9 @@ export default async function LayoutRooms({ children }: Props) {
                     <Courasel data={dataCourasel} />
                     <Stats data={dataInfoMarketing} />
                     <TitleRoom title="Tất cả các phòng tại Next Room" />
-
+                    <ComponentFilterPost />
                     {children}
+                    <TitleRoom title="Phòng giá tốt tại Next Room" />
                     <MainPromotions data={dataRoomsPromotions} page={page} size={size} />
                     <div className="bg-white rounded-lg">
                         <RealEstateExperience />
