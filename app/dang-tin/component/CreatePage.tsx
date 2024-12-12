@@ -7,6 +7,7 @@ import RoomPricingSection from "./PricingDetails";
 import RoomUtilitiesSection from "./RoomUtilities";
 import ContactInfoSection from "./ContactInfoSection";
 import AdsSection from "./AdsSection";
+import AdvertisementForm from "./Advertisement";
 interface RoomFormProps {
   onSubmit: (data: RoomFinal) => void;
   roomData?: RoomFinal;
@@ -101,6 +102,7 @@ const RoomListingForm: React.FC<RoomFormProps> = ({ roomData, onSubmit }) => {
           <RoomPricingSection />
           <RoomUtilitiesSection />
           <ContactInfoSection />
+          <AdvertisementForm setValue={form.setFieldsValue} />
           <Form.Item>
             <Button
               type="primary"

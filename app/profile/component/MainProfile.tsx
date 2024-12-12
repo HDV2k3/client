@@ -30,8 +30,8 @@ export default function MainProfilePage() {
     <Layout className="bg-gray-100 h-full min-h-[900px]">
       <Sider width={250} theme="light" className="shadow-md">
         <SidebarMenu
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          // activeTab={activeTab}
+          // setActiveTab={setActiveTab}
           avatar=""
           name=""
         />

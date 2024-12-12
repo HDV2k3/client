@@ -1,3 +1,4 @@
+import { addressHCM } from "@/constants/HCM_address";
 import React, { useState, useEffect } from "react";
 
 interface FilterProps {
@@ -33,6 +34,8 @@ const FilterComponent: React.FC<FilterProps> = ({ applyFilters }) => {
   const [priceRanges, setPriceRanges] = useState<
     Array<{ label: string; min: number; max: number }>
   >([]);
+
+  const district = addressHCM.district;
 
   // const districts = [
   //   "Quận 1",

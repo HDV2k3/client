@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table, Tag, message } from "antd";
@@ -35,30 +37,33 @@ const DepositHistoryTable: React.FC = () => {
   const fetchData = async (page: number, pageSize: number) => {
     try {
       setLoading(true);
-      const response = await axios.get<ApiResponse>(
-        // `http://localhost:8084/payment/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
-        `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      console.log("API Response:", response.data);
-
-      if (response.data.message === "Success") {
-        setData(response.data.data.data);
-        setPagination((prevPagination) => ({
-          ...prevPagination,
-          current: response.data.data.currentPage + 1, // Chuyển về dạng 1-indexed
-          pageSize: response.data.data.pageSize,
-          total: response.data.data.totalElements,
-        }));
-      } else {
-        message.error(
-          response.data.message || "Không thể tải lịch sử giao dịch"
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        const response = await axios.get<ApiResponse>(
+          // `http://localhost:8084/payment/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
+          `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/order/all?userId=${userId}&page=${page}&size=${pageSize}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
         );
+        console.log("API Response:", response.data);
+
+        if (response.data.message === "Success") {
+          setData(response.data.data.data);
+          setPagination((prevPagination) => ({
+            ...prevPagination,
+            current: response.data.data.currentPage + 1, // Chuyển về dạng 1-indexed
+            pageSize: response.data.data.pageSize,
+            total: response.data.data.totalElements,
+          }));
+        } else {
+          message.error(
+            response.data.message || "Không thể tải lịch sử giao dịch"
+          );
+        }
       }
     } catch (error) {
       console.error("Lỗi tải lịch sử giao dịch:", error);

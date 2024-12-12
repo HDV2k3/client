@@ -5,7 +5,7 @@ import { Button, notification, Spin } from "antd";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import RoomImageUpload from "../../component/UploadImages";
-
+import TitleRoom from "@/components/TitleRoom";
 
 const UploadPage: React.FC = () => {
   const router = useRouter();
@@ -38,7 +38,8 @@ const UploadPage: React.FC = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="h-[900px]">
+      <TitleRoom title="Thêm ảnh để hoàn thành quá trình đăng bài" />
       <RoomImageUpload postId={typeof id === "string" ? id : ""} />
       <Button
         type="primary"
