@@ -9,9 +9,9 @@ import NextTopLoader from "../components/Header/NextTopLoader";
 import TopNavigation from "@/components/Header/TopNavigation";
 
 export const metadata = {
-  title: "NextRoom",
+  title: "NextLife",
   description:
-    "NextRoom - Your ultimate platform for finding and renting rooms with ease.",
+    "NextLife - Your ultimate platform for finding and renting rooms with ease.",
 };
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
