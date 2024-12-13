@@ -20,6 +20,7 @@ export default async function RoomsPage({ searchParams }: SearchParams) {
   let data = [];
   let typeGet = 0; // 0: all, 1: fillter
   let searchParam = '';
+
   if (minPrice || maxPrice || district || commune || type || hasPromotion || sortByCreated || sortByPrice) {
     const queryParams = {
       district: district !== -1 ? district : undefined,
@@ -30,30 +31,26 @@ export default async function RoomsPage({ searchParams }: SearchParams) {
       hasPromotion: hasPromotion ? true : undefined,
       sortByPrice,
       sortByCreated,
-      page,
-      size,
     };
     const filteredParams = Object.fromEntries(
       Object.entries(queryParams).filter(([_, value]) => value !== "NaN")
     );
     searchParam = queryString.stringify(filteredParams);
-    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${searchParam}`;
+    const query = `${searchParam}&page=${page}&size=${size}`
+    const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${query}`;
     const res = await fetch(url);
     const response = await res.json();
     data = response?.data?.data;
-    console.log('data: ', response);
     typeGet = 1;
   } else {
     const res = await fetchPostsAllByPage(page, size);
     data = res?.data?.data;
-    console.log('check no query data:')
   }
 
   return (
     <>
       {data.length > 0
-        ?
-        <>
+        ? <>
           <TitleRoom title="Phòng bạn tìm kiếm" />
           <MainRoomList data={data} page={page} size={size} type={typeGet} searchParam={searchParam} />
         </>
