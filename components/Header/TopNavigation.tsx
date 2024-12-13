@@ -27,7 +27,7 @@ const TopNavigation = () => {
             <span className="text-white font-semibold">Next News</span>
           </Button>
         </Link>
-        <Link href="/rooms">
+        {/* <Link href="/rooms">
           {" "}
           <Button
             type="link"
@@ -35,7 +35,7 @@ const TopNavigation = () => {
           >
             <span className="text-white font-semibold">Next Other</span>
           </Button>{" "}
-        </Link>
+        </Link> */}
         <Link href="products">
           <Button
             type="link"

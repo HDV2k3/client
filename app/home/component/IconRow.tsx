@@ -35,7 +35,7 @@ const IconRow = () => {
       icon: FaRegNewspaper,
       text: "Tin Tức",
       alt: "Icon for latest news",
-      link: "/tin-moi",
+      link: "/news",
     },
     {
       icon: FaRegBookmark,
