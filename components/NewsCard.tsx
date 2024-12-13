@@ -1,7 +1,5 @@
-import { News } from "@/types/New";
 import Image from "next/image";
 import React from "react";
-import { FormatDescription } from "./FormatDescription";
 import Link from "next/link";
 import { converStringToSlug } from "@/utils/converStringToSlug";
 

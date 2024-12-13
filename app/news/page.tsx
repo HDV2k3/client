@@ -1,24 +1,12 @@
-"use client";
-import NewsCard from "@/components/NewsCard";
-import { fetchAllNew } from "@/service/NewsService";
-import { News } from "@/types/New";
-import { useEffect, useState } from "react";
+import MainNewsClient from "./component/LoadData";
 
-export default function NewsPage() {
-  const [allData, setAllData] = useState<News[]>([]);
-  const fetchData = async () => {
-    const data = await fetchAllNew(1, 10);
-    setAllData(data);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return (
-    <div>
-      {allData.map((news, index) => (
-        <NewsCard key={index} data={news} />
-      ))}
-    </div>
+export default async function NewsPage() {
+  const page = 1;
+  const size = 10;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/news/all?page=${page}&size=${size}`
   );
+  const data = await response.json();
+  const dataNews = data.data.data;
+  return <MainNewsClient data={dataNews} />
 }
