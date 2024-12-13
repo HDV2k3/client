@@ -180,7 +180,19 @@ body {
   --ig-primary-text-light: 255, 255, 255;
 }
 
+ol li:before {
+  content: counter(list-item) "";
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin-right: 10px;
+  padding:0 7px;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #1e3a8a;
 
+}
 .light {
   background-color: rgb(var(--ig-primary-background));
   color: rgb(var(--ig-primary-text));

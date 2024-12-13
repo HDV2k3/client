@@ -29,7 +29,7 @@ export default async function LayoutRooms({ children }: Props) {
                     {children}
                     <TitleRoom title="Phòng giá tốt tại Next Room" />
                     <MainPromotions data={dataRoomsPromotions} page={page} size={size} />
-                    <div className="bg-white rounded-lg">
+                    <div className="rounded-lg">
                         <RealEstateExperience />
                     </div>
                 </div>
