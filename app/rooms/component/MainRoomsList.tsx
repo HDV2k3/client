@@ -5,7 +5,7 @@ import { SkeletonCard } from "@/components/SkeletonCard";
 import { fetchPostsFeaturedByPage } from "@/service/Marketing";
 import { Button } from "antd";
 import { useEffect, useState } from "react";
-
+import { useRouter } from "@/hooks/useRouter";
 type Props = {
     data: any;
     page: number;
@@ -15,10 +15,12 @@ type Props = {
 }
 
 export default function MainRoomList({ data, page, size, type, searchParam }: Props) {
+    const router = useRouter();
     const [dataRooms, setDataRooms] = useState<any[]>(data);
     const [isPage, setIsPage] = useState<number>(page);
     const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
     const [isReachingEnd, setIsReachingEnd] = useState<boolean>(false);
+    const [isEndMore, serIsEndMore] = useState<boolean>(false);
 
     const handleFetchData = async () => {
         try {
@@ -26,6 +28,7 @@ export default function MainRoomList({ data, page, size, type, searchParam }: Pr
             const newPage = isPage + 1;
             const dataResponseRooms = await fetchPostsFeaturedByPage(newPage, size);
             const dataRooms = dataResponseRooms?.data?.data;
+            console.log('check dataRooms: ', dataRooms);
             if (dataRooms.length > 0) {
                 setDataRooms((prev: any) => [
                     ...prev,
@@ -42,12 +45,12 @@ export default function MainRoomList({ data, page, size, type, searchParam }: Pr
             setIsLoadingMore(false)
         }
     }
-
     const handleFetchDataSearch = async () => {
         try {
             setIsLoadingMore(true);
             const newPage = isPage + 1;
-            const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${searchParam}`;
+            const query = `${searchParam}&page=${newPage}&size=${size}`
+            const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${query}`;
             const res = await fetch(url);
             const response = await res.json();
             const dataRooms = response?.data?.data;
@@ -59,6 +62,7 @@ export default function MainRoomList({ data, page, size, type, searchParam }: Pr
                 setIsPage(newPage);
                 setIsLoadingMore(false);
             } else {
+                serIsEndMore(true);
                 setIsReachingEnd(true);
             }
         } catch (e) {
@@ -67,23 +71,21 @@ export default function MainRoomList({ data, page, size, type, searchParam }: Pr
             setIsLoadingMore(false)
         }
     }
+    useEffect(() => { if (page === 1) { setDataRooms(data); } }, [data, page])
 
-    useEffect(() => {
-        setDataRooms(data);
-    }, [data])
-
-    // const 
     const loadMore = async () => {
         if (type === 0) await handleFetchData();
         if (type === 1) await handleFetchDataSearch();
     }
-
     const reset = () => {
         setDataRooms(data.slice(0, 8));
         setIsPage(1);
         setIsReachingEnd(false);
     }
-
+    const handleRefesh = () => {
+        serIsEndMore(false);
+        router.push('/rooms');
+    }
     return (
         <>
             <div className="featured-room-list mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -114,21 +116,23 @@ export default function MainRoomList({ data, page, size, type, searchParam }: Pr
                         />
                     );
                 })}
-                {/* Hiển thị Skeleton khi đang tải thêm */}
-                {isLoadingMore &&
-                    Array.from({ length: size }).map((_, index) => (
-                        <SkeletonCard key={`skeleton-${index}`} />
-                    ))}
+                {isLoadingMore && Array.from({ length: size }).map((_, index) => (<SkeletonCard key={`skeleton-${index}`} />))}
             </div>
 
             <div className="text-center mt-4">
                 <>
-                    {!isReachingEnd &&
+                    {!isReachingEnd && !isEndMore &&
                         <Button onClick={loadMore} disabled={isLoadingMore}>
                             {isLoadingMore ? "Loading..." : "Xem thêm"}
                         </Button>
                     }
-                    {isReachingEnd && <Button onClick={reset}>Rút gọn</Button>}
+                    {isEndMore &&
+                        <div className="mb-[20px] flex justify-center items-center bg-white rounded-xl shadow-lg text-center  w-full, h-[50px]" >
+                            <span style={{ fontSize: 15, fontWeight: 700, color: 'red' }}>Đã hết bài viết</span>
+                            <Button onClick={handleRefesh} style={{ marginLeft: '20px' }}>Làm mới</Button>
+                        </div>
+                    }
+                    {isReachingEnd && !isEndMore && <Button onClick={reset}>Rút gọn</Button>}
                 </>
             </div>
         </>

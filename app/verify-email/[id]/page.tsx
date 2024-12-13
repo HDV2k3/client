@@ -55,10 +55,7 @@ const VerifyEmailPage: React.FC = () => {
           }
         );
 
-
-        if (!response.ok) {
-          notificationServiceVerify_Email.verifyError();
-        }
+        if (!response.ok) { notificationServiceVerify_Email.verifyError(); }
 
         setNotification({
           isOpen: true,
@@ -105,13 +102,14 @@ const VerifyEmailPage: React.FC = () => {
           router.push("/login");
         }, 1000);
       } catch (error) {
-        setNotification({
-          isOpen: true,
-          type: "error",
-          title: "Error",
-          message:
-            error instanceof Error ? error.message : "Verification failed",
-        });
+        console.error('Error verify: ', error);
+        // setNotification({
+        //   isOpen: true,
+        //   type: "error",
+        //   title: "Error",
+        //   message:
+        //     error instanceof Error ? error.message : "Verification failed",
+        // });
       } finally {
         setIsLoading(false);
       }

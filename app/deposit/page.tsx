@@ -4,7 +4,9 @@ import AdvancedDepositPage from './component/AdvancedDepositPage';
 
 const page = () => {
   return (
-   <AdvancedDepositPage/>
+    <div className='h-[900px] mb-[20px] mt-[20px]'>
+      <AdvancedDepositPage />
+    </div>
   )
 }
 
