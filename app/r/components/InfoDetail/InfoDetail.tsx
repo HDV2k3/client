@@ -14,6 +14,8 @@ import { Button } from "antd";
 import Link from "next/link";
 import { findNameByType } from '@/constants/districts'
 import { getTypeRoomById } from "@/constants/TypeCreatePost";
+import axios from "axios";
+import { useRouter } from "@/hooks/useRouter";
 
 // Subcomponent for displaying utility items
 const UtilityItem: React.FC<{ label: string }> = ({ label }) => (
@@ -56,8 +58,37 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
     }
   `;
 
-  const hasPromotionalPrice =
-    (room.fixPrice ?? 0) < room.pricingDetails.basePrice;
+  const router = useRouter();
+  const handleContact = async () => {
+    try {
+      console.log('check room: ', room);
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      if (!userId || !token) return;
+
+      const urlCK = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/encrytion/keys?userId=${userId}`;
+      const createKey = await fetch(urlCK);
+      const dataKey = await createKey.json();
+
+      if (dataKey) {
+        const publicKey = dataKey?.data?.publicKey;
+        localStorage.setItem('publicKey', publicKey);
+      }
+
+      const url = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/create-null-mess?id=${room?.id}`
+      const responseCreateRoom = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      // const data = await responseCreateRoom.json();
+      // console.log('data: ', data);
+      router.push(`/message/${room?.userId}`);
+    } catch (e) {
+      console.error('--> Handle Contact error: ', e);
+    }
+  }
+
+
+  const hasPromotionalPrice = (room.fixPrice ?? 0) < room.pricingDetails.basePrice;
 
   // Determine the status message based on room's status
   const roomStatusMessage =
@@ -201,9 +232,9 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
       {/* Contact and Zalo Button */}
       <div className="flex justify-between mb-5">
         <div className="flex justify-start ">
-          <Link href={`/messages`} passHref>
-            <Button>liên hệ ngay: {room.createdBy}</Button>
-          </Link>
+          {/* <Link href={`/messages`} passHref> */}
+          <Button onClick={handleContact}>liên hệ ngay: {room.createdBy}</Button>
+          {/* </Link> */}
         </div>
         <div className="flex justify-end">
           <a

@@ -42,5 +42,5 @@ interface Room {
   lastModifiedDate: number;
   status: string;
   statusShowCheck: string;
-  index: string;
+  index: number;
 }

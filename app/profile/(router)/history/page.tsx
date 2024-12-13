@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table, Tag, message } from "antd";
 import { redirect } from "next/navigation";
+import { convertTimestampToDate } from "@/utils/formatDate";
 
 interface OrderRecord {
     id: string;
@@ -93,14 +94,14 @@ export default function HistoryBalance() {
         {
             title: "Số Tiền",
             dataIndex: "amount",
-            key: "amount",
+            key: 'amount',
             render: (amount: number) => `${amount.toLocaleString()} VND`,
         },
         {
             title: "Ngày",
             dataIndex: "createDate",
             key: "createDate",
-            render: (date: string) => new Date(date).toLocaleString(),
+            render: (lastModifiedDate: number) => convertTimestampToDate(lastModifiedDate),
         },
         {
             title: "Trạng Thái",
@@ -139,7 +140,7 @@ export default function HistoryBalance() {
                 pageSize: pagination.pageSize,
                 total: pagination.total,
                 showSizeChanger: true,
-                showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} mục`,
+                showTotal: (total, range) => `${range[0]} - ${range[1]} của ${total} mục`,
             }}
             onChange={handleTableChange}
         />

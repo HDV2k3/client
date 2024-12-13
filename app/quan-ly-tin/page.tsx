@@ -3,8 +3,8 @@ import React from "react";
 import PostManagement from "./component/PostManagement";
 
 const page = () => {
-  return <div>
-    <PostManagement/>
+  return <div className="p-3">
+    <PostManagement />
   </div>;
 };
 

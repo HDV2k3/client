@@ -15,6 +15,7 @@ const PostList: React.FC<PostListProps> = ({
   onPageChange,
   total,
 }) => {
+  console.log('check post: ', posts);
   return (
     <div>
       {loading ? (
@@ -26,13 +27,16 @@ const PostList: React.FC<PostListProps> = ({
           ))}
         </div>
       )}
-      <Pagination
-        className="mt-4"
-        total={total}
-        pageSize={5}
-        onChange={onPageChange}
-        showSizeChanger={false}
-      />
+
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px' }}>
+        <Pagination
+          className="mt-4"
+          total={total}
+          pageSize={5}
+          onChange={onPageChange}
+          showSizeChanger={false}
+        />
+      </div>
     </div>
   );
 };

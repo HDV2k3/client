@@ -5,7 +5,8 @@ import { InputNumber, Select, Checkbox, Radio } from "antd";
 import { typeRooms } from "../../../constants/TypeCreatePost";
 import { addressHCM, getCommuneByIdDistrict } from '@/constants/HCM_address';
 import { RefreshButton, SubmitButton } from '../style/index';
-import { useRouter } from "@/hooks/useRouter";
+// import { useRouter } from "@/hooks/useRouter";
+import { useRouter } from "next/navigation";
 import queryString from "query-string";
 
 interface Commune {
