@@ -43,7 +43,6 @@ const fetchHomeNewAction = async () => {
             `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/news/all`
         );
         const data: any = await response.json();
-
         // Kiểm tra responseCode và cập nhật dữ liệu
         if (data.responseCode === 101000) {
             return data?.data?.data;

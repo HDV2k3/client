@@ -1,15 +1,26 @@
 import Image from "next/image";
 import { Carousel } from "antd";
+import Link from "next/link";
+import { converStringToSlug } from "@/utils/converStringToSlug";
 
 type Props = {
   data: any;
 };
 
-const ExperienceCard: React.FC<any> = ({ title, description, postImages }) => {
+const ExperienceCard: React.FC<any> = ({ id,title, description, postImages }) => {
   // Giới hạn mô tả chỉ lấy 100 ký tự
-  const truncatedDescription = description.length > 20 ? description.slice(0, 20) + '...' : description;
-
+  const truncatedDescription = description.length > 50 ? (
+    <>
+      {description.slice(0, 170)}{" "}
+      <Link href={`/news/${converStringToSlug(title)}-${id}.html`} className="text-blue-500 underline">
+        Đọc tiếp
+      </Link>
+    </>
+  ) : (
+    description
+  );
   return (
+    <Link key={id} href={`/news/${converStringToSlug(title)}-${id}.html`}>
     <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
       <div className="relative h-40">
         <Image
@@ -24,6 +35,7 @@ const ExperienceCard: React.FC<any> = ({ title, description, postImages }) => {
         <p className="text-gray-600 text-sm">{truncatedDescription}</p>
       </div>
     </div>
+    </Link>
   );
 };
 
