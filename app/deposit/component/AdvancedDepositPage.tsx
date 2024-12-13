@@ -14,6 +14,7 @@ interface PaymentMethod {
   icon: React.ReactNode;
   color: string;
   description: string;
+  logo: string;
   fields: {
     name: string;
     label: string;
@@ -27,6 +28,7 @@ const paymentMethods: PaymentMethod[] = [
     key: "momo",
     name: "Momo",
     icon: <MobileOutlined className="text-4xl text-pink-500" />,
+    logo: '/assets/images/momo_icon.png',
     color: "bg-pink-50",
     description: "Nạp tiền nhanh chóng qua ví điện tử Momo",
     fields: [{ name: "momoAmount", label: "Số tiền nạp", type: "number" }],
@@ -35,6 +37,7 @@ const paymentMethods: PaymentMethod[] = [
     key: "vnpay",
     name: "VNPay",
     icon: <QrcodeOutlined className="text-4xl text-blue-600" />,
+    logo: '/assets/images/vnpay_logo.png',
     color: "bg-blue-50",
     description: "Thanh toán qua hệ thống ngân hàng VNPay",
     fields: [{ name: "vnpayAmount", label: "Số tiền nạp", type: "number" }],
@@ -42,9 +45,7 @@ const paymentMethods: PaymentMethod[] = [
 ];
 
 const AdvancedDepositPage = () => {
-  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(
-    null
-  );
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
@@ -115,14 +116,15 @@ const AdvancedDepositPage = () => {
   };
 
   return (
-    <div className="min-h-max bg-gradient-to-br from-blue-100 to-purple-100 p-6 flex flex-col items-center justify-center">
+    <div className="h-[100%] bg-gradient-to-br from-blue-100 to-purple-100 p-6 flex flex-col items-center justify-center rounded-2xl">
       <Title level={2} className="text-center mb-6 text-blue-800">
         Nạp Tiền An Toàn & Nhanh Chóng
       </Title>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-        {paymentMethods.map((method) => (
+        {paymentMethods.map((method: any) => (
           <PaymentMethodCard
+            logo={method.logo}
             key={method.key}
             name={method.name}
             icon={method.icon}
