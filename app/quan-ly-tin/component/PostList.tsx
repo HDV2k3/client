@@ -15,7 +15,6 @@ const PostList: React.FC<PostListProps> = ({
   onPageChange,
   total,
 }) => {
-  console.log('check post: ', posts);
   return (
     <div>
       {loading ? (
