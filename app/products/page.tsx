@@ -1,74 +1,120 @@
-'use server';
-
+"use client";
 import React from "react";
-import { Button } from "antd";
-import TitleRoom from "../../components/TitleRoom";
-import ProductCard from "../../components/ProductCard"; // You need to create this component
-import { SkeletonCard } from "../../components/SkeletonCard"; // Use for loading state
+import { Card, Row, Col, Tag, Typography, Divider } from "antd";
+import { PhoneOutlined, WifiOutlined, HomeOutlined } from "@ant-design/icons";
+import Image from "next/image";
 
-// Define the types for your products
-interface Product {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    imageUrl: string;
-    features: string[];
-}
+const { Title, Paragraph } = Typography;
+const { Meta } = Card;
 
-const ProductsPage: React.FC = () => {
-    // Simulate fetching products data
-    const products: Product[] = [
-        {
-            id: '1',
-            name: 'Standard Room Package',
-            description: 'A cozy room with essential amenities for a comfortable stay.',
-            price: 300,
-            imageUrl: '/assets/images/standard-room.jpg',
-            features: ['Wi-Fi', 'Air Conditioning', 'TV'],
-        },
-        {
-            id: '2',
-            name: 'Luxury Suite',
-            description: 'A luxurious suite with premium amenities for an extravagant stay.',
-            price: 800,
-            imageUrl: '/assets/images/luxury-suite.jpg',
-            features: ['Wi-Fi', 'Private Balcony', 'Premium TV Channels', 'Minibar'],
-        },
-        // Add more products as needed
-    ];
+const RoomListing = () => {
+  // Data mẫu cho các phòng
+  const rooms = [
+    {
+      id: 1,
+      name: "Phòng Nghỉ Gần Bệnh Viện Chợ Rẫy",
+      image: "/api/placeholder/400/300",
+      description:
+        "Phòng đầy đủ tiện nghi, có máy lạnh, cách bệnh viện 5 phút đi bộ. Phù hợp cho bệnh nhân và người nhà đi khám.",
+      price: "30.000đ/ngày",
+      contact: "0901234567",
+      location: "Quận 5",
+      amenities: ["Máy lạnh", "WiFi", "Tủ lạnh", "Nước nóng"],
+    },
+    {
+      id: 2,
+      name: "Phòng Trọ Gần Bệnh Viện 115",
+      image: "/api/placeholder/400/300",
+      description:
+        "Phòng sạch sẽ, thoáng mát, có nhà bếp riêng. Gần chợ và tiện di chuyển.",
+      price: "50.000đ/ngày",
+      contact: "0909876543",
+      location: "Quận 10",
+      amenities: ["Quạt máy", "WiFi", "Nhà bếp"],
+    },
+    {
+      id: 3,
+      name: "Nhà Nghỉ Gần Bệnh Viện Ung Bướu",
+      image: "/api/placeholder/400/300",
+      description:
+        "Phòng rộng rãi, có thể ở 3-4 người, đầy đủ tiện nghi sinh hoạt.",
+      price: "40.000đ/ngày",
+      contact: "0908765432",
+      location: "Bình Thạnh",
+      amenities: ["Máy lạnh", "TV", "Tủ lạnh", "Phòng tắm riêng"],
+    },
+  ];
 
-    return (
-        <div className="px-4 py-8 max-w-screen-xl mx-auto min-h-screen flex flex-col ">
-            <TitleRoom title="Sản Phẩm Của Chúng Tôi" />
-            <p className="text-lg mb-6">
-                Tại NextRoom, chúng tôi cung cấp các gói phòng khác nhau để đáp ứng nhu cầu
-                của bạn. Từ những căn phòng tiện nghi đến các suite sang trọng, chúng tôi
-                cam kết mang đến trải nghiệm tốt nhất cho bạn.
-            </p>
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {products.length === 0 ? (
-                    Array.from({ length: 3 }).map((_, index) => (
-                        <SkeletonCard key={index} />
-                    ))
-                ) : (
-                    products.map((product) => (
-                        <ProductCard
-                            key={product.id}
-                            name={product.name}
-                            description={product.description}
-                            price={product.price}
-                            imageUrl={product.imageUrl}
-                            features={product.features}
-                        />
-                    ))
-                )}
-            </div>
-            <div className="text-center mt-6">
-                <Button type="primary" href="/contact">Liên Hệ Đặt Phòng</Button>
-            </div>
-        </div>
-    );
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Title level={2} className="text-center mb-8">
+        Phòng Cho Thuê Hỗ Dành Cho Bệnh Nhân Ở Ngắn Hạn
+      </Title>
+
+      <Row gutter={[16, 16]}>
+        {rooms.map((room) => (
+          <Col xs={24} md={12} lg={8} key={room.id}>
+            <Card
+              hoverable
+              cover={
+                <Image
+                  alt={room.name}
+                  src={room.image}
+                  className="h-48 object-cover"
+                  width={400} // Add a width prop to specify the image width
+                  height={300} // Add a height prop to specify the image height
+                />
+              }
+              className="h-full"
+            >
+              <Meta
+                title={
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg">{room.name}</span>
+                  </div>
+                }
+                description={
+                  <>
+                    <div>
+                      <span className="text-sm">
+                        Hỗ trợ 70% cho người nhà khám bệnh từ tỉnh lẽ vào Tp.HCM
+                        với
+                      </span>
+                      <Tag color="green">{room.price}</Tag>
+                    </div>
+                    <Tag color="blue" className="mb-2">
+                      <HomeOutlined className="mr-1" />
+                      {room.location}
+                    </Tag>
+
+                    <Paragraph className="mb-3" ellipsis={{ rows: 2 }}>
+                      {room.description}
+                    </Paragraph>
+
+                    <div className="mb-3">
+                      {room.amenities.map((amenity, index) => (
+                        <Tag key={index} className="mb-1 mr-1">
+                          <WifiOutlined className="mr-1" />
+                          {amenity}
+                        </Tag>
+                      ))}
+                    </div>
+
+                    <Divider className="my-2" />
+
+                    <div className="flex items-center text-blue-600">
+                      <PhoneOutlined className="mr-2" />
+                      <span className="font-medium">{room.contact}</span>
+                    </div>
+                  </>
+                }
+              />
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+  );
 };
 
-export default ProductsPage;
+export default RoomListing;

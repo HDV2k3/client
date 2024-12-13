@@ -26,24 +26,24 @@ const IdeaContributionForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const categories = [
-    "Residential Property",
-    "Commercial Property",
-    "Industrial Property",
-    "Land Development",
-    "Property Management",
+    "Bất động sản nhà ở",
+    "Bất động sản thương mại",
+    "Bất động sản công nghiệp",
+    "Phát triển đất đai",
+    "Quản lý bất động sản",
   ];
 
   const validateForm = (): boolean => {
     const newErrors: Errors = {};
 
     if (!formData.title.trim()) {
-      newErrors.title = "Title cannot be empty";
+      newErrors.title = "Tiêu đề không được để trống";
     }
     if (formData.description.trim().length < 20) {
-      newErrors.description = "Description must be at least 20 characters long";
+      newErrors.description = "Mô tả phải dài ít nhất 20 ký tự";
     }
     if (!formData.category) {
-      newErrors.category = "Please select a category";
+      newErrors.category = "Vui lòng chọn một danh mục";
     }
 
     setErrors(newErrors);
@@ -97,10 +97,10 @@ const IdeaContributionForm: React.FC = () => {
             <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-3xl font-bold text-white mb-2">
-                  Share Your Real Estate Ideas
+                  Chia sẻ ý tưởng bất động sản của bạn
                 </h1>
                 <p className="text-gray-200">
-                  Contribute to the future of property development
+                  Đóng góp vào tương lai phát triển bất động sản
                 </p>
               </div>
             </div>
@@ -113,7 +113,7 @@ const IdeaContributionForm: React.FC = () => {
                   htmlFor="title"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Idea Title
+                  Tiêu đề ý tưởng
                 </label>
                 <input
                   type="text"
@@ -121,7 +121,9 @@ const IdeaContributionForm: React.FC = () => {
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
-                  className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${errors.title ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
+                  className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${
+                    errors.title ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   aria-label="Idea title"
                   autoComplete="off"
                 />
@@ -135,17 +137,19 @@ const IdeaContributionForm: React.FC = () => {
                   htmlFor="category"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Category
+                  Loại
                 </label>
                 <select
                   id="category"
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${errors.category ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
+                  className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${
+                    errors.category ? "border-red-500" : "border-gray-300"
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                   aria-label="Select category"
                 >
-                  <option value="">Select a category</option>
+                  <option value="">Chọn một danh mục</option>
                   {categories.map((category) => (
                     <option key={category} value={category}>
                       {category}
@@ -171,7 +175,9 @@ const IdeaContributionForm: React.FC = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${errors.description ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
+                className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${
+                  errors.description ? "border-red-500" : "border-gray-300"
+                } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200`}
                 aria-label="Idea description"
               />
               {errors.description && (
@@ -190,7 +196,7 @@ const IdeaContributionForm: React.FC = () => {
                 {isSubmitting ? (
                   <>
                     <FaSpinner className="animate-spin -ml-1 mr-2 h-5 w-5" />
-                    Submitting...
+                    Đang gửi...
                   </>
                 ) : (
                   "Submit Idea"

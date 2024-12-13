@@ -48,7 +48,6 @@ const LoginPage: React.FC = () => {
         }
       );
 
-
       if (response.data && response.data.data.token) {
         const token = response.data.data.token;
 
@@ -100,7 +99,7 @@ const LoginPage: React.FC = () => {
         <div className="w-[200px] h-[30px] bg-black rounded-b-[20px] absolute top-2 z-10" />
         <div className="w-full h-full bg-white rounded-[50px] overflow-hidden flex justify-center items-center relative">
           <Image
-            src={'/assets/images/NextLife_Background.png'}
+            src={"/assets/images/NextLife_Background.png"}
             alt="Background"
             width={370}
             height={740}
@@ -113,10 +112,10 @@ const LoginPage: React.FC = () => {
         <div className="max-w-md w-full space-y-6 bg-white p-6 md:p-10 rounded-lg shadow-lg">
           <div>
             <h2 className="text-center text-2xl md:text-3xl font-extrabold text-gray-900">
-              Welcome Back
+              Chúc bạn có nghiệm tuyệt vời với NextLife
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Please sign in to your account
+              Vui lòng đăng nhập với tài khoản của bạn.
             </p>
           </div>
 
@@ -137,7 +136,7 @@ const LoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Enter your email"
+                  placeholder="Nhập email"
                 />
               </div>
 
@@ -146,7 +145,7 @@ const LoginPage: React.FC = () => {
                   htmlFor="password"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Password
+                  Mật khẩu
                 </label>
                 <div className="mt-1 relative">
                   <input
@@ -157,7 +156,7 @@ const LoginPage: React.FC = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    placeholder="Enter your password"
+                    placeholder="Nhâp mật khâu"
                   />
                   <button
                     type="button"

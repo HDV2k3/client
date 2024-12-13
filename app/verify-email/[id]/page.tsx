@@ -29,7 +29,7 @@ const VerifyEmailPage: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
   const tokenVerify = useParams().id;
 
-  let tokenAuth = '';
+  let tokenAuth = "";
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -55,7 +55,9 @@ const VerifyEmailPage: React.FC = () => {
           }
         );
 
-        if (!response.ok) { notificationServiceVerify_Email.verifyError(); }
+        if (!response.ok) {
+          console.error("Error verify: ", response);
+        }
 
         setNotification({
           isOpen: true,
@@ -80,17 +82,20 @@ const VerifyEmailPage: React.FC = () => {
             const token = response.data.data.token;
             setToken(token);
             tokenAuth = token;
-            localStorage.setItem('token', token);
+            localStorage.setItem("token", token);
           }
-        } catch (error) { }
+        } catch (error) {}
         try {
-          await fetch(`${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/create`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${tokenAuth}`,
-            },
-          });
+          await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/create`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${tokenAuth}`,
+              },
+            }
+          );
         } catch (error) {
           console.error("Error verifying email:", error);
         }
@@ -102,7 +107,7 @@ const VerifyEmailPage: React.FC = () => {
           router.push("/login");
         }, 1000);
       } catch (error) {
-        console.error('Error verify: ', error);
+        console.error("Error verify: ", error);
         // setNotification({
         //   isOpen: true,
         //   type: "error",

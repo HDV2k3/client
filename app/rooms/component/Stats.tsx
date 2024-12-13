@@ -3,10 +3,9 @@ import { FaHandshake, FaKey, FaBuilding, FaUserTie } from "react-icons/fa";
 import { AiOutlineBook, AiOutlineUsergroupAdd } from "react-icons/ai";
 type Props = {
   data: any;
-}
+};
 
 const Stats = ({ data }: Props) => {
-
   const stats = [
     {
       icon: FaHandshake,
@@ -17,7 +16,7 @@ const Stats = ({ data }: Props) => {
     {
       icon: FaKey,
       label: "Cho thuê",
-      count: data?.quantityTypeSale || "120.930",
+      count: data?.quantityTypeSale || "34",
       subLabel: "tin đăng cho thuê",
     },
     {
@@ -36,9 +35,8 @@ const Stats = ({ data }: Props) => {
       icon: AiOutlineBook,
       label: "Tổng bài đăng",
       count: data?.totalPosts || "245",
-      subLabel: "đã duyệt",
+      subLabel: "đã kiểm duyệt",
     },
-
   ];
 
   return (

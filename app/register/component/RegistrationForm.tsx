@@ -65,11 +65,36 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       {[
-        { id: "email", type: "email", label: "Email address", value: formData.email },
-        { id: "password", type: "password", label: "Password", value: formData.password },
-        { id: "firstName", type: "text", label: "First Name", value: formData.firstName },
-        { id: "lastName", type: "text", label: "Last Name", value: formData.lastName },
-        { id: "dayOfBirth", type: "date", label: "Date of Birth", value: formData.dayOfBirth },
+        {
+          id: "email",
+          type: "email",
+          label: "Địa chỉ email",
+          value: formData.email,
+        },
+        {
+          id: "password",
+          type: "password",
+          label: "Mật khẩu",
+          value: formData.password,
+        },
+        {
+          id: "firstName",
+          type: "text",
+          label: "Họ",
+          value: formData.firstName,
+        },
+        {
+          id: "lastName",
+          type: "text",
+          label: "Tên",
+          value: formData.lastName,
+        },
+        {
+          id: "dayOfBirth",
+          type: "date",
+          label: "Ngày tháng năm sinh",
+          value: formData.dayOfBirth,
+        },
       ].map(({ id, type, label, value }) => (
         <div key={id}>
           <label
@@ -96,10 +121,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
         <button
           type="submit"
           disabled={isLoading} // Disable nút khi đang loading
-          className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${isLoading
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700"
-            }`}
+          className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+            isLoading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
           {isLoading ? (
             <svg

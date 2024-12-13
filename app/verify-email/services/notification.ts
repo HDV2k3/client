@@ -34,11 +34,11 @@ export const notificationServiceVerify_Email = {
       `Chúc bạn có một trải nghiệm tuyệt vời với chúng tôi.`
     );
   },
-  verifyError: () => {
-    notificationServiceVerify_Email.show(
-      "error",
-      "chuyển trang thất bại",
-      "Vui lòng thử lại hoặc liên hệ với nhân viên hỗ trợ."
-    );
-  },
+  // verifyError: () => {
+  //   notificationServiceVerify_Email.show(
+  //     "error",
+  //     "chuyển trang thất bại",
+  //     "Vui lòng thử lại hoặc liên hệ với nhân viên hỗ trợ."
+  //   );
+  // },
 };

@@ -70,6 +70,42 @@ const UserProfileCard: React.FC<{ onEdit: () => void }> = ({ onEdit }) => {
     }
   };
 
+  const handleUpload = async (file: File) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      message.error("No authentication token found");
+      return;
+    }
+    const userId = localStorage.getItem("userId");
+    const formData = new FormData();
+    formData.append("avatar", file); // Append the file to FormData
+    formData.append("userId", userId || "");
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL_USER}/users/upload-avatar`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // Ensure the header is set for file upload
+          },
+        }
+      );
+
+      message.success("Avatar uploaded successfully!");
+      // Update the user's avatar in the UI
+      setUserData((prevData) => ({
+        ...prevData,
+        avatar: response.data.avatarUrl, // Assuming API returns the avatar URL
+      }));
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+      message.error("Failed to upload avatar");
+    }
+  };
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -90,6 +126,10 @@ const UserProfileCard: React.FC<{ onEdit: () => void }> = ({ onEdit }) => {
           listType="picture-circle"
           className="avatar-uploader mr-6"
           showUploadList={false}
+          beforeUpload={(file) => {
+            handleUpload(file); // Trigger the upload API call
+            return false; // Prevent the default upload behavior
+          }}
         >
           <Avatar size={120} icon={<UserOutlined />} src={userData.avatar} />
         </Upload>

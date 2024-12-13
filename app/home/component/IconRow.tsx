@@ -6,12 +6,12 @@ import {
   FaRegNewspaper,
   FaRegBookmark,
   FaRegEdit,
+  FaClinicMedical,
 } from "react-icons/fa";
 
 import Link from "next/link";
 
 const IconRow = () => {
-
   const services = [
     {
       icon: FaHome,
@@ -44,10 +44,10 @@ const IconRow = () => {
       link: "/bookmark",
     },
     {
-      icon: FaRegEdit,
-      text: "Đăng Tin",
+      icon: FaClinicMedical,
+      text: "Dịch Vụ",
       alt: "Icon for posting",
-      link: "/dang-tin",
+      link: "/products",
     },
   ];
 

@@ -17,13 +17,15 @@ const SearchBar = () => {
 
   const filteredSuggestions = searchValue
     ? suggestions.filter((item) =>
-      item.value.toLowerCase().includes(searchValue.toLowerCase())
-    )
+        item.value.toLowerCase().includes(searchValue.toLowerCase())
+      )
     : suggestions; // If no search value, show all suggestions
 
   const handleSearch = (value: string) => {
     if (value.trim()) {
-      window.location.href = `/search?keyword=${encodeURIComponent(value.trim())}`;
+      window.location.href = `/search?keyword=${encodeURIComponent(
+        value.trim()
+      )}`;
     }
   };
 
@@ -56,7 +58,7 @@ const SearchBar = () => {
         <input
           type="text"
           className="w-full h-8 px-2 py-2 text-sm text-gray-700 bg-white border rounded-l focus:outline-none focus:ring-1 focus:ring-blue-500"
-          placeholder="Tìm kiếm sản phẩm trên NextLife"
+          placeholder="Tìm kiếm cuộc sống mới với NextLife"
           value={searchValue}
           onChange={(e) => {
             setSearchValue(e.target.value);

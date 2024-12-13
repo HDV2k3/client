@@ -15,7 +15,7 @@ const TopNavigation = () => {
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
           >
-            <span className="text-white font-semibold">Next Rooms</span>
+            <span className="text-white font-semibold">Next Sản phẩm</span>
           </Button>
         </Link>
         <Link href="/news">
@@ -24,7 +24,7 @@ const TopNavigation = () => {
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
           >
-            <span className="text-white font-semibold">Next News</span>
+            <span className="text-white font-semibold">Next Tin Tức</span>
           </Button>
         </Link>
         {/* <Link href="/rooms">
@@ -41,7 +41,7 @@ const TopNavigation = () => {
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
           >
-            <span className="text-white font-semibold">Next Products</span>
+            <span className="text-white font-semibold">Next Dịch Vụ</span>
           </Button>
         </Link>
       </div>

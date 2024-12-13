@@ -6,9 +6,12 @@ import { notificationServiceRegister } from "./services/notification";
 import getToken from "@/utils/getTokenLocalStorage";
 import { redirect } from "next/navigation";
 
-const RegistrationFormLazy = dynamic(() => import("./component/RegistrationForm"), {
-  loading: () => <p>Loading...</p>,
-});
+const RegistrationFormLazy = dynamic(
+  () => import("./component/RegistrationForm"),
+  {
+    loading: () => <p>Đang tải...</p>,
+  }
+);
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
@@ -65,7 +68,7 @@ const RegisterPage: React.FC = () => {
   if (!isTokenChecked) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Checking authentication...</p>
+        <p>Kiểm tra xác thực...</p>
       </div>
     );
   }
@@ -74,7 +77,7 @@ const RegisterPage: React.FC = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Register your account
+          Đăng ký tài khoản của bạn
         </h2>
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
