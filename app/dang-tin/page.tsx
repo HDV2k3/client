@@ -60,7 +60,7 @@ const NewRoomPage: React.FC = () => {
               title: 'Không đủ tiền thanh toán',
               content: 'Bạn có muốn nạp thêm tiền vào để tiếp tục?',
               onOk() {
-                router.push('/payment');
+                router.push('/deposit');
               },
               onCancel() {
                 notification.info({

@@ -70,7 +70,7 @@ const MessageList: React.FC = () => {
                 userId: chat.userId,
                 firstName: chat.firstName,
                 lastName: chat.lastName,
-                lastMessage: "Error decrypting message",
+                lastMessage: "Chưa có tin nhắn",
                 lastMessageTime: "",
               };
             }

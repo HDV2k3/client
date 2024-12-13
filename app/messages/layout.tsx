@@ -9,14 +9,14 @@ interface MessagesLayoutProps {
 
 export default function MessagesLayout({ children }: MessagesLayoutProps) {
   return (
-    <div className=" flex container mx-auto px-4 py-2 sm:px-0 lg:px-0 max-w-screen-xl">
+    <div className=" flex container mx-auto px-4 py-2 sm:px-0 lg:px-0 max-w-screen-xl h-[900px]">
       {/* Message List Sidebar */}
       <div className="w-96 bg-white border-r">
         <MessageList />
       </div>
 
       {/* Chat Detail or Placeholder */}
-      <div className="flex-1 bg-gray-100">{children}</div>
+      <div className="flex-1 bg-gray-100 h-[883px]">{children}</div>
     </div>
   );
 }

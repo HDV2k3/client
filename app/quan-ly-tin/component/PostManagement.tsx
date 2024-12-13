@@ -66,11 +66,7 @@ const PostManagement: React.FC = () => {
   };
 
   return (
-    <Tabs
-      activeKey={activeTab}
-      onChange={handleTabChange}
-      className="bg-white p-6 rounded-lg shadow"
-    >
+    <Tabs activeKey={activeTab} onChange={handleTabChange} className="bg-white p-6 rounded-lg shadow ml-2" >
       {/* Tab 1 - Active Posts */}
       <Tabs.TabPane
         key="1"

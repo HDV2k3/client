@@ -53,7 +53,7 @@ export const fetchPostsPromotionalByPage = async (
 ) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/list-post-promotional?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/all?page=${page}&size=${size}`
     );
     const data = await response.json();
     return data;
