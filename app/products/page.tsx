@@ -13,7 +13,8 @@ const RoomListing = () => {
     {
       id: 1,
       name: "Phòng Nghỉ Gần Bệnh Viện Chợ Rẫy",
-      image: "/api/placeholder/400/300",
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/marketing%2F000a888e-c553-4727-9bec-dd686df05405_458920372_1218988892667038_8221875161629353613_n.jpg?alt=media&token=c0dc2af3-4fc2-4628-8130-de248b6bb3e1",
       description:
         "Phòng đầy đủ tiện nghi, có máy lạnh, cách bệnh viện 5 phút đi bộ. Phù hợp cho bệnh nhân và người nhà đi khám.",
       price: "30.000đ/ngày",
@@ -24,7 +25,8 @@ const RoomListing = () => {
     {
       id: 2,
       name: "Phòng Trọ Gần Bệnh Viện 115",
-      image: "/api/placeholder/400/300",
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/marketing%2F009c48b9-fb2e-41a4-931e-3d308f33295a_458912008_4224014664513771_5526694429572879032_n.jpg?alt=media&token=5033e80c-9211-4662-8935-08428feb1182",
       description:
         "Phòng sạch sẽ, thoáng mát, có nhà bếp riêng. Gần chợ và tiện di chuyển.",
       price: "50.000đ/ngày",
@@ -35,7 +37,8 @@ const RoomListing = () => {
     {
       id: 3,
       name: "Nhà Nghỉ Gần Bệnh Viện Ung Bướu",
-      image: "/api/placeholder/400/300",
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/datpt-ce669.appspot.com/o/marketing%2F01e37a77-cebf-4fd3-9111-34506e2a2930_458728232_1691699091565618_8958733197005373296_n.jpg?alt=media&token=364fc0df-71d2-4697-a0b9-41b32a91bc16",
       description:
         "Phòng rộng rãi, có thể ở 3-4 người, đầy đủ tiện nghi sinh hoạt.",
       price: "40.000đ/ngày",

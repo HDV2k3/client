@@ -76,11 +76,14 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Stop and remove old container
+        run: docker rm -f fe-service || true
+
+      - name: Remove old images
+        run: docker rmi -f devhuynh2003/fe-service:latest || true
+
       - name: Pull image from Docker Hub
         run: docker pull devhuynh2003/fe-service:latest
-
-      - name: Delete old container
-        run: docker rm -f fe-service || true
 
       - name: Run docker container
         run: |
@@ -89,5 +92,3 @@ jobs:
             --env-file /home/ubuntu/.env \
             --name fe-service \
             devhuynh2003/fe-service:latest
-
-            
