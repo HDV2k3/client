@@ -59,34 +59,70 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
   `;
 
   const router = useRouter();
+  // const handleContact = async () => {
+  //   try {
+  //     console.log('check room: ', room);
+  //     const userId = localStorage.getItem('userId');
+  //     const token = localStorage.getItem('token');
+  //     if (!userId || !token) return;
+
+  //     const urlCK = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/encrytion/keys?userId=${userId}`;
+  //     const createKey = await fetch(urlCK);
+  //     const dataKey = await createKey.json();
+
+  //     if (dataKey) {
+  //       const publicKey = dataKey?.data?.publicKey;
+  //       localStorage.setItem('publicKey', publicKey);
+  //     }
+
+  //     const url = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/create-null-mess?id=${room?.id}`
+  //     const responseCreateRoom = await fetch(url, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //     // const data = await responseCreateRoom.json();
+  //     // console.log('data: ', data);
+  //     router.push(`/message/${room?.userId}`);
+  //   } catch (e) {
+  //     console.error('--> Handle Contact error: ', e);
+  //   }
+  // }
   const handleContact = async () => {
     try {
       console.log('check room: ', room);
       const userId = localStorage.getItem('userId');
       const token = localStorage.getItem('token');
-      if (!userId || !token) return;
-
+      
+      // Kiểm tra authentication
+      if (!userId || !token) {
+        // Lưu lại URL hiện tại trước khi chuyển hướng
+        const currentPath = window.location.pathname;
+        localStorage.setItem('returnUrl', currentPath);
+        
+        // Chuyển đến trang đăng nhập
+        router.push('/login');
+        return;
+      }
+  
+      // Tiếp tục xử lý logic nếu đã có token và userId
       const urlCK = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/encrytion/keys?userId=${userId}`;
       const createKey = await fetch(urlCK);
       const dataKey = await createKey.json();
-
+  
       if (dataKey) {
         const publicKey = dataKey?.data?.publicKey;
         localStorage.setItem('publicKey', publicKey);
       }
-
-      const url = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/create-null-mess?id=${room?.id}`
+  
+      const url = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/create-null-mess?id=${room?.id}`;
       const responseCreateRoom = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      // const data = await responseCreateRoom.json();
-      // console.log('data: ', data);
+      });
+      
       router.push(`/message/${room?.userId}`);
     } catch (e) {
       console.error('--> Handle Contact error: ', e);
     }
   }
-
 
   const hasPromotionalPrice = (room.fixPrice ?? 0) < room.pricingDetails.basePrice;
 

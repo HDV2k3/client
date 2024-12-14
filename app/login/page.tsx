@@ -34,6 +34,56 @@ const LoginPage: React.FC = () => {
     }
   }, [callbackUrl, router]);
 
+  // const handleLogin = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setError(null);
+  //   setLoading(true);
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_API_URL_USER}/auth/login`,
+  //       {
+  //         email,
+  //         password,
+  //       }
+  //     );
+
+  //     if (response.data && response.data.data.token) {
+  //       const token = response.data.data.token;
+
+  //       // Lưu token vào localStorage và cookie
+  //       if (typeof window !== "undefined") {
+  //         localStorage.setItem("token", token);
+
+  //         // Set cookie với các options bảo mật
+  //         document.cookie = `token=${token}; path=/; max-age=86400; secure; samesite=strict`;
+
+  //         // Phát sự kiện 'userLogin'
+  //         window.dispatchEvent(new Event("userLogin"));
+
+  //         // Redirect về trang được yêu cầu hoặc trang chủ
+  //         router.push(callbackUrl);
+  //       }
+  //     } else {
+  //       setError("Invalid login response. Please try again.");
+  //     }
+  //   } catch (err: unknown) {
+  //     const error = err as { response?: { data?: { message?: string } } };
+
+  //     // Xử lý các loại lỗi cụ thể
+  //     if (error.response?.data?.message === "Invalid credentials") {
+  //       setError("Email hoặc mật khẩu không chính xác");
+  //     } else if (error.response?.data?.message === "User not found") {
+  //       setError("Tài khoản không tồn tại");
+  //     } else if (error.response?.data?.message === "Email not verified") {
+  //       setError("Vui lòng xác thực email trước khi đăng nhập");
+  //     } else {
+  //       setError("Đăng nhập thất bại. Vui lòng thử lại sau.");
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -60,9 +110,16 @@ const LoginPage: React.FC = () => {
 
           // Phát sự kiện 'userLogin'
           window.dispatchEvent(new Event("userLogin"));
+          // Lấy returnUrl từ localStorage (URL được lưu trước khi chuyển đến trang login)
+          const returnUrl = localStorage.getItem("returnUrl");
 
-          // Redirect về trang được yêu cầu hoặc trang chủ
-          router.push(callbackUrl);
+          if (returnUrl) {
+            localStorage.removeItem("returnUrl"); // Xóa returnUrl sau khi đã sử dụng
+            router.push(returnUrl);
+          } else {
+            // Nếu không có returnUrl, sử dụng callbackUrl hoặc trang mặc định
+            router.push(callbackUrl || "/");
+          }
         }
       } else {
         setError("Invalid login response. Please try again.");
@@ -84,7 +141,6 @@ const LoginPage: React.FC = () => {
       setLoading(false);
     }
   };
-
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
