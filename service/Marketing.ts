@@ -164,7 +164,11 @@ export const fetchPostsByRoomPage = async (page: number, size: number) => {
     throw error;
   }
 };
-export const fetchPostByTypeRoomAndPage = async (type: number, page: number, size: number) => {
+export const fetchPostByTypeRoomAndPage = async (
+  type: number,
+  page: number,
+  size: number
+) => {
   try {
     const query = queryString.stringify({ type, page, size });
     const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/fil-type?${query}`;
@@ -175,7 +179,7 @@ export const fetchPostByTypeRoomAndPage = async (type: number, page: number, siz
     console.error("Error fetching posts by type and page size:", error);
     throw error;
   }
-}
+};
 export const fetchInfoRooms = async () => {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/info-marketing`;
@@ -186,4 +190,4 @@ export const fetchInfoRooms = async () => {
     console.error("Error fetching posts by type and page size:", error);
     throw error;
   }
-}
+};

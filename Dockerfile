@@ -20,10 +20,8 @@ WORKDIR /app
 COPY --from=builder /app ./
 
 # Expose port
-EXPOSE 3001
+EXPOSE 3000
 
-# Đặt biến môi trường
-ENV PORT=3001
 
 # Khởi động ứng dụng
 CMD ["npm", "run", "start"]
