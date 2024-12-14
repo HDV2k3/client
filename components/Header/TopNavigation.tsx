@@ -36,7 +36,7 @@ const TopNavigation = () => {
             <span className="text-white font-semibold">Next Other</span>
           </Button>{" "}
         </Link> */}
-        <Link href="products">
+        <Link href="/products">
           <Button
             type="link"
             className="text-[#60A5FA] hover:text-[#FBBF24] px-1 py-0 h-auto"
