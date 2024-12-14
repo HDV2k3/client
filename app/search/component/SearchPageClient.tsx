@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -62,7 +62,7 @@ export default function SearchPageClient() {
     <div className="search-page">
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">
-          Search Results for &quot;{keyword}&quot;
+          Kết quả tìm kiếm tại: &quot;{keyword}&quot;
         </h1>
         <FeaturedRoomList
           rooms={rooms}
