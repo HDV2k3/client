@@ -8,17 +8,20 @@ import MainRoomList from "@/app/home/component/MainRoomList";
 
 export default function RoomsLocation() {
     const [dataPost, setDataPost] = useState<any>();
-    const [title, setTitle] = useState<string>('');
     const page = 1;
     const size = 10;
 
     const handleFetchData = async (district: string) => {
-        const type = findTypeByName(district || 'TP.Thủ Đức') as number || 769;
+
+        const adjustedDistrict = district?.includes("District")
+            ? district.replace("District", "Quận")
+            : district;
+        // const type = findTypeByName(district || 'TP.Thủ Đức') as number || 769;
+        const type = findTypeByName(adjustedDistrict || 'TP.Thủ Đức') as number || 769;
         console.log('Address:', district, 'type: ', type);
         const data = await getDistrictAction(type, page, size);
         const rooms = data?.data?.data;
         setDataPost(rooms);
-        setTitle(`Danh sách nhà tại ${district}`);
     }
     const fetchLocationDetails = useCallback(async (lat: number, lon: number) => {
         console.log('check ', lat, lon);
@@ -33,7 +36,7 @@ export default function RoomsLocation() {
                 const formattedAddress = data.results[0].formatted;
                 console.log('Address:', formattedAddress);
                 const addressParts: string[] = formattedAddress.split(',');
-                const district = addressParts[addressParts.length - 3];
+                const district = addressParts[addressParts.length - 3]; // lấy vị trị quận
                 console.log('Region or District (last part - 3):', district);
                 await handleFetchData(district)
             } else {
@@ -61,9 +64,9 @@ export default function RoomsLocation() {
 
     return (
         <>
-            {dataPost && title
+            {dataPost
                 ? <>
-                    <TitleRoom title={title} />
+                    <TitleRoom title={'Danh sách nhà gần bạn'} />
                     <MainRoomList data={dataPost} page={page} size={size} />
                 </>
                 : null
