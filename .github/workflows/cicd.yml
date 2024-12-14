@@ -89,3 +89,5 @@ jobs:
             --env-file /home/ubuntu/.env \
             --name fe-service \
             devhuynh2003/fe-service:latest
+
+            
