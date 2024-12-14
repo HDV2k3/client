@@ -12,7 +12,7 @@ import { convertToVND } from "../../../../utils/convertToVND";
 import Image from "next/image";
 import { Button } from "antd";
 import Link from "next/link";
-import { findNameByType } from '@/constants/districts'
+import { findNameByType } from "@/constants/districts";
 import { getTypeRoomById } from "@/constants/TypeCreatePost";
 import axios from "axios";
 import { useRouter } from "@/hooks/useRouter";
@@ -88,53 +88,54 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
   // }
   const handleContact = async () => {
     try {
-      console.log('check room: ', room);
-      const userId = localStorage.getItem('userId');
-      const token = localStorage.getItem('token');
-      
+      console.log("check room: ", room);
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
       // Kiểm tra authentication
       if (!userId || !token) {
         // Lưu lại URL hiện tại trước khi chuyển hướng
         const currentPath = window.location.pathname;
-        localStorage.setItem('returnUrl', currentPath);
-        
+        localStorage.setItem("returnUrl", currentPath);
+
         // Chuyển đến trang đăng nhập
-        router.push('/login');
+        router.push("/login");
         return;
       }
-  
+
       // Tiếp tục xử lý logic nếu đã có token và userId
       const urlCK = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/encrytion/keys?userId=${userId}`;
       const createKey = await fetch(urlCK);
       const dataKey = await createKey.json();
-  
+
       if (dataKey) {
         const publicKey = dataKey?.data?.publicKey;
-        localStorage.setItem('publicKey', publicKey);
+        localStorage.setItem("publicKey", publicKey);
       }
-  
+
       const url = `${process.env.NEXT_PUBLIC_API_URL_CHATTING}/api/v1/chat/create-null-mess?id=${room?.id}`;
       const responseCreateRoom = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
-      router.push(`/message/${room?.userId}`);
-    } catch (e) {
-      console.error('--> Handle Contact error: ', e);
-    }
-  }
 
-  const hasPromotionalPrice = (room.fixPrice ?? 0) < room.pricingDetails.basePrice;
+      router.push(`/messages/${room?.userId}`);
+    } catch (e) {
+      console.error("--> Handle Contact error: ", e);
+    }
+  };
+
+  const hasPromotionalPrice =
+    (room.fixPrice ?? 0) < room.pricingDetails.basePrice;
 
   // Determine the status message based on room's status
   const roomStatusMessage =
     room.statusShowCheck === "ACTIVE"
       ? "Phòng hiện đang trống"
       : room.statusShowCheck === "PENDING"
-        ? "Phòng đang thi công"
-        : room.statusShowCheck === "REJECTED"
-          ? "Phòng đã hết"
-          : "Trạng thái không xác định";
+      ? "Phòng đang thi công"
+      : room.statusShowCheck === "REJECTED"
+      ? "Phòng đã hết"
+      : "Trạng thái không xác định";
 
   return (
     <div className="float-right px-2">
@@ -186,7 +187,9 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
       {/* Display Room Status */}
       <div className="mb-4 text-sm text-gray-600">
         <span
-          className={`font-bold ${room.status === "available" ? "text-green-600" : "text-red-600"}`}
+          className={`font-bold ${
+            room.status === "available" ? "text-green-600" : "text-red-600"
+          }`}
         >
           {roomStatusMessage}
         </span>
@@ -269,7 +272,9 @@ const InfoDetail: React.FC<IProps> = ({ room }) => {
       <div className="flex justify-between mb-5">
         <div className="flex justify-start ">
           {/* <Link href={`/messages`} passHref> */}
-          <Button onClick={handleContact}>liên hệ ngay: {room.createdBy}</Button>
+          <Button onClick={handleContact}>
+            liên hệ ngay: {room.createdBy}
+          </Button>
           {/* </Link> */}
         </div>
         <div className="flex justify-end">
