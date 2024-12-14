@@ -685,8 +685,8 @@ const ChatDetail: React.FC = () => {
       );
       setChatHistory(decryptedHistory as ChatMessage[]);
     } catch (error) {
-      console.error("Error sending message:", error);
-      message.error("Failed to send message");
+      console.log("error", error);
+      // message.error("Failed to send message");
     }
   };
   return (
@@ -739,10 +739,11 @@ const ChatDetail: React.FC = () => {
                   renderItem={(message) => (
                     <List.Item
                       key={message.id}
-                      className={`flex ${message.senderId === senderId
-                        ? "justify-end"
-                        : "justify-start"
-                        } px-2`}
+                      className={`flex ${
+                        message.senderId === senderId
+                          ? "justify-end"
+                          : "justify-start"
+                      } px-2`}
                     >
                       {message.senderId !== senderId && (
                         <Avatar
@@ -753,10 +754,11 @@ const ChatDetail: React.FC = () => {
 
                       <div className="flex flex-col items-start space-y-1 max-w-[75%] md:max-w-[60%]">
                         <div
-                          className={`p-2 md:p-3 rounded-lg text-sm break-words ${message.senderId === senderId
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-200 text-gray-800"
-                            }`}
+                          className={`p-2 md:p-3 rounded-lg text-sm break-words ${
+                            message.senderId === senderId
+                              ? "bg-blue-500 text-white"
+                              : "bg-gray-200 text-gray-800"
+                          }`}
                         >
                           {message.message}
                         </div>
