@@ -5,6 +5,7 @@ import PromotionBanner from "./component/PromotionBanner";
 import Courasel from "./component/Courasel";
 import TitleRoom from "@/components/TitleRoom";
 import SquareAndRectangles from "./component/SquareAndRectangles";
+import RoomsLocation from "@/components/RenderRoomLocation";
 
 type Props = {
     children: React.ReactNode;
@@ -14,7 +15,7 @@ export default async function LayoutHomePage({ children }: Props) {
     const dataCourasel = await fetchCarouselData();
     const dataPromotion = await fetchPromotionBannerAction();
     const dataNew = await fetchHomeNewAction();
-    
+
     return (
         <>
             <div className="container mx-auto px-4 py-2 sm:px-0 lg:px-0 max-w-screen-xl">
@@ -30,6 +31,10 @@ export default async function LayoutHomePage({ children }: Props) {
                 </div>
 
                 {children}
+
+                <div className="sm:mb-8">
+                    <RoomsLocation />
+                </div>
 
                 {/* Rooms by Location */}
                 <div className="sm:mb-8">

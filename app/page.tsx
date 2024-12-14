@@ -8,6 +8,7 @@ import SquareAndRectangles from "@/app/home/component/SquareAndRectangles";
 import { fetchPostsFeaturedByPage, fetchPostsPromotionalByPage } from "@/service/Marketing";
 import MainRoomList from "./home/component/MainRoomList";
 import MainPromotions from "./home/component/MainRoomListPromotion";
+import RoomsLocation from "@/components/RenderRoomLocation";
 
 export default async function LayoutHomePage() {
   const page = 1;
@@ -44,6 +45,10 @@ export default async function LayoutHomePage() {
       <div className="mb-6 sm:mb-8">
         <TitleRoom title="Phòng ưu đãi" />
         {dataRoomsPromotions && <MainPromotions data={dataRoomsPromotions} page={page} size={size} />}
+      </div>
+
+      <div className="sm:mb-8">
+        <RoomsLocation />
       </div>
 
       {/* Rooms by Location */}
