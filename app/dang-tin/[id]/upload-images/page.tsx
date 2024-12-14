@@ -44,11 +44,20 @@ const UploadPage: React.FC = () => {
       <Button
         type="primary"
         onClick={() => {
-          router.push(`/dang-tin/${id}/update`);
+          router.push(`/home`);
         }}
       >
         {" "}
         Tro ve trang chu
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          router.push(`/quan-ly-tin`);
+        }}
+      >
+        {" "}
+        Quản lý tin
       </Button>
     </div>
   );
