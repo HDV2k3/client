@@ -19,9 +19,18 @@ export default async function RoomsPage({ searchParams }: SearchParams) {
   const size = 8;
   let data = [];
   let typeGet = 0; // 0: all, 1: fillter
-  let searchParam = '';
+  let searchParam = "";
 
-  if (minPrice || maxPrice || district || commune || type || hasPromotion || sortByCreated || sortByPrice) {
+  if (
+    minPrice ||
+    maxPrice ||
+    district ||
+    commune ||
+    type ||
+    hasPromotion ||
+    sortByCreated ||
+    sortByPrice
+  ) {
     const queryParams = {
       district: district !== -1 ? district : undefined,
       commune: commune !== -1 ? commune : undefined,
@@ -36,7 +45,7 @@ export default async function RoomsPage({ searchParams }: SearchParams) {
       Object.entries(queryParams).filter(([_, value]) => value !== "NaN")
     );
     searchParam = queryString.stringify(filteredParams);
-    const query = `${searchParam}&page=${page}&size=${size}`
+    const query = `${searchParam}&page=${page}&size=${size}`;
     const url = `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/post-filter?${query}`;
     const res = await fetch(url);
     const response = await res.json();
@@ -49,13 +58,20 @@ export default async function RoomsPage({ searchParams }: SearchParams) {
 
   return (
     <>
-      {data.length > 0
-        ? <>
-          <TitleRoom title="Phòng bạn tìm kiếm" />
-          <MainRoomList data={data} page={page} size={size} type={typeGet} searchParam={searchParam} />
+      {data.length > 0 ? (
+        <>
+          <TitleRoom title="Phòng Nổi Bậc Tại Next Life" />
+          <MainRoomList
+            data={data}
+            page={page}
+            size={size}
+            type={typeGet}
+            searchParam={searchParam}
+          />
         </>
-        : <NotFoundData />
-      }
+      ) : (
+        <NotFoundData />
+      )}
     </>
-  )
+  );
 }
