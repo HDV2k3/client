@@ -1,55 +1,4 @@
-# name: CI/CD Pipeline for NextLife Website
-
-# on:
-#   push:
-#     branches: ["main"]
-#   pull_request:
-#     branches: ["main"]
-
-# jobs:
-#   build-and-deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       # Bước 1: Checkout mã nguồn
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       # Bước 2: Đăng nhập Docker Hub
-#       - name: Login to Docker Hub
-#         run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-#       # Bước 3: Build và push Docker image
-#       - name: Build and push Docker image
-#         run: |
-#           docker build -t devhuynh2003/fe-service:latest .
-#           docker push devhuynh2003/fe-service:latest
-
-#       # Bước 4: Triển khai lên VPS
-#       - name: Deploy to VPS
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.VPS_HOST }}
-#           username: ${{ secrets.VPS_USERNAME }}
-#           password: ${{ secrets.VPS_PASSWORD }}
-#           script: |
-#             # Kéo image mới nhất từ Docker Hub
-#             docker pull devhuynh2003/fe-service:latest
-
-#             # Dừng và xóa container cũ (nếu có)
-#             docker ps -q --filter "name=fe-service" | xargs -r docker stop
-#             docker ps -aq --filter "name=fe-service" | xargs -r docker rm
-
-#             # Xóa các image cũ không còn sử dụng
-#             docker images -f "dangling=true" -q | xargs -r docker rmi
-
-#             # Chạy container mới từ image latest
-#             docker run -d \
-#             --name fe-service \
-#             -p 3001:3001 \
-#             --env-file /root/devhuynh/.env \
-#             devhuynh2003/fe-service:latest
-name: Deploy Java Spring Boot Application
+name: CI/CD Pipeline for NextLife Website
 
 on:
   push:
@@ -97,4 +46,4 @@ jobs:
             --health-start-period=10s \
             --name fe-service \
             devhuynh2003/fe-service:latest
-            
+
