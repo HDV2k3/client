@@ -11,6 +11,10 @@
 # next.js
 /.next/
 /out/
+node_modules
+npm-debug.log
+.DS_Store
+dist
 
 # production
 /build
