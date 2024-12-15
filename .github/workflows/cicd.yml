@@ -97,3 +97,4 @@ jobs:
             --health-start-period=10s \
             --name fe-service \
             devhuynh2003/fe-service:latest
+            
