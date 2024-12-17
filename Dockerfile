@@ -22,7 +22,6 @@ COPY --from=builder /app ./
 # Expose port
 EXPOSE 3000
 
-COPY .env .env
 
 # Khởi động ứng dụng
 CMD ["npm", "run", "start"]
