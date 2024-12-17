@@ -21,8 +21,6 @@ COPY --from=builder /app ./
 
 COPY .env.local .env.local 
 
-COPY  .env .env
-
 # Expose port
 EXPOSE 3000
 
