@@ -19,7 +19,7 @@ WORKDIR /app
 # Sao chép build output từ stage 1
 COPY --from=builder /app ./
 
-COPY .env.local .env.local 
+COPY .env ./.env 
 
 # Expose port
 EXPOSE 3000
