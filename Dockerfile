@@ -1,29 +1,43 @@
-# Stage 1: Build application
 FROM node:20-alpine3.18 as builder
-
 WORKDIR /app
-
-# Sao chép file package.json và package-lock.json trước để cache layer
 COPY package*.json ./
-
-# Cài đặt dependencies và build ứng dụng
 RUN npm install
 COPY . .
+
+# Thêm các ARG để nhận biến khi build
+ARG NEXT_PUBLIC_API_URL_SOCKET
+ARG NEXT_PUBLIC_API_URL_CHATTING
+ARG NEXT_PUBLIC_API_URL_MARKETING
+ARG NEXT_PUBLIC_API_URL_USER
+ARG NEXT_PUBLIC_API_URL_CHAT_BOT
+ARG NEXT_PUBLIC_API_URL_PAYMENT
+
+# Set environment variables cho build time
+ENV NEXT_PUBLIC_API_URL_SOCKET=$NEXT_PUBLIC_API_URL_SOCKET
+ENV NEXT_PUBLIC_API_URL_CHATTING=$NEXT_PUBLIC_API_URL_CHATTING
+ENV NEXT_PUBLIC_API_URL_MARKETING=$NEXT_PUBLIC_API_URL_MARKETING
+ENV NEXT_PUBLIC_API_URL_USER=$NEXT_PUBLIC_API_URL_USER
+ENV NEXT_PUBLIC_API_URL_CHAT_BOT=$NEXT_PUBLIC_API_URL_CHAT_BOT
+ENV NEXT_PUBLIC_API_URL_PAYMENT=$NEXT_PUBLIC_API_URL_PAYMENT
+
 RUN npm run build
 
-# Stage 2: Production-ready image
 FROM node:20-alpine3.18
-
 WORKDIR /app
 
-# Sao chép build output từ stage 1
-COPY --from=builder /app ./
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
-COPY .env ./
+# Set lại environment variables cho runtime
+ENV NEXT_PUBLIC_API_URL_SOCKET=$NEXT_PUBLIC_API_URL_SOCKET
+ENV NEXT_PUBLIC_API_URL_CHATTING=$NEXT_PUBLIC_API_URL_CHATTING
+ENV NEXT_PUBLIC_API_URL_MARKETING=$NEXT_PUBLIC_API_URL_MARKETING
+ENV NEXT_PUBLIC_API_URL_USER=$NEXT_PUBLIC_API_URL_USER
+ENV NEXT_PUBLIC_API_URL_CHAT_BOT=$NEXT_PUBLIC_API_URL_CHAT_BOT
+ENV NEXT_PUBLIC_API_URL_PAYMENT=$NEXT_PUBLIC_API_URL_PAYMENT
 
-# Expose port
 EXPOSE 3000
-
-
-# Khởi động ứng dụng
 CMD ["npm", "run", "start"]
