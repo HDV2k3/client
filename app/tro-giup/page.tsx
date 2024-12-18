@@ -8,10 +8,10 @@ import {
 } from "react-icons/fa";
 
 interface FormData {
-  name: string;
+  fullName: string;
   email: string;
   subject: string;
-  message: string;
+  content: string;
 }
 
 interface FaqItem {
@@ -21,10 +21,10 @@ interface FaqItem {
 
 const HelpPage: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
+    fullName: "",
     email: "",
     subject: "",
-    message: "",
+    content: "",
   });
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
@@ -50,8 +50,8 @@ const HelpPage: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Name is required";
     }
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
@@ -61,8 +61,8 @@ const HelpPage: React.FC = () => {
     if (!formData.subject.trim()) {
       newErrors.subject = "Subject is required";
     }
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
+    if (!formData.content.trim()) {
+      newErrors.content = "Message is required";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -74,8 +74,16 @@ const HelpPage: React.FC = () => {
       setIsSubmitting(true);
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
+        const supportRequest = { ...formData };
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL_USER}/users/support`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(supportRequest),
+        });
         console.log("Support request submitted:", formData);
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setFormData({ fullName: "", email: "", subject: "", content: "" });
       } catch (error) {
         console.error("Submission error:", error);
       } finally {
@@ -164,14 +172,16 @@ const HelpPage: React.FC = () => {
                     type="text"
                     id="name"
                     name="name"
-                    value={formData.name}
+                    value={formData.fullName}
                     onChange={handleChange}
                     className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${
-                      errors.name ? "border-red-500" : "border-gray-300"
+                      errors.fullName ? "border-red-500" : "border-gray-300"
                     } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                   />
-                  {errors.name && (
-                    <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                  {errors.fullName && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.fullName}
+                    </p>
                   )}
                 </div>
 
@@ -232,15 +242,15 @@ const HelpPage: React.FC = () => {
                     id="message"
                     name="message"
                     rows={4}
-                    value={formData.message}
+                    value={formData.content}
                     onChange={handleChange}
                     className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${
-                      errors.message ? "border-red-500" : "border-gray-300"
+                      errors.content ? "border-red-500" : "border-gray-300"
                     } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                   />
-                  {errors.message && (
+                  {errors.content && (
                     <p className="mt-1 text-sm text-red-500">
-                      {errors.message}
+                      {errors.content}
                     </p>
                   )}
                 </div>
