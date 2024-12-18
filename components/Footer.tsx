@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -149,18 +149,18 @@ const AppFooter: React.FC = () => {
 
         <section className="w-full text-center">
           <address className="text-[12px] text-gray-500 mx-auto">
-            CÔNG TY TNHH NEXTROOM - Người đại diện theo pháp luật: THÔNG LÊ;
+            CÔNG TY TNHH NEXTROOM - Người đại diện theo pháp luật: Dev Java;
             GPDKKD: 0999999999 do Sở KH & ĐT TP.HCM cấp ngày 9/9/2024;
             <br />
             GPMXH: 322/GP-BTTTT do Bộ Thông tin và Truyền thông cấp ngày
-            10/9/2024 - Chịu trách nhiệm nội dung: Huỳnh Đắc Việt.
+            10/9/2024 - Chịu trách nhiệm nội dung: Trần Văn Dev.
             <a href="/" target="_blank" rel="noopener noreferrer nofollow">
               {" "}
               Chính sách sử dụng
             </a>
             <br />
             Địa chỉ: Thành phố Hồ Chí Minh, Việt Nam; Email:
-            dacviethuynh@gmail.com - Tổng đài CSKH: 0329615309 (1.000đ/phút)
+            devjavahcmc@gmail.com - Tổng đài CSKH: 0329999999 (1.000đ/phút)
           </address>
         </section>
       </div>
