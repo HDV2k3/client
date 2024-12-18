@@ -49,3 +49,5 @@ jobs:
             --env-file /home/ubuntu/.env \
             --name nextjs-service \
             devhuynh2003/nextjs-service:latest
+
+            
