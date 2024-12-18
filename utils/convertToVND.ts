@@ -6,3 +6,4 @@ export const convertToVND = (amount: number | null): string => {
   const formattedAmount = amount.toLocaleString("vi-VN");
   return `${formattedAmount} VNĐ`;
 };
+
