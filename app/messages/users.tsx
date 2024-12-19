@@ -2,8 +2,7 @@ import EncryptionService from "../../service/EncryptionService";
 import { Avatar, List, Typography, Spin } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRouter } from '@/hooks/useRouter';
-
+import { useRouter } from "@/hooks/useRouter";
 
 const { Text } = Typography;
 
@@ -79,7 +78,8 @@ const MessageList: React.FC = () => {
 
         setChatHistory(decryptedChatHistory);
       } catch {
-        setError("Failed to fetch chat history.");
+        // setError("Failed to fetch chat history.");
+        console.log("Failed to fetch chat history.");
       } finally {
         setLoading(false);
       }

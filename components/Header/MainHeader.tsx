@@ -130,7 +130,7 @@ const MainHeader: React.FC<MainHeaderProps> = ({
         <div className="flex items-center space-x-4">
           <Link href="/">
             <span className="text-xl sm:text-2xl font-bold text-white">
-              NextLife
+              NextRoom
             </span>
           </Link>
         </div>

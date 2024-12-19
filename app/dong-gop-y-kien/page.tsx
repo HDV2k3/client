@@ -167,7 +167,7 @@ const IdeaContributionForm: React.FC = () => {
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
               >
-                Description
+                Mô tả
               </label>
               <textarea
                 id="description"

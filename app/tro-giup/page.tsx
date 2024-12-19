@@ -5,7 +5,10 @@ import {
   FaQuestionCircle,
   FaEnvelope,
   FaPhone,
+  FaComments,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { message } from "antd";
 
 interface FormData {
   fullName: string;
@@ -29,7 +32,8 @@ const HelpPage: React.FC = () => {
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
+  const token = localStorage.getItem("token");
+  const router = useRouter();
   const faqData: FaqItem[] = [
     {
       question: "Làm thế nào để tôi gửi ý tưởng bất động sản?",
@@ -107,7 +111,15 @@ const HelpPage: React.FC = () => {
       }));
     }
   };
-
+  const handleChatWithAdmin = () => {
+    if (token) {
+      message.success("Đã chuyển đến trang hỗ trợ");
+      router.push("/messages/1");
+    } else {
+      message.warning("Vui lòng đăng nhập");
+      router.push("/login");
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -157,6 +169,15 @@ const HelpPage: React.FC = () => {
                     <FaPhone className="text-blue-600 mr-3" />
                     <span className="text-gray-600">+84 329-615-309</span>
                   </div>
+                </div>
+                <div className="mt-6">
+                  <button
+                    onClick={handleChatWithAdmin}
+                    className="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  >
+                    <FaComments className="mr-2" />
+                    Nhắn tin ngay với nhân viên
+                  </button>
                 </div>
               </div>
 
