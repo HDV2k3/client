@@ -83,15 +83,21 @@ const HelpPage: React.FC = () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         const supportRequest = { ...formData };
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL_USER}/users/support`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(supportRequest),
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL_USER}/users/support`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(supportRequest),
+          }
+        );
         console.log("Support request submitted:", formData);
         setFormData({ fullName: "", email: "", subject: "", content: "" });
+        if (response.ok) {
+          message.success("Gửi yêu cầu hỗ trợ thành công");
+        }
       } catch (error) {
         console.error("Submission error:", error);
       } finally {
