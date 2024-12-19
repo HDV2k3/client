@@ -124,7 +124,7 @@ const HelpPage: React.FC = () => {
   const handleChatWithAdmin = () => {
     if (token) {
       message.success("Đã chuyển đến trang hỗ trợ");
-      router.push("/messages/1");
+      router.push("/messages/18");
     } else {
       message.warning("Vui lòng đăng nhập");
       router.push("/login");
