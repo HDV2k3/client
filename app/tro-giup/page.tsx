@@ -188,15 +188,15 @@ const HelpPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="fullName"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Họ và tên
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="fullName"
+                    name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
                     className={`mt-1 block w-full rounded-md shadow-sm py-2 px-3 border ${
@@ -258,14 +258,14 @@ const HelpPage: React.FC = () => {
 
                 <div>
                   <label
-                    htmlFor="message"
+                    htmlFor="content"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Nội dung
                   </label>
                   <textarea
-                    id="message"
-                    name="message"
+                    id="content"
+                    name="content"
                     rows={4}
                     value={formData.content}
                     onChange={handleChange}

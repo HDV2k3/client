@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Form, Input, InputNumber, Select, DatePicker } from "antd";
-import { typeRooms, styleRooms, floorRooms, typeSales } from "../../../constants/TypeCreatePost";
+import {
+  typeRooms,
+  styleRooms,
+  floorRooms,
+  typeSales,
+} from "../../../constants/TypeCreatePost";
 import moment from "moment";
-import { addressHCM, getCommuneByIdDistrict } from '@/constants/HCM_address';
+import { addressHCM, getCommuneByIdDistrict } from "@/constants/HCM_address";
 
 interface Commune {
   idDistrict: number;
@@ -12,7 +17,7 @@ interface Commune {
 
 type Props = {
   setValue: (fields: any) => void;
-}
+};
 
 const RoomDetailsSection = ({ setValue }: Props) => {
   const [dataCommune, setDataCommune] = useState<Commune[]>([]);
@@ -53,9 +58,16 @@ const RoomDetailsSection = ({ setValue }: Props) => {
             label="Quận/Huyện"
             rules={[{ required: true, message: "Vui lòng chọn quận/huyện" }]}
           >
-            <Select placeholder="Chọn quận/huyện" className="w-full " onChange={handleDistrictChange} >
+            <Select
+              placeholder="Chọn quận/huyện"
+              className="w-full "
+              onChange={handleDistrictChange}
+            >
               {addressHCM.district.map((district) => (
-                <Select.Option key={district.idDistrict} value={district.idDistrict}>
+                <Select.Option
+                  key={district.idDistrict}
+                  value={district.idDistrict}
+                >
                   {district.name}
                 </Select.Option>
               ))}
@@ -68,20 +80,26 @@ const RoomDetailsSection = ({ setValue }: Props) => {
             label="Phường Xã"
             rules={[{ required: true, message: "Vui lòng chọn quận/huyện" }]}
           >
-            <Select placeholder="Chọn phường/xã" className="w-full " disabled={selectedDistrict === -1} >
-              {dataCommune && <>
-                {dataCommune.map((item) => (
-                  <Select.Option key={item.idCommune} value={item.idCommune}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </>}
+            <Select
+              placeholder="Chọn phường/xã"
+              className="w-full "
+              disabled={selectedDistrict === -1}
+            >
+              {dataCommune && (
+                <>
+                  {dataCommune.map((item) => (
+                    <Select.Option key={item.idCommune} value={item.idCommune}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                </>
+              )}
             </Select>
           </Form.Item>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg">
@@ -130,10 +148,7 @@ const RoomDetailsSection = ({ setValue }: Props) => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          name={["roomInfo", "style"]}
-          label="Phong cách của phòng"
-        >
+        <Form.Item name={["roomInfo", "style"]} label="Phong cách của phòng">
           <Select placeholder="Phong cách của phòng" className="w-full">
             {styleRooms.map((item) => (
               <Option key={item?.index} value={item?.index}>
@@ -146,10 +161,7 @@ const RoomDetailsSection = ({ setValue }: Props) => {
 
       {/* Row 2 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Form.Item
-          name={["roomInfo", "floor"]}
-          label="Sàn phòng"
-        >
+        <Form.Item name={["roomInfo", "floor"]} label="Sàn phòng">
           <Select placeholder="Sàn của phòng" className="w-full">
             {floorRooms.map((item) => (
               <Option key={item?.index} value={item?.index}>
@@ -164,7 +176,8 @@ const RoomDetailsSection = ({ setValue }: Props) => {
           label="Ngày mở cho thuê vào"
           rules={[{ required: true, message: "Vui lòng chọn ngày có sẵn" }]}
         >
-          <DatePicker className="w-full"
+          <DatePicker
+            className="w-full"
             disabledDate={(current) => {
               return current && current < moment().endOf("day");
             }}
@@ -173,7 +186,7 @@ const RoomDetailsSection = ({ setValue }: Props) => {
       </div>
 
       {/* Row 3 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {[
           { label: "Chiều rộng phòng (m)", name: "width", min: 1 },
           { label: "Chiều cao (m)", name: "height", min: 1 },
@@ -190,6 +203,36 @@ const RoomDetailsSection = ({ setValue }: Props) => {
             <InputNumber
               type="number"
               style={{ width: '100%', minWidth: '150px' }}
+              placeholder={item.label}
+              min={item.min}
+            />
+          </Form.Item>
+        ))}
+      </div> */}
+      {/* Row 3 */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        {[
+          { label: "Chiều rộng phòng (m)", name: "width", min: 1 },
+          { label: "Chiều cao (m)", name: "height", min: 1 },
+          { label: "Số lượng phòng ngủ", name: "numberOfBedrooms", min: 1 },
+          { label: "Số lượng phòng tắm", name: "numberOfBathrooms", min: 1 },
+          { label: "Số lượng người ở", name: "capacity", min: 1 },
+        ].map((item) => (
+          <Form.Item
+            key={item.name}
+            name={["roomInfo", item.name]}
+            label={item.label}
+            rules={[
+              {
+                type: "number",
+                min: item.min,
+                message: `${item.label} không hợp lệ`,
+              },
+            ]}
+          >
+            <InputNumber
+              type="number"
+              style={{ width: "100%", minWidth: "150px" }}
               placeholder={item.label}
               min={item.min}
             />
