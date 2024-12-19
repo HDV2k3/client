@@ -9,6 +9,7 @@ import {
 } from "../../../components/ui/card";
 import { notificationServiceVerify_Email } from "../services/notification";
 import axios from "axios";
+import { set } from "nprogress";
 
 interface NotificationState {
   isOpen: boolean;
@@ -27,6 +28,7 @@ const VerifyEmailPage: React.FC = () => {
     message: "",
   });
   const [token, setToken] = useState<string | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
   const tokenVerify = useParams().id;
 
   let tokenAuth = "";
@@ -81,18 +83,18 @@ const VerifyEmailPage: React.FC = () => {
           if (response.data && response.data.data.token) {
             const token = response.data.data.token;
             setToken(token);
-            tokenAuth = token;
+            setUserId(response.data.data.id);
             localStorage.setItem("token", token);
           }
         } catch (error) {}
         try {
           await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/create`,
+            `${process.env.NEXT_PUBLIC_API_URL_PAYMENT}/userPayment/create/${userId}`,
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${tokenAuth}`,
+                Authorization: `Bearer ${token}`,
               },
             }
           );
