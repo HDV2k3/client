@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaSpinner,
   FaQuestionCircle,
@@ -29,10 +29,14 @@ const HelpPage: React.FC = () => {
     subject: "",
     content: "",
   });
+  const [token, setToken] = useState<string | null>(null);
 
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const token = localStorage.getItem("token");
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+
   const router = useRouter();
   const faqData: FaqItem[] = [
     {
