@@ -4,11 +4,15 @@ import { getDistrictAction } from "@/service/actions/DistrictAction";
 import { useCallback, useEffect, useState } from "react";
 import TitleRoom from "@/components/TitleRoom";
 import MainRoomList from "@/app/home/component/MainRoomList";
+import { useLocation } from "@/app/context/LocationContext";
+import GeoFindMe from "./location";
+
 
 export default function RoomsLocation() {
   const [dataPost, setDataPost] = useState<any>();
   const page = 1;
   const size = 10;
+  const { latitude, longitude } = useLocation();
 
   const transformDistrictName = (district: string) => {
     if (!district) return district;
@@ -60,9 +64,35 @@ export default function RoomsLocation() {
     const rooms = data?.data?.data;
     setDataPost(rooms);
   };
+
+    // const fetchLocationDetails = useCallback(async (lat: number, lon: number) => {
+    //   const apiKey = "2957dd5070844700a7c254fce8cef57a";
+    //   const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${apiKey}`;
+
+    //   try {
+    //     const res = await fetch(apiUrl);
+    //     const data = await res.json();
+    //     console.log("OpenCage API response:", data); // Log dữ liệu trả về từ API
+
+    //     if (data.results && data.results.length > 0) {
+    //       const formattedAddress = data.results[0].formatted;
+    //       console.log("Formatted address:", formattedAddress);
+
+    //       const addressParts: string[] = formattedAddress.split(",");
+    //       const district = addressParts[addressParts.length - 3]; // lấy vị trí quận
+    //       console.log("District:", district);
+
+    //       await handleFetchData(district);
+    //     } else {
+    //       console.error("Error: No results found");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching location details:", error);
+    //   }
+    // }, []);
   const fetchLocationDetails = useCallback(async (lat: number, lon: number) => {
     const apiKey = "2957dd5070844700a7c254fce8cef57a";
-    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${apiKey}`;
+    const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
 
     try {
       const res = await fetch(apiUrl);
@@ -106,7 +136,8 @@ export default function RoomsLocation() {
     <>
       {dataPost ? (
         <>
-          <TitleRoom title={"Danh sách nhà gần bạn"} />
+          <TitleRoom title={"Bán kính 10km theo vị trí"} />
+          <GeoFindMe />
           <MainRoomList data={dataPost} page={page} size={size} />
         </>
       ) : null}

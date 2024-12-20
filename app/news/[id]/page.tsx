@@ -11,6 +11,7 @@ import { FormatDescription } from "../../../components/FormatDescription";
 import { fetchAllNew } from "@/service/NewsService";
 import { News } from "@/types/New";
 
+
 export default function NewPageDetail() {
   const params = useParams();
   const id = getIdBySlug(params?.id as string);
@@ -84,7 +85,10 @@ export default function NewPageDetail() {
             <ol className="my-4">
               {allData.map((item: any) => (
                 <>
-                  <li key={item.id} className="my-2 font-semibold hover:text-[#1e3a8a]">
+                  <li
+                    key={item.id}
+                    className="my-2 font-semibold hover:text-[#1e3a8a]"
+                  >
                     <Link
                       key={id}
                       href={`/news/${converStringToSlug(item.title)}-${

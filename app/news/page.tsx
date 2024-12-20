@@ -9,4 +9,5 @@ export default async function NewsPage() {
   const data = await response.json();
   const dataNews = data.data.data;
   return <MainNewsClient data={dataNews} />
+  
 }
