@@ -22,11 +22,11 @@ export const fetchPostsByPage = async (page: number, pageSize: number) => {
   const data = await response.json();
   return data;
 };
-
 export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
   try {
+    const timestamp = new Date().getTime(); // Lấy timestamp hiện tại
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/list-post-featured?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_URL_MARKETING}/post/list-post-featured?page=${page}&size=${size}&_=${timestamp}`
     );
     const data = await response.json();
     return data;
@@ -35,6 +35,7 @@ export const fetchPostsFeaturedByPage = async (page: number, size: number) => {
     throw error;
   }
 };
+
 export const fetchPostsAllByPage = async (page: number, size: number) => {
   try {
     const response = await fetch(

@@ -12,6 +12,7 @@ interface ChatData {
   lastName: string;
   lastMessage: string;
   lastMessageTime: string;
+  avatarUrl: string;
 }
 
 const MessageList: React.FC = () => {
@@ -61,6 +62,7 @@ const MessageList: React.FC = () => {
                 userId: chat.userId,
                 firstName: chat.firstName,
                 lastName: chat.lastName,
+                avatarUrl: chat.avatarUrl,
                 lastMessage: decryptedMessage || "No message",
                 lastMessageTime,
               };
@@ -69,13 +71,13 @@ const MessageList: React.FC = () => {
                 userId: chat.userId,
                 firstName: chat.firstName,
                 lastName: chat.lastName,
+                avatarUrl: chat.avatarUrl,
                 lastMessage: "Chưa có tin nhắn",
                 lastMessageTime: "",
               };
             }
           })
         );
-
         setChatHistory(decryptedChatHistory);
       } catch {
         // setError("Failed to fetch chat history.");
@@ -94,7 +96,7 @@ const MessageList: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg max-w-md mx-auto sm:max-w-lg md:max-w-xl">
+    <div className="bg-white p-4 rounded-lg shadow-lg w-full max-h-screen overflow-y-auto sm:max-w-lg md:max-w-xl mx-auto">
       {loading ? (
         <div className="flex justify-center items-center h-32">
           <Spin tip="Loading chat history..." />
@@ -104,17 +106,23 @@ const MessageList: React.FC = () => {
       ) : (
         <List
           itemLayout="horizontal"
+          className="max-h-[75vh] overflow-y-auto"
           dataSource={chatHistory}
           renderItem={(item) => (
             <List.Item
               onClick={() => handleClick(item)}
-              className="hover:bg-gray-100 transition duration-150 rounded-md cursor-pointer p-2 mb-2 shadow-sm"
+              className="hover:shadow-md hover:bg-gray-100 transition-all duration-300 rounded-md cursor-pointer p-2 mb-2 flex-wrap md:flex-nowrap"
             >
               <List.Item.Meta
                 avatar={
                   <Avatar
-                    src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${item.userId}`}
+                    src={
+                      item.avatarUrl
+                        ? item.avatarUrl
+                        : `https://api.dicebear.com/7.x/miniavs/svg?seed=${item.userId}`
+                    }
                     size="large"
+                    className="sm:w-10 sm:h-10"
                   />
                 }
                 title={
@@ -123,11 +131,14 @@ const MessageList: React.FC = () => {
                   </Text>
                 }
                 description={
-                  <div className="flex flex-col space-y-1">
+                  <div className="flex flex-col sm:flex-row sm:justify-between space-y-1 sm:space-y-0 sm:space-x-4">
                     <Text type="secondary" ellipsis className="text-sm">
                       {item.lastMessage}
                     </Text>
-                    <Text type="secondary" className="text-xs text-right">
+                    <Text
+                      type="secondary"
+                      className="text-xs text-gray-500 sm:text-right"
+                    >
                       {item.lastMessageTime}
                     </Text>
                   </div>

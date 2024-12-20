@@ -97,7 +97,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             typePackage === 1
               ? 10000
               : typePackage === 2
-              ? 500000
+              ? 50000
               : typePackage === 3
               ? 189000
               : 0;
