@@ -12,5 +12,4 @@ const TitleRoom = ({ title, className }: TitleRoomProps) => {
     </div>
   );
 };
-
 export default TitleRoom;
