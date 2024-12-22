@@ -16,7 +16,7 @@ import {
   ShopOutlined,
   SyncOutlined,
   TeamOutlined,
-  UserOutlined
+  UserOutlined,
 } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 import { useState } from "react";
@@ -29,22 +29,27 @@ const MenuDropdown = () => {
   const menuItems = [
     {
       key: "1",
-      label: "Next Rooms",
+      label: "Next Sản Phẩm",
       icon: <ApartmentOutlined />,
       link: "/rooms",
     },
-    { key: "2", label: "Next New", icon: <ProfileOutlined />, link: "/rooms" },
+    {
+      key: "2",
+      label: "Next tin tức",
+      icon: <ProfileOutlined />,
+      link: "/news",
+    },
     {
       key: "3",
-      label: "Next Other",
+      label: "Next Dịch Vụ",
       icon: <AppstoreAddOutlined />,
-      link: "/rooms",
+      link: "/products",
     },
     {
       key: "4",
-      label: "Next Products",
+      label: "Đóng góp ý kiến",
       icon: <ShopOutlined />,
-      link: "/products",
+      link: "/dong-gop-y-kien",
     },
     {
       key: "5",
@@ -54,9 +59,9 @@ const MenuDropdown = () => {
     },
     {
       key: "6",
-      label: "Chương trình khách hàng thân thiết Genius",
+      label: "Trợ giúp",
       icon: <UserOutlined />,
-      link: "/genius",
+      link: "/tro-giup",
     },
     {
       key: "7",
@@ -66,54 +71,30 @@ const MenuDropdown = () => {
     },
     {
       key: "8",
-      label: "Liên hệ Dịch vụ Khách hàng",
-      icon: <CustomerServiceOutlined />,
-      link: "/contact",
-    },
-    {
-      key: "9",
-      label: "Tranh chấp đối tác",
-      icon: <SyncOutlined />,
-      link: "/dispute",
-    },
-    {
-      key: "10",
-      label: "Ưu đãi theo mùa và dịp lễ",
-      icon: <GiftOutlined />,
-      link: "/offers",
-    },
-    {
-      key: "11",
-      label: "Bài viết về du lịch",
-      icon: <FileTextOutlined />,
-      link: "/articles",
-    },
-    {
-      key: "12",
       label: "Về Nextlife",
       icon: <AppstoreOutlined />,
       link: "/about",
     },
     {
-      key: "13",
+      key: "9",
       label: "Cơ hội việc làm",
       icon: <TeamOutlined />,
       link: "/careers",
     },
     {
-      key: "14",
+      key: "10",
       label: "Trở thành đối tác phân phối",
       icon: <BarChartOutlined />,
       link: "/partners",
     },
     {
-      key: "15",
+      key: "11",
       label: "Bảo mật & Cookie",
       icon: <SafetyCertificateOutlined />,
       link: "/privacy",
     },
     {
-      key: "16",
+      key: "12",
       label: "Điều khoản và điều kiện",
       icon: <BookOutlined />,
       link: "/terms",
